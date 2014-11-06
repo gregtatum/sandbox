@@ -1,0 +1,328 @@
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #222;
+	margin: 0px;
+	overflow: hidden;
+}
+*, *:before, *:after {
+	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+canvas {
+	width:100%;
+	height:100%;
+	/*cursor: pointer;*/
+}
+h1 {
+	font-weight: 800;
+	font-size: 3.05em;
+	color: #4A9DE7;
+	text-transform:uppercase;
+	margin:0;
+	line-height: 1;
+	font-weight: 100;
+}
+.info {
+	position: absolute;
+	bottom: 2.1em;
+	right: 1em;	
+}
+p {
+    margin: 0;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #999;
+    letter-spacing: 0.25em;
+}
+.credits {
+    position: absolute;
+    bottom: 0.5em;
+    left: 0;
+	padding: 0 1.6em;
+    font-size: 0.7em;
+    color: #777;
+    text-align: left;
+    width: 100%;
+}
+a {
+    color: #4A9DE7;
+}
+a:hover {
+    color: #007BE9;
+    text-decoration: none;
+}
+
+.info {
+	padding: 0 2em;
+	text-align:center;
+}
+.arrow-prev:after, .arrow-next:after {
+    content:"";
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    position: absolute;
+    top: 50%;
+    margin-top: -1em;
+}
+.arrow-prev:after {
+	left: 0;
+    border-width: 0.7em 1em 0.7em 0;
+    border-color: transparent rgba(0, 123, 255, 0.67) transparent transparent;
+}
+.arrow-next:after {
+    right: 0;
+    border-width: 0.7em 0 0.7em 1em;
+    border-color: transparent transparent transparent rgba(0, 123, 255, 0.67);
+}
+.arrow-prev, .arrow-next {
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 2em;
+    height: 100%;
+    overflow: hidden;
+    text-indent: 100px;
+}
+.arrow-prev {
+    left: 0;
+}
+.arrow-next {
+    right: 0;
+}
+.message {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	margin-top: -0.5em;
+	font-size: 1.7em;
+	text-align: center;
+	text-transform: uppercase;
+	color: rgba(74, 157, 231, 0.65);
+	padding: 0 6%;
+	pointer-events:none;
+}
+.score {
+	position: absolute;
+	bottom: 0.5em;
+	left: 0.5em;
+	font-size:2em;
+	opacity:0;
+	transition:1s;
+}
+.score strong {
+	color: #4A9DE7;
+	font-weight:100;
+}
+.score span {
+	color:#fff;
+}
+.score-message {
+	display:block;
+	transform: translateX( 0 );
+	opacity:1;
+	transition:opacity 500ms ease-out, transform 500ms ease-out;
+}
+.score-message.fadein {
+	transform: translateX( 50% );
+	opacity:0;
+}
+.score-message.fadeout {
+	transform: translateX( -50% );
+	opacity:0;
+	transition:opacity 100ms ease-in, transform 100ms ease-in;
+}
+.win {
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    color: #fff;
+    opacity: 0;
+	display:none;
+    margin-top: -3em;
+    font-size: 1.5em;
+    transition: opacity 1000ms;
+}
+.win h1 {
+    font-weight: 800;
+}
+.win strong {
+    color: #4A9DE7;
+}
+.npm-scb-now-playing {
+	left: 0;
+	padding-left: 138px;
+	width: 100%;
+}
+.npm-scb-wrap {
+	width: 100%;
+}
+.npm-scb-wrap p {
+	letter-spacing:0;
+}
+.npm-scb-info {
+	max-width: 300px;
+	width: 100%;
+	left: 0;
+	padding-left: 120px;
+	font-size: 0.9em;
+}
+.title {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+	transition: transform 1000ms, opacity 1000ms;
+	transform: scale(1);
+	opacity: 1;
+}
+.title.hide {
+	transform: scale(2);
+	opacity: 0;
+}
+.title-logo {
+    max-width: 84%;
+	-webkit-animation: grow 15000ms;
+	-moz-animation: grow 15000ms;
+	-o-animation: grow 15000ms;
+	animation: grow 15000ms;
+    margin-top: 10%;
+    max-height: 40%;
+}
+.title-left, .title-right {
+	position:absolute;
+	width:50%;
+	bottom: 6%;
+	height: 38%;
+}
+.title-left img, .title-right img {
+    padding-bottom: 2em;
+    margin-top: 12%;
+    height: 57%;
+    width: auto;
+}
+.title-left {
+	left:0;
+}
+.title-right {
+	right:0;
+}
+.title-webgl-error {
+	text-transform:none;
+	letter-spacing:0;
+	max-width:80%;
+	margin:8% auto 0;
+	display:none;
+}
+.title-webgl-error p {
+	margin:1em 0;
+}
+.title-right img {
+	-webkit-animation:tiltA 10s infinite ease-in-out;
+	   -moz-animation:tiltA 10s infinite ease-in-out;
+	    -ms-animation:tiltA 10s infinite ease-in-out;
+	     -o-animation:tiltA 10s infinite ease-in-out;
+	        animation:tiltA 10s infinite ease-in-out;
+}
+@-webkit-keyframes tiltA {
+    0%		{transform: rotateY(-30deg) rotateX(-20deg)}
+    16%		{transform: rotateY( 30deg) rotateX(  0deg)}
+    33%		{transform: rotateY(-30deg) rotateX( 30deg)}
+    50%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    66%		{transform: rotateY(-30deg) rotateX(-10deg)}
+    82%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    100%	{transform: rotateY(-30deg) rotateX(-20deg)}
+}
+@-moz-keyframes tiltA {
+    0%		{transform: rotateY(-30deg) rotateX(-20deg)}
+    16%		{transform: rotateY( 30deg) rotateX(  0deg)}
+    33%		{transform: rotateY(-30deg) rotateX( 30deg)}
+    50%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    66%		{transform: rotateY(-30deg) rotateX(-10deg)}
+    82%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    100%	{transform: rotateY(-30deg) rotateX(-20deg)}
+}
+@-ms-keyframes tiltA {
+    0%		{transform: rotateY(-30deg) rotateX(-20deg)}
+    16%		{transform: rotateY( 30deg) rotateX(  0deg)}
+    33%		{transform: rotateY(-30deg) rotateX( 30deg)}
+    50%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    66%		{transform: rotateY(-30deg) rotateX(-10deg)}
+    82%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    100%	{transform: rotateY(-30deg) rotateX(-20deg)}
+}
+@-o-keyframes tiltA {
+    0%		{transform: rotateY(-30deg) rotateX(-20deg)}
+    16%		{transform: rotateY( 30deg) rotateX(  0deg)}
+    33%		{transform: rotateY(-30deg) rotateX( 30deg)}
+    50%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    66%		{transform: rotateY(-30deg) rotateX(-10deg)}
+    82%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    100%	{transform: rotateY(-30deg) rotateX(-20deg)}
+}
+@keyframes tiltA {
+    0%		{transform: rotateY(-30deg) rotateX(-20deg)}
+    16%		{transform: rotateY( 30deg) rotateX(  0deg)}
+    33%		{transform: rotateY(-30deg) rotateX( 30deg)}
+    50%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    66%		{transform: rotateY(-30deg) rotateX(-10deg)}
+    82%		{transform: rotateY( 30deg) rotateX( 10deg)}
+    100%	{transform: rotateY(-30deg) rotateX(-20deg)}
+}
+
+@media screen and (min-width:1200px) {
+	.info {
+		font-size:1.3em;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.score {
+		text-align: left;
+		width:100%;
+		font-size: 1em;
+	}
+	.info {
+		font-size:0.6em;
+		width:100%;
+		text-align: left;
+		right:0;
+	}
+	.credits {
+		right:0;
+		text-align: left;
+		padding: 0 19px;
+		font-size: 0.6em;
+	}
+
+	.arrow-prev:after {
+	    right: 0;
+		left: auto;
+	}
+	.arrow-next:after {
+	    left: 0;
+		right: auto;
+	}	
+}
+@-webkit-keyframes grow {  
+	0% {transform: scale(0.7);}
+	100% {transform: scale(1);}
+}
+@-moz-keyframes grow {  
+	0% {transform: scale(0.7);}
+	100% {transform: scale(1);}
+}
+@-ms-keyframes grow {  
+	0% {transform: scale(0.7);}
+	100% {transform: scale(1);}
+}
+@-o-keyframes grow {  
+	0% {transform: scale(0.7);}
+	100% {transform: scale(1);}
+}
+@keyframes grow {  
+	0% {transform: scale(0.7);}
+	100% {transform: scale(1);}
+}

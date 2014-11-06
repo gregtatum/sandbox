@@ -1,0 +1,24 @@
+{
+  "name": "polar",
+  "version": "0.0.1",
+  "devDependencies": {
+    "browserify": "^5.10.0",
+    "gulp": "^3.8.7",
+    "gulp-jshint": "^1.8.4",
+    "gulp-react": "^1.0.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^0.7.3",
+    "gulp-sourcemaps": "^1.1.1",
+    "gulp-uglify": "^0.3.1",
+    "gulp-util": "^3.0.0",
+    "jshint-stylish": "^0.4.0",
+    "minifyify": "^4.0.4",
+    "reactify": "^0.14.0",
+    "soundcloud-badge": "0.0.0",
+    "vinyl-source-stream": "^0.1.1",
+    "watchify": "^1.0.2"
+  },
+  "dependencies": {
+    "underscore": "^1.7.0"
+  }
+}

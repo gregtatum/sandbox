@@ -1,0 +1,18 @@
+{
+	"globals": {
+		"THREE": true,
+		"_": true,
+		"poem": true,
+		"LevelLoader": true,
+		"webkitAudioContext": true,
+		"AudioContext": true
+	},
+	"node": true,
+	"devel": true,
+	"jquery": true,
+	"browser": true,
+	"debug": true, //allow debug statements
+	"eqeqeq": true, //must use ===
+	"latedef": true, //variables must be defined before use
+	"undef": true //all variables must be declared
+}
