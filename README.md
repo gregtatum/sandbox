@@ -1,4 +1,4 @@
-###Three.js and Browserify Enviroment
+##Three.js and Browserify Enviroment
 
 This is a basic starting point for a project using Three.js and Browserify. It includes a central project graph called a poem, and a level manifest to load in multiple poem configurations. There is a components directory for reusable modules.
 
@@ -7,7 +7,8 @@ This is a basic starting point for a project using Three.js and Browserify. It i
 The main graph for your project is the `Poem` object, as in programing poem (or sketch, demo, code art, etc.) It's passed in to each component and is available globally for ease in debugging.
 
  * `poem.scene` - Three.js scene
- * `poem.camera` - Three.js camera
+ * `poem.camera` - Custom camera object
+ * `poem.camera.object` - Three.js camera
  * `poem.clock` - Custom clock object
  * `poem.div` - div element that holds the canvas
  * `poem.ratio` - pixel ratio
@@ -15,11 +16,13 @@ The main graph for your project is the `Poem` object, as in programing poem (or 
  * `poem.off` - remove event listener
  * `poem.trigger` - trigger event listener
  
-Poem events: (`poem.on('update', callback);`)
+#### Poem events
 
  * update - dispatched on every requestAnimationFrame, the event holds timing info
  * resize - dispatched on window resize
  * destroy - dispatched when destroying the poem's level
+
+Usage: `poem.on('update', callback);`
 
 ### Levels
 
@@ -52,7 +55,7 @@ Create multiple levels by declaring them in the `/js/levels/` folder. Create reu
 		}
 	}
 
-So for example the `poem` object will have `poem.sphere` as a property. For some pseudocode explaining what that looks like in practice is something like this:
+So in this example the `poem` object will have `poem.sphere` as a property. For some pseudocode explaining what that looks like in practice is something like this:
 
 	poem.sphere = new Spheres( poem, properties );
 
@@ -65,7 +68,7 @@ To load a level using the level manifest:
 	var LevelLoader = require('./LevelLoader');
 	LevelLoader("demo");
 
-This will load the `levels/demo.js` file. It will then destroy the current poem if it exists, and initiate a new one.
+Loading a new level will load the `levels/demo.js` file. It will then destroy the current poem if it exists, and initiate a new one. `LevelLoader` is set as a global variable for debugging purposes.
 
 ### Components
 
