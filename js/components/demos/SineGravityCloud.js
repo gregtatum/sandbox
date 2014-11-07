@@ -98,11 +98,13 @@ PointCloud.prototype = {
 			this.positions[ v * 3 + 1 ] = Math.sin( x * Math.PI * 10 ) * this.radius
 			this.positions[ v * 3 + 2 ] = this.radius * -0.5;
 
-			this.velocity[ v * 3 + 0 ] = random.range( -0.01, 0.01 );
+			this.velocity[ v * 3 + 0 ] = random.range( -0.01, 0.01 ) * 0;
 			this.velocity[ v * 3 + 1 ] = random.range( -0.01, 0.01 ) * 10;
-			this.velocity[ v * 3 + 2 ] = random.range( -0.01, 0.01 );
+			this.velocity[ v * 3 + 2 ] = random.range( -0.01, 0.01 ) * 0;
 
-			hue = (v / this.count ) * 0.2 + 0.45;
+			// hue = (v / this.count ) * 0.2 + 0.45;
+			
+			hue = x * 0.3 + 0.65;
 
 			color.setHSL( hue, 1.0, 0.55 );
 
@@ -147,7 +149,7 @@ PointCloud.prototype = {
 			this.positions[ i * 3 + 0 ] += this.velocity[ i * 3 + 0 ];
 			this.positions[ i * 3 + 1 ] += this.velocity[ i * 3 + 1 ];
 			this.positions[ i * 3 + 2 ] += this.velocity[ i * 3 + 2 ];
-
+			
 		}
 		
 		this.geometry.attributes.position.needsUpdate = true;

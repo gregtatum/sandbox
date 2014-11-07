@@ -8,7 +8,9 @@ var Camera = function( poem, properties ) {
 		3,										// near frustum
 		1000									// far frustum
 	);
-	this.object.position.z = 500;
+	this.object.position.x = _.isNumber( properties.x ) ? properties.x : 0;
+	this.object.position.y = _.isNumber( properties.y ) ? properties.y : 0;
+	this.object.position.z = _.isNumber( properties.z ) ? properties.z : 500;
 	
 	this.poem.scene.add( this.object );
 	

@@ -1,3 +1,4 @@
 module.exports = {
-	demo : require("./demo")
+	spheresDemo : require("./spheresDemo"),
+	sineGravityCloud : require("./sineGravityCloud")
 };

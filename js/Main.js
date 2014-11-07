@@ -1,5 +1,8 @@
 var LevelLoader = require('./LevelLoader');
 
 $(function() {
-	LevelLoader("demo");
+	var hash = window.location.hash.substring(1);
+	
+	
+	LevelLoader(hash || "sineGravityCloud");
 });

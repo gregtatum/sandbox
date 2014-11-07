@@ -15,7 +15,7 @@ var Poem = function( level ) {
 	this.requestedFrame = undefined;
 
 	this.clock = new Clock();
-	this.camera = new Camera( this );
+	this.camera = new Camera( this, level.config.camera );
 	this.scene.fog = new THREE.Fog( 0x222222, this.camera.object.position.z / 2, this.camera.object.position.z * 2 );
 	
 	if(!_renderer) {
