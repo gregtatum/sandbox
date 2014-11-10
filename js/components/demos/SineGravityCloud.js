@@ -4,7 +4,7 @@ var random		= require('../../utils/random')
   , RSVP		= require('rsvp')
 ;
 
-var PointCloud = function(poem, properties) {
+var SineGravityCloud = function(poem, properties) {
 	
 	this.poem = poem;
 	
@@ -23,9 +23,9 @@ var PointCloud = function(poem, properties) {
 	
 	
 	RSVP.all([
-		loadTexture( "assets/images/pointcloud.png", this, "texture" ),
-		loadText( "assets/shaders/pointcloud.vert", this, "vertexShader" ),
-		loadText( "assets/shaders/pointcloud.frag", this, "fragmentShader" )
+		loadTexture( "assets/images/sinegravitycloud.png", this, "texture" ),
+		loadText( "assets/shaders/sinegravitycloud.vert", this, "vertexShader" ),
+		loadText( "assets/shaders/sinegravitycloud.frag", this, "fragmentShader" )
 	])
 	.then(
 		this.start.bind(this),
@@ -33,9 +33,9 @@ var PointCloud = function(poem, properties) {
 	);
 };
 
-module.exports = PointCloud;
+module.exports = SineGravityCloud;
 
-PointCloud.prototype = {
+SineGravityCloud.prototype = {
 	
 	start : function() {
 		
@@ -129,7 +129,7 @@ PointCloud.prototype = {
 	},
 	
 	error : function( error ) {
-		throw new Error("Could not load assets for the PointCloud", error);
+		throw new Error("Could not load assets for the SineGravityCloud", error);
 	},
 	
 	update : function(e) {

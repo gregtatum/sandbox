@@ -50,7 +50,11 @@ a:hover {
     color: #007BE9;
     text-decoration: none;
 }
-
+.level-select {
+	position: absolute;
+	bottom: 1%;
+	left: 1%;
+}
 .info {
 	padding: 0 2em;
 	text-align:center;

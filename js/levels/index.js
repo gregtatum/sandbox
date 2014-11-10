@@ -1,4 +1,6 @@
 module.exports = {
 	spheresDemo : require("./spheresDemo"),
-	sineGravityCloud : require("./sineGravityCloud")
+	sineGravityCloud : require("./sineGravityCloud"),
+	uniformPositionalMatrices : require("./uniformPositionalMatrices"),
+	texturePositionalMatrices : require("./texturePositionalMatrices")
 };

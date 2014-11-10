@@ -18,9 +18,7 @@ var Poem = function( level ) {
 	this.camera = new Camera( this, level.config.camera );
 	this.scene.fog = new THREE.Fog( 0x222222, this.camera.object.position.z / 2, this.camera.object.position.z * 2 );
 	
-	if(!_renderer) {
-		this.addRenderer();
-	}
+	this.addRenderer();
 	
 	this.parseLevel( level );
 	
@@ -46,9 +44,13 @@ Poem.prototype = {
 	},
 	
 	addRenderer : function() {
-		_renderer = new THREE.WebGLRenderer({
-			alpha : true
-		});
+		if(!_renderer) {
+		
+			_renderer = new THREE.WebGLRenderer({
+				alpha : true
+			});
+			
+		}
 		_renderer.setSize( window.innerWidth, window.innerHeight );
 		this.div.appendChild( _renderer.domElement );
 		this.canvas = _renderer.domElement;
