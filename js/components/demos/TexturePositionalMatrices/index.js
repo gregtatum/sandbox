@@ -2,9 +2,9 @@ var random		= require('../../../utils/random')
   , loadTexture	= require('../../../utils/loadTexture')
   , loadText	= require('../../../utils/loadText')
   , RSVP		= require('rsvp')
-  , perlin		= require('perlin')
+  , simplex2	= require('../../../utils/simplex2')
 ;
-
+	
 var TexturePositionalMatrices = function(poem, properties) {
 
 	window.t = this;
@@ -20,7 +20,7 @@ var TexturePositionalMatrices = function(poem, properties) {
 	this.vertexShader = null;
 	this.fragmentShader = null;
 	
-	this.count = 400;
+	this.count = 50000;
 	this.radius = 400;
 	this.pointSize = 14;
 	
@@ -63,6 +63,7 @@ TexturePositionalMatrices.prototype = {
 		for( i = 0; i < this.count; i++ ) {
 			
 			hue = (this.positions[ i * 3 + 0 ] / this.radius * 0.3 + 0.65) % 1;
+			hue = random.range( 0, 1 );
 
 			color.setHSL( hue, 1.0, 0.55 );
 			
@@ -74,9 +75,9 @@ TexturePositionalMatrices.prototype = {
 				this.sizes[ offset1 ] = this.pointSize;
 				this.transformIndices[ offset1 ] = i;
 							
-				this.positions[ offset3 + 0 ] = vertices[j].x * 20;
-				this.positions[ offset3 + 1 ] = vertices[j].y * 20;
-				this.positions[ offset3 + 2 ] = vertices[j].z * 20;
+				this.positions[ offset3 + 0 ] = vertices[j].x * 4;
+				this.positions[ offset3 + 1 ] = vertices[j].y * 4;
+				this.positions[ offset3 + 2 ] = vertices[j].z * 4;
 
 				this.colors[ offset3 + 0 ] = color.r;
 				this.colors[ offset3 + 1 ] = color.g;
@@ -97,8 +98,6 @@ TexturePositionalMatrices.prototype = {
 		var s;
 		
 		for( i = 0; i < this.count ; i++ ) {
-			
-			
 			
 			s = random.range( 0.5, 2 );
 			
@@ -210,20 +209,35 @@ TexturePositionalMatrices.prototype = {
 	update : function() {
 		
 		var translation = new THREE.Matrix4();
+		var euler = new THREE.Euler();
 		
 		return function(e) {
 
 			this.uniforms.time.value = e.time;
+			
+			var x,y;
 		
 			for( i = 0; i < this.count ; i++ ) {
 				
+				x = e.time / 1000;
+				y = i * 1000;
+				
 				translation.makeTranslation(
-					random.range( -1, 1 ),
-					random.range( -1, 1 ),
-					random.range( -1, 1 )
-				)
+					simplex2.range( x, y, -1, 1 ),
+					simplex2.range( x, y + 333, -1, 1 ),
+					simplex2.range( x, y + 666, -1, 1 )
+				);
 				
 				this.matrices[i].multiplyMatrices( translation, this.matrices[i] );
+				
+				// euler.set(
+				// 	random.range( 0, 2 * Math.PI ),
+				// 	random.range( 0, 2 * Math.PI ),
+				// 	random.range( 0, 2 * Math.PI )
+				// );
+				//
+				// rotateM.makeRotationFromEuler( euler );
+				
 				
 				this.matrices[i].flattenToArrayOffset( this.matricesData, i * 16 );
 			}
