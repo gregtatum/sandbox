@@ -13,6 +13,7 @@
     "gulp-util": "^3.0.0",
     "jshint-stylish": "^0.4.0",
     "minifyify": "^4.0.4",
+    "perlin": "^1.0.0",
     "reactify": "^0.14.0",
     "rsvp": "^3.0.14",
     "soundcloud-badge": "0.0.0",

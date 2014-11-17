@@ -2,10 +2,13 @@ var random		= require('../../../utils/random')
   , loadTexture	= require('../../../utils/loadTexture')
   , loadText	= require('../../../utils/loadText')
   , RSVP		= require('rsvp')
+  , perlin		= require('perlin')
 ;
 
 var TexturePositionalMatrices = function(poem, properties) {
 
+	window.t = this;
+	
 	this.poem = poem;
 	
 	this.object = null;
@@ -17,9 +20,9 @@ var TexturePositionalMatrices = function(poem, properties) {
 	this.vertexShader = null;
 	this.fragmentShader = null;
 	
-	this.count = 100000;
-	this.radius = 200;
-	this.pointSize = 7;
+	this.count = 400;
+	this.radius = 400;
+	this.pointSize = 14;
 	
 	RSVP.all([
 		loadTexture( "assets/images/sinegravitycloud.png", this, "texture" ),
@@ -37,39 +40,6 @@ module.exports = TexturePositionalMatrices;
 TexturePositionalMatrices.prototype = {
 	
 	start : function() {
-		
-		var transformCount = 50;
-		
-		
-		this.attributes = {
-
-			size:       	{ type: 'f', value: null },
-			customColor:	{ type: 'c', value: null },
-			transformIndex:	{ type: 'f', value: null }
-
-		};
-
-		this.uniforms = {
-
-			color:     			{ type: "c", value: new THREE.Color( 0xffffff ) },
-			texture:   			{ type: "t", value: this.texture },
-			time:      			{ type: 'f', value: Date.now() },
-			transformMatrix:	{ type: 'm4v', value: [] }
-
-		};
-
-		this.material = new THREE.ShaderMaterial( {
-
-			uniforms:       this.uniforms,
-			attributes:     this.attributes,
-			vertexShader:   "#define TRANSFORM_MATRIX_COUNT " + transformCount + "\n" + this.vertexShader,
-			fragmentShader: this.fragmentShader,
-
-			blending:       THREE.AdditiveBlending,
-			depthTest:      false,
-			transparent:    true
-
-		});
 
 		var vec3FloatLength = 3;
 		var pointsLength = 8;
@@ -81,67 +51,132 @@ TexturePositionalMatrices.prototype = {
 		this.velocity = new Float32Array( this.count * vec3FloatLength );
 		this.colors = new Float32Array( this.count * boxGeometryLength );
 		this.sizes = new Float32Array( this.count * pointsLength );
-		this.transformIndices = new Float32Array( this.count * pointsLength )
+		this.transformIndices = new Float32Array( this.count * pointsLength );
 
 		var color = new THREE.Color(0x000000);
 		var hue;
-		
-		var theta, phi;
 		
 		var vertices = new THREE.BoxGeometry( 1, 1, 1 ).vertices;
 
 		var x, y, z, i, j;
 
 		for( i = 0; i < this.count; i++ ) {
-
-			theta = random.rangeLow( 0.1, Math.PI );
-			phi = random.rangeLow( Math.PI * 0.3, Math.PI );
-			
-			x = Math.sin( theta ) * Math.cos( phi ) * this.radius * theta;
-			y = Math.sin( theta ) * Math.sin( phi ) * this.radius;
-			z = Math.cos( theta ) * this.radius ;
 			
 			hue = (this.positions[ i * 3 + 0 ] / this.radius * 0.3 + 0.65) % 1;
 
 			color.setHSL( hue, 1.0, 0.55 );
 			
-			var transformIndex = random.rangeInt( 0, transformCount );
-			
 			for( j=0; j < vertices.length ; j++ ) {
 				
 				var offset3 = (i * boxGeometryLength) + (j * vec3FloatLength);
-				var offset1 = (i * boxGeometryLength + j);
+				var offset1 = (i * pointsLength + j);
 
 				this.sizes[ offset1 ] = this.pointSize;
-				this.transformIndices[ offset1 ] = transformIndex;
+				this.transformIndices[ offset1 ] = i;
 							
-				this.positions[ offset3 + 0 ] = vertices[j].x * 3 + x;
-				this.positions[ offset3 + 1 ] = vertices[j].y * 3 + y;
-				this.positions[ offset3 + 2 ] = vertices[j].z * 3 + z;
+				this.positions[ offset3 + 0 ] = vertices[j].x * 20;
+				this.positions[ offset3 + 1 ] = vertices[j].y * 20;
+				this.positions[ offset3 + 2 ] = vertices[j].z * 20;
 
 				this.colors[ offset3 + 0 ] = color.r;
 				this.colors[ offset3 + 1 ] = color.g;
 				this.colors[ offset3 + 2 ] = color.b;
 
 			}
-						
-			
 		}
+
+		this.matricesTextureSize = this.calculateSquaredTextureSize( this.count * 16 ); //16 floats per matrix
 		
-		for( i = 0; i < transformCount ; i++ ) {
+		this.matrices = []
+		this.matricesData = new Float32Array( this.matricesTextureSize * this.matricesTextureSize * 4 )
+		
+		var rotateM = new THREE.Matrix4();
+		var translateM = new THREE.Matrix4();
+		var scaleM = new THREE.Matrix4();
+		var euler = new THREE.Euler()
+		var s;
+		
+		for( i = 0; i < this.count ; i++ ) {
 			
-			this.uniforms.transformMatrix.value[i] = new THREE.Matrix4().makeTranslation(
+			
+			
+			s = random.range( 0.5, 2 );
+			
+			scaleM.makeScale( s, s, s );
+			
+			translateM.makeTranslation(
 				random.range( -this.radius, this.radius ) * 0.5,
 				random.range( -this.radius, this.radius ) * 0.5,
 				random.range( -this.radius, this.radius ) * 0.5
 			);
 			
-		}
+			euler.set(
+				random.range( 0, 2 * Math.PI ),
+				random.range( 0, 2 * Math.PI ),
+				random.range( 0, 2 * Math.PI )
+			);
 
-		this.geometry.addAttribute( 'position', new THREE.BufferAttribute( this.positions, 3 ) );
-		this.geometry.addAttribute( 'customColor', new THREE.BufferAttribute( this.colors, 3 ) );
-		this.geometry.addAttribute( 'size', new THREE.BufferAttribute( this.sizes, 1 ) );
-		this.geometry.addAttribute( 'transformIndex', new THREE.BufferAttribute( this.transformIndices, 1 ) );
+			rotateM.makeRotationFromEuler( euler );
+			
+			this.matrices[i] = new THREE.Matrix4()
+				.multiply( translateM )
+				.multiply( rotateM )
+				.multiply( scaleM );
+			
+			// this.matrices[i] = new THREE.Matrix4();
+			
+			this.matrices[i].flattenToArrayOffset( this.matricesData, i * 16 );
+			
+		}
+		
+		this.matricesTexture = new THREE.DataTexture(
+			this.matricesData,
+			this.matricesTextureSize,
+			this.matricesTextureSize,
+			THREE.RGBAFormat,
+			THREE.FloatType
+		);
+		this.matricesTexture.minFilter = THREE.NearestFilter;
+		this.matricesTexture.magFilter = THREE.NearestFilter;
+		this.matricesTexture.generateMipmaps = false;
+		this.matricesTexture.flipY = false;
+		this.matricesTexture.needsUpdate = true;
+		
+		this.attributes = {
+
+			size:       	{ type: 'f', value: null },
+			customColor:	{ type: 'c', value: null },
+			transformIndex:	{ type: 'f', value: null }
+
+		};
+
+		this.uniforms = {
+
+			color:     				{ type: "c", value: new THREE.Color( 0xffffff ) },
+			texture:   				{ type: "t", value: this.texture },
+			matricesTexture:		{ type: "t", value: this.matricesTexture },
+			time:      				{ type: 'f', value: Date.now() },
+			matricesTextureSize:	{ type: 'f', value: this.matricesTextureSize }
+
+		};
+
+		this.material = new THREE.ShaderMaterial( {
+
+			uniforms:       this.uniforms,
+			attributes:     this.attributes,
+			vertexShader:   this.vertexShader,
+			fragmentShader: this.fragmentShader,
+
+			blending:       THREE.AdditiveBlending,
+			depthTest:      false,
+			transparent:    true
+
+		});
+		
+		this.geometry.addAttribute( 'position',			new THREE.BufferAttribute( this.positions, 3 ) );
+		this.geometry.addAttribute( 'customColor',		new THREE.BufferAttribute( this.colors, 3 ) );
+		this.geometry.addAttribute( 'size',				new THREE.BufferAttribute( this.sizes, 1 ) );
+		this.geometry.addAttribute( 'transformIndex',	new THREE.BufferAttribute( this.transformIndices, 1 ) );
 
 		this.object = new THREE.PointCloud( this.geometry, this.material );
 		this.object.position.y -= this.radius * 0.2;
@@ -153,14 +188,83 @@ TexturePositionalMatrices.prototype = {
 		
 	},
 	
+	calculateSquaredTextureSize : function( count ) {
+		
+		var size = 1;
+		var i = 0;
+		
+		while( size * size < (count / 4) ) {
+			
+			i++;
+			size = Math.pow( 2, i );
+			
+		}
+		
+		return size;
+	},
+	
 	error : function( error ) {
 		throw new Error("Could not load assets for the TexturePositionalMatrices", error);
 	},
 	
-	update : function(e) {
-
-		this.uniforms.time.value = e.time;
+	update : function() {
 		
-	}
+		var translation = new THREE.Matrix4();
+		
+		return function(e) {
+
+			this.uniforms.time.value = e.time;
+		
+			for( i = 0; i < this.count ; i++ ) {
+				
+				translation.makeTranslation(
+					random.range( -1, 1 ),
+					random.range( -1, 1 ),
+					random.range( -1, 1 )
+				)
+				
+				this.matrices[i].multiplyMatrices( translation, this.matrices[i] );
+				
+				this.matrices[i].flattenToArrayOffset( this.matricesData, i * 16 );
+			}
+			
+			this.matricesTexture.needsUpdate = true;
+		}
+	}()
 	
 };
+
+window.consoleMatrixElements = function( els, decimalPlaces ) {
+ 
+	var i, j, el, results;
+ 
+	results = [];
+	j = 0;
+ 
+	for( i=0; i < els.length; i++ ) {
+		
+		if( j === 0 ) {
+			results.push([]);
+		}
+ 
+		el = els[i];
+ 
+		if( typeof decimalPlaces === "number" ) {
+ 
+			el = Math.round( Math.pow(10, decimalPlaces) * el ) / Math.pow(10, decimalPlaces);
+ 
+		}
+ 
+		results[Math.floor(i / 4) % 4].push( el );
+ 
+		j++;
+		j %= 4;
+		
+		if( i % 16 === 15 ) {
+			console.table( results );
+			results = [];
+		}
+ 
+	}
+ 
+}
