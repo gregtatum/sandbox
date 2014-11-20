@@ -7,6 +7,8 @@ var random		= require('../../../utils/random')
 	
 var TexturePositionalMatrices = function(poem, properties) {
 
+	window.t = this;
+	
 	this.poem = poem;
 	
 	this.object = null;

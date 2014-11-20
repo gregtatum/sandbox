@@ -10,6 +10,7 @@ var Poem = function( level ) {
 	this.ratio = window.devicePixelRatio >= 1 ? window.devicePixelRatio : 1;
 	
 	this.div = document.getElementById( 'container' );
+	this.$div = $(this.div);
 	this.canvas = null;
 	this.scene = new THREE.Scene();
 	this.requestedFrame = undefined;

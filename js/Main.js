@@ -16,6 +16,8 @@ $(function() {
 	
 	var levelToLoad = _.contains( levels, hash ) ? hash : _.first( levels );
 	
+	window.location.hash = levelToLoad;
+	
 	$('#LevelSelect')
 		.append(
 		

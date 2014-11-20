@@ -35,13 +35,12 @@ p {
 }
 .credits {
     position: absolute;
-    bottom: 0.5em;
-    left: 0;
-	padding: 0 1.6em;
+    top: 0.5em;
+    right: 0.5em;
     font-size: 0.7em;
     color: #777;
-    text-align: left;
-    width: 100%;
+	text-align: right;
+	line-height: 1.6;
 }
 a {
     color: #4A9DE7;
@@ -230,6 +229,13 @@ a:hover {
 	     -o-animation:tiltA 10s infinite ease-in-out;
 	        animation:tiltA 10s infinite ease-in-out;
 }
+.nasa-logo {
+	position:absolute;
+	bottom: 1em;
+	left: 1em;
+	width: 10%;
+	height: auto;
+}
 @-webkit-keyframes tiltA {
     0%		{transform: rotateY(-30deg) rotateX(-20deg)}
     16%		{transform: rotateY( 30deg) rotateX(  0deg)}
@@ -291,14 +297,15 @@ a:hover {
 	.info {
 		font-size:0.6em;
 		width:100%;
-		text-align: left;
+		text-align: center;
 		right:0;
 	}
 	.credits {
 		right:0;
-		text-align: left;
-		padding: 0 19px;
-		font-size: 0.6em;
+		text-align:center;
+	}
+	.wide {
+		display:none;
 	}
 
 	.arrow-prev:after {

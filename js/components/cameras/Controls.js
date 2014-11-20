@@ -7,6 +7,8 @@ var Controls = function( poem, properties ) {
 
 	this.controls = new OrbitControls( this.poem.camera.object, this.poem.canvas );
 	
+	_.extend( this.controls, properties );
+	
 	this.poem.on( 'update', this.controls.update.bind( this.controls ) );
 	
 };
