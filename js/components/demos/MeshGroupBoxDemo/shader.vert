@@ -1,24 +1,21 @@
 attribute float size;
-attribute vec3 customColor;
-attribute float transformIndex;
+attribute float transformMatrixIndex;
 
 uniform float time;
 uniform sampler2D texture;
 uniform sampler2D matricesTexture;
-uniform float matricesTextureSize;
-
-varying vec3 vColor;
+uniform float matricesTextureWidth;
 
 vec3 wave;
 
 mat4 getMatrixFromTexture( const in float i ) {
 
 	float j = i * 4.0;
-	float x = mod( j, float( matricesTextureSize ) );
-	float y = floor( j / float( matricesTextureSize ) );
+	float x = mod( j, float( matricesTextureWidth ) );
+	float y = floor( j / float( matricesTextureWidth ) );
 
-	float dx = 1.0 / float( matricesTextureSize );
-	float dy = 1.0 / float( matricesTextureSize );
+	float dx = 1.0 / float( matricesTextureWidth );
+	float dy = 1.0 / float( matricesTextureWidth );
 
 	y = dy * ( y + 0.5 );
 
@@ -29,17 +26,22 @@ mat4 getMatrixFromTexture( const in float i ) {
 
 	return mat4( v1, v2, v3, v4 );
 
+	// Debug:
+	// return mat4(
+	// 	1.0, 0.0, 0.0, 0.0,
+	// 	0.0, 1.0, 0.0, 0.0,
+	// 	0.0, 0.0, 1.0, 0.0,
+	// 	0.0, 0.0, 0.0, 1.0
+	// );
 }
 
 void main() {
 
-	vColor = customColor;
-	
-	mat4 transformMatrix = getMatrixFromTexture( transformIndex );
+	mat4 transformMatrix = getMatrixFromTexture( transformMatrixIndex );
 	
 	vec4 mvPosition = modelViewMatrix * transformMatrix * vec4( position, 1.0 );
 
-	gl_PointSize = size * ( 300.0 / length( mvPosition.xyz ) );
+	gl_PointSize =  300.0 / length( mvPosition.xyz );
 
 	gl_Position = projectionMatrix * mvPosition;
 
