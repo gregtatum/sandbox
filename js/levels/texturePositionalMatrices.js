@@ -9,10 +9,10 @@ module.exports = {
 			object: require("../components/cameras/Controls"),
 		},
 		texturePositionalMatrices : {
-			object: require("../components/demos/texturePositionalMatrices"),
+			object: require("../demos/texturePositionalMatrices"),
 		},
 		grid : {
-			object: require("../components/demos/Grid"),
+			object: require("../demos/Grid"),
 		},
 		stats : {
 			object: require("../components/utils/Stats")

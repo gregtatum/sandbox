@@ -1,4 +1,4 @@
-var random = require('../../utils/random');
+var random = require('../utils/random');
 
 var Grid = function( poem, properties ) {
 	

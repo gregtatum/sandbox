@@ -1,5 +1,5 @@
-var random = require('../../utils/random')
-  , loadTexture	= require('../../utils/loadTexture')
+var random = require('../utils/random')
+  , loadTexture	= require('../utils/loadTexture')
   , RSVP = require('rsvp');
 
 var Earth = function(poem, properties) {

@@ -6,14 +6,14 @@ module.exports = {
 	},
 	objects : {
 		demo : {
-			object: require("../components/demos/MeshGroupBoxDemo"),
+			object: require("../demos/MeshGroupBoxDemo"),
 			properties: {}
 		},
 		controls : {
 			object: require("../components/cameras/Controls"),
 		},
 		grid : {
-			object: require("../components/demos/Grid"),
+			object: require("../demos/Grid"),
 		},
 		stats : {
 			object: require("../components/utils/Stats")

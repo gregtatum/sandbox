@@ -9,10 +9,10 @@ module.exports = {
 			object: require("../components/cameras/Controls"),
 		},
 		pointcloud : {
-			object: require("../components/demos/SineGravityCloud"),
+			object: require("../demos/SineGravityCloud"),
 		},
 		grid : {
-			object: require("../components/demos/Grid"),
+			object: require("../demos/Grid"),
 		},
 		// stats : {
 		// 	object: require("../components/utils/Stats")

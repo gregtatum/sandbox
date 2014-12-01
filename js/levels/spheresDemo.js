@@ -6,7 +6,7 @@ module.exports = {
 	},
 	objects : {
 		sphere : {
-			object: require("../components/demos/Spheres"),
+			object: require("../demos/Spheres"),
 			properties: {
 				count : 50,
 				dispersion : 120,
@@ -17,7 +17,7 @@ module.exports = {
 			object: require("../components/cameras/Controls"),
 		},
 		grid : {
-			object: require("../components/demos/Grid"),
+			object: require("../demos/Grid"),
 		},
 		stats : {
 			object: require("../components/utils/Stats")

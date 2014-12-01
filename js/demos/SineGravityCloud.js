@@ -1,6 +1,6 @@
-var random		= require('../../utils/random')
-  , loadTexture	= require('../../utils/loadTexture')
-  , loadText	= require('../../utils/loadText')
+var random		= require('../utils/random')
+  , loadTexture	= require('../utils/loadTexture')
+  , loadText	= require('../utils/loadText')
   , RSVP		= require('rsvp')
 ;
 

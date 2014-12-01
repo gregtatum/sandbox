@@ -7,7 +7,7 @@ module.exports = {
 	},
 	objects : {
 		sphere : {
-			object: require("../components/demos/Earth"),
+			object: require("../demos/Earth"),
 			properties: {}
 		},
 		controls : {

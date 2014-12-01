@@ -1,5 +1,5 @@
 var MeshGroup = require('./MeshGroup')
-  , random = require('../../../utils/random')
+  , random = require('../../utils/random')
   , twoπ = Math.PI * 2;
 
 var MeshGroupBoxDemo = function( poem, properties ) {

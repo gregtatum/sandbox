@@ -1,8 +1,8 @@
-var random		= require('../../../utils/random')
-  , loadTexture	= require('../../../utils/loadTexture')
-  , loadText	= require('../../../utils/loadText')
+var random		= require('../../utils/random')
+  , loadTexture	= require('../../utils/loadTexture')
+  , loadText	= require('../../utils/loadText')
   , RSVP		= require('rsvp')
-  , simplex2	= require('../../../utils/simplex2')
+  , simplex2	= require('../../utils/simplex2')
 ;
 	
 var TexturePositionalMatrices = function(poem, properties) {
@@ -24,8 +24,8 @@ var TexturePositionalMatrices = function(poem, properties) {
 	
 	RSVP.all([
 		loadTexture( "assets/images/sinegravitycloud.png", this, "texture" ),
-		loadText( "js/components/demos/TexturePositionalMatrices/shader.vert", this, "vertexShader" ),
-		loadText( "js/components/demos/TexturePositionalMatrices/shader.frag", this, "fragmentShader" )
+		loadText( "js/demos/TexturePositionalMatrices/shader.vert", this, "vertexShader" ),
+		loadText( "js/demos/TexturePositionalMatrices/shader.frag", this, "fragmentShader" )
 	])
 	.then(
 		this.start.bind(this),

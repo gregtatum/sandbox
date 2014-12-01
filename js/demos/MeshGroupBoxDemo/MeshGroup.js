@@ -1,6 +1,6 @@
-var calculateSquaredTextureWidth = require('../../../utils/calculateSquaredTextureWidth')
-  , loadTexture	= require('../../../utils/loadTexture')
-  , loadText	= require('../../../utils/loadText')
+var calculateSquaredTextureWidth = require('../../utils/calculateSquaredTextureWidth')
+  , loadTexture	= require('../../utils/loadTexture')
+  , loadText	= require('../../utils/loadText')
   , RSVP = require('rsvp');
 
 var MeshGroup = function( poem ) {
@@ -21,8 +21,8 @@ var MeshGroup = function( poem ) {
 	
 	this.loaded = RSVP.all([
 		loadTexture( "assets/images/sinegravitycloud.png", this, "texture" ),
-		loadText( "js/components/demos/MeshGroupBoxDemo/shader.vert", this, "vertexShader" ),
-		loadText( "js/components/demos/MeshGroupBoxDemo/shader.frag", this, "fragmentShader" )
+		loadText( "js/demos/MeshGroupBoxDemo/shader.vert", this, "vertexShader" ),
+		loadText( "js/demos/MeshGroupBoxDemo/shader.frag", this, "fragmentShader" )
 	])
 	.catch( function( error ) {
 		throw new Error("Could not load assets for the MeshGroup", error);
