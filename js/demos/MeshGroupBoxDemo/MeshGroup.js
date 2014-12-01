@@ -79,7 +79,7 @@ MeshGroup.prototype = _.extend( Object.create( THREE.Object3D.prototype ), {
 		}
 		
 		this.bufferGeometry.fromGeometry( mergedGeometry );
-				
+		
 	},
 	
 	generateTransformMatrixIndices : function( object3Ds ) {
@@ -139,7 +139,7 @@ MeshGroup.prototype = _.extend( Object.create( THREE.Object3D.prototype ), {
 		
 		this.attributes = {
 			
-			transformIndex:	{ type: 'f', value: null }
+			transformMatrixIndex:	{ type: 'f', value: null }
 			
 		};
 		
