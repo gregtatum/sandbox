@@ -1,12 +1,12 @@
 var Camera = function( poem, properties ) {
 	
 	this.poem = poem;
-			
+		
 	this.object = new THREE.PerspectiveCamera(
 		properties.fov || 50,					// fov
 		window.innerWidth / window.innerHeight,	// aspect ratio
 		properties.near || 3,					// near frustum
-		properties.far || 1000					// far frustum
+		properties.far || 10000					// far frustum
 	);
 	
 	this.object.position.x = _.isNumber( properties.x ) ? properties.x : 0;

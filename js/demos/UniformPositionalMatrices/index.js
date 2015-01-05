@@ -77,7 +77,7 @@ UniformPositionalMatrices.prototype = {
 		this.velocity = new Float32Array( this.count * 3 );
 		this.colors = new Float32Array( this.count * 3 );
 		this.sizes = new Float32Array( this.count );
-		this.transformIndices = new Float32Array( this.count )
+		this.transformIndices = new Float32Array( this.count );
 
 		var color = new THREE.Color(0x000000);
 		var hue;

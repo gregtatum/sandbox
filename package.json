@@ -1,24 +1,43 @@
 {
-  "name": "polar",
+  "name": "sandbox",
   "version": "0.0.1",
+  "gulpfile": {
+    "transforms": [
+      "glslify"
+    ],
+    "paths": {
+      "entry": "./js",
+      "js": [
+        "js/**/*.js",
+        "gulpfile.js"
+      ],
+      "jsWatch": [
+        "js/**/*",
+        "gulpfile.js"
+      ],
+      "hint": [
+        "assets/build/bundle.js",
+        "gulpfile.js"
+      ],
+      "build": "./assets/build/",
+      "bundleName": "bundle.js",
+      "minName": "bundle.min.js",
+      "mapName": "bundle.min.map",
+      "svg": "./assets/svg/*.svg",
+      "svgBuild": "./assets/fonts/icons",
+      "svgTemplates": "./assets/svg/templates/"
+    }
+  },
   "devDependencies": {
-    "browserify": "^5.10.0",
+    "glsl-hsv2rgb": "^1.0.0",
+    "glsl-noise": "0.0.0",
+    "glslify": "^1.6.0",
     "gulp": "^3.8.7",
-    "gulp-jshint": "^1.8.4",
-    "gulp-react": "^1.0.0",
-    "gulp-rename": "^1.2.0",
-    "gulp-sass": "^0.7.3",
-    "gulp-sourcemaps": "^1.1.1",
-    "gulp-uglify": "^0.3.1",
-    "gulp-util": "^3.0.0",
-    "jshint-stylish": "^0.4.0",
-    "minifyify": "^4.0.4",
+    "gulpfile": "git://github.com/TatumCreative/gulpfile.git#v1.2.1",
     "perlin-simplex": "0.0.2",
-    "reactify": "^0.14.0",
     "rsvp": "^3.0.14",
     "soundcloud-badge": "0.0.0",
-    "vinyl-source-stream": "^0.1.1",
-    "watchify": "^1.0.2"
+    "three-glslify": "^2.0.1"
   },
   "dependencies": {
     "underscore": "^1.7.0"

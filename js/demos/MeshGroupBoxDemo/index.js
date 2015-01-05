@@ -28,7 +28,7 @@ MeshGroupBoxDemo.prototype = {
 		
 		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 		var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-		var cube;
+		var box;
 		
 		var i = this.count; while (i--) {
 			
@@ -60,7 +60,7 @@ MeshGroupBoxDemo.prototype = {
 			
 			box.scale.multiplyScalar( random.range( 1, 2) );
 			
-			box.updateMatrix()
+			box.updateMatrix();
 			
 			boxes.push( box );
 			

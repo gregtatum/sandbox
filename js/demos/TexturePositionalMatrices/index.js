@@ -86,13 +86,13 @@ TexturePositionalMatrices.prototype = {
 
 		this.matricesTextureSize = this.calculateSquaredTextureSize( this.count * 16 ); //16 floats per matrix
 		
-		this.matrices = []
-		this.matricesData = new Float32Array( this.matricesTextureSize * this.matricesTextureSize * 4 )
+		this.matrices = [];
+		this.matricesData = new Float32Array( this.matricesTextureSize * this.matricesTextureSize * 4 );
 		
 		var rotateM = new THREE.Matrix4();
 		var translateM = new THREE.Matrix4();
 		var scaleM = new THREE.Matrix4();
-		var euler = new THREE.Euler()
+		var euler = new THREE.Euler();
 		var s;
 		
 		for( i = 0; i < this.count ; i++ ) {
@@ -215,7 +215,7 @@ TexturePositionalMatrices.prototype = {
 			
 			var x,y;
 		
-			for( i = 0; i < this.count ; i++ ) {
+			for( var i = 0; i < this.count ; i++ ) {
 				
 				x = e.time / 1000;
 				y = i * 1000;
@@ -241,7 +241,7 @@ TexturePositionalMatrices.prototype = {
 			}
 			
 			this.matricesTexture.needsUpdate = true;
-		}
+		};
 	}()
 	
 };
@@ -279,4 +279,4 @@ window.consoleMatrixElements = function( els, decimalPlaces ) {
  
 	}
  
-}
+};

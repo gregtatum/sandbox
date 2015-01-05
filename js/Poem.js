@@ -2,8 +2,10 @@ var Stats = require('./vendor/Stats');
 var EventDispatcher = require('./utils/EventDispatcher');
 var Clock = require('./utils/Clock');
 var Camera = require('./components/cameras/Camera');
-
+var StereoEffect = require('./vendor/StereoEffect');
+var DeviceOrientationControls = require('./vendor/DeviceOrientationControls');
 var _renderer;
+var _webGLRenderer;
 
 var Poem = function( level ) {
 
@@ -19,7 +21,7 @@ var Poem = function( level ) {
 	this.camera = new Camera( this, _.isObject( level.config.camera ) ? level.config.camera : {} );
 	this.scene.fog = new THREE.Fog( 0x222222, this.camera.object.position.z / 2, this.camera.object.position.z * 2 );
 	
-	this.addRenderer();
+	this.addRenderer( level.config.vr );
 	
 	this.parseLevel( level );
 	
@@ -44,17 +46,35 @@ Poem.prototype = {
 		}, this);
 	},
 	
-	addRenderer : function() {
+	addRenderer : function( useVR ) {
+				
 		if(!_renderer) {
-		
-			_renderer = new THREE.WebGLRenderer({
+			_webGLRenderer = new THREE.WebGLRenderer({
 				alpha : true
 			});
-			
 		}
+
+		if( useVR ) {
+			_renderer = new StereoEffect( _webGLRenderer );
+			_renderer.separation = 10;
+			this.hideUI();
+		} else {
+			_renderer = _webGLRenderer;
+			this.showUI();
+		}
+		
 		_renderer.setSize( window.innerWidth, window.innerHeight );
-		this.div.appendChild( _renderer.domElement );
-		this.canvas = _renderer.domElement;
+		this.div.appendChild( _webGLRenderer.domElement );
+		this.canvas = _webGLRenderer.domElement;
+	},
+	
+	hideUI : function() {
+		$('.info, .credits, .level-select').hide();
+	},
+	
+	showUI : function() {
+
+		$('.info, .credits, .level-select').show();
 	},
 	
 	addStats : function() {
@@ -63,6 +83,7 @@ Poem.prototype = {
 	
 	addEventListeners : function() {
 		$(window).on('resize', this.resizeHandler.bind(this));
+		$(window).on('deviceorientation', this.resizeHandler.bind(this));
 	},
 	
 	resizeHandler : function() {

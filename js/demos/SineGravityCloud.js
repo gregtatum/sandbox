@@ -20,6 +20,8 @@ var SineGravityCloud = function(poem, properties) {
 	this.count = 200000;
 	this.radius = 200;
 	this.pointSize = 7;
+		
+	_.extend( this, properties );
 	
 	
 	RSVP.all([
@@ -95,7 +97,7 @@ SineGravityCloud.prototype = {
 			x = random.range( -1, 1 );
 			
 			this.positions[ v * 3 + 0 ] = x * this.radius;
-			this.positions[ v * 3 + 1 ] = Math.sin( x * Math.PI * 10 ) * this.radius
+			this.positions[ v * 3 + 1 ] = Math.sin( x * Math.PI * 10 ) * this.radius;
 			this.positions[ v * 3 + 2 ] = this.radius * -0.5;
 
 			this.velocity[ v * 3 + 0 ] = random.range( -0.01, 0.01 ) * 0;
@@ -122,6 +124,9 @@ SineGravityCloud.prototype = {
 		this.object.position.y -= this.radius * 0.2;
 		
 		this.poem.scene.add( this.object );
+		
+		this.object.scale.multiplyScalar( 1.5 );
+		
 	
 	
 		this.poem.on( 'update', this.update.bind(this) );
@@ -134,6 +139,10 @@ SineGravityCloud.prototype = {
 	
 	update : function(e) {
 		
+		var unitTimeX = Math.cos( e.time * 0.00005 * 1 );
+		var unitTimeY = Math.cos( e.time * 0.00005 * 2 );
+		var unitTimeZ = Math.cos( e.time * 0.00005 * 3 );
+		
 		var d2;
 	
 		for( var i = 0; i < this.count; i++ ) {
@@ -142,13 +151,13 @@ SineGravityCloud.prototype = {
 			    this.positions[ i * 3 + 1 ] * this.positions[ i * 3 + 1 ] +
 			    this.positions[ i * 3 + 2 ] * this.positions[ i * 3 + 2 ];
 
-			this.velocity[ i * 3 + 0 ] -= this.positions[ i * 3 + 0 ] / d2;
-			this.velocity[ i * 3 + 1 ] -= this.positions[ i * 3 + 1 ] / d2;
-			this.velocity[ i * 3 + 2 ] -= this.positions[ i * 3 + 2 ] / d2;
+			this.velocity[ i * 3 + 0 ] -= unitTimeX * this.positions[ i * 3 + 0 ] / d2;
+			this.velocity[ i * 3 + 1 ] -= unitTimeY * this.positions[ i * 3 + 1 ] / d2;
+			this.velocity[ i * 3 + 2 ] -= unitTimeZ * this.positions[ i * 3 + 2 ] / d2;
 
-			this.positions[ i * 3 + 0 ] += this.velocity[ i * 3 + 0 ];
-			this.positions[ i * 3 + 1 ] += this.velocity[ i * 3 + 1 ];
-			this.positions[ i * 3 + 2 ] += this.velocity[ i * 3 + 2 ];
+			this.positions[ i * 3 + 0 ] += unitTimeX * this.velocity[ i * 3 + 0 ];
+			this.positions[ i * 3 + 1 ] += unitTimeY * this.velocity[ i * 3 + 1 ];
+			this.positions[ i * 3 + 2 ] += unitTimeZ * this.velocity[ i * 3 + 2 ];
 			
 		}
 		

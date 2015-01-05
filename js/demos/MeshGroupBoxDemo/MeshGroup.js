@@ -38,7 +38,7 @@ MeshGroup.prototype = _.extend( Object.create( THREE.Object3D.prototype ), {
 			
 			this.buildGeometry();
 			this.buildMatrices();
-			this.buildMaterial()
+			this.buildMaterial();
 			
 			this.object = new THREE.PointCloud( this.bufferGeometry, this.material );
 			
@@ -88,6 +88,8 @@ MeshGroup.prototype = _.extend( Object.create( THREE.Object3D.prototype ), {
 		var totalLength = 0;
 		var positionsInFaces;
 		var childGeometry;
+		
+		var i, il, j, jl;
 		
 		for( i = 0, il = object3Ds.length; i < il; i++ ) {
 			
