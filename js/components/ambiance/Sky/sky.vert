@@ -1,6 +1,5 @@
 uniform float time;
 varying vec4 vColor;
-varying vec2 vUv;
 
 #pragma glslify: simplex4 = require(glsl-noise/simplex/4d)
 #pragma glslify: hsv2rgb = require(glsl-hsv2rgb)
@@ -35,8 +34,6 @@ vec4 calculateColor( in vec2 uv, in vec3 position ) {
 }
 
 void main() {
-	
-	vUv = uv;
 	
 	vColor = calculateColor( uv, position );
 	

@@ -1,9 +1,14 @@
 module.exports = {
+	name : "VR Demo",
+	description : "The Sine Gravity wave as a VR demo",
+	order : 0,
 	config : {
-		vr : true,
 		camera : {
 			x : -300,
 			fov : 70
+		},
+		renderer : {
+			useVR : true
 		}
 	},
 	objects : {

@@ -1,4 +1,7 @@
 module.exports = {
+	name : "Endless Terrain",
+	description : "An ever-repeating environment",
+	order : 0,
 	config : {
 		camera : {
 			x : -400

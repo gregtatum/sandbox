@@ -1,4 +1,7 @@
 module.exports = {
+	name : "Carbon Dioxide Earth",
+	description : "Mapping NASA Data",
+	order : 0,
 	config : {
 		camera : {
 			x : -400,

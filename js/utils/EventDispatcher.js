@@ -53,6 +53,8 @@ EventDispatcher.prototype = {
 			listeners[ type ].push( listener );
 
 		}
+		
+		return listener;
 
 	},
 

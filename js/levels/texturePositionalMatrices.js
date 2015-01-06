@@ -1,4 +1,7 @@
 module.exports = {
+	name : "MeshGroup() Pre-Cursor 2",
+	description : "Position matrices packed into a texture",
+	order : 52,
 	config : {
 		camera : {
 			x : -400

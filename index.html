@@ -1,29 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Greg Tatum's Three.js Sandbox</title>
+	<title>A Three.js Sandbox of Experiments | Greg Tatum</title>
 
 	<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css' />
-	<link href='base.css' rel='stylesheet' type='text/css' />
+	<link href='base.css?v=9' rel='stylesheet' type='text/css' />
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta property="og:image" content="assets/images/screenshot.jpg" />
-	 
+	<meta property="og:image" content="assets/screenshots/titles.jpg" />
+	<meta name="description" content="A retro shoot 'em up built with WebGL and Three.js.">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="apple-mobile-web-app-capable" content="yes">
 	
-	<!-- Vendor -->
-	<script src='assets/vendor/jquery-2.1.1.min.js'></script>
-	<script src="assets/vendor/three.js"></script>
-	<script src="assets/vendor/underscore-min.js"></script>
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@TatumCreative" />
+	<meta name="twitter:title" content="Polar Space" />
+	<meta name="twitter:description" content="A retro shoot 'em up built with WebGL and Three.js." />
+	<meta name="twitter:image" content="http://gregtatum.com/polar/assets/screenshots/titles.jpg" />
+	<meta name="twitter:url" content="http://gregtatum.com/polar/" />
 	
-	<!-- Poem -->
-	<script src='assets/build/bundle.js?v=4'></script>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-3859613-1']);
 
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	
 </head>
 <body>
 	
-	<div id='container'>
+	<div id='menu' class='menu'>
+		
+		<a class="burger-wrapper" href="#menu" id="menu-button" title='Hit ESC key to open/close'>
+			<div class="burger"></div>
+		</a>
+		<h1 class='menu-title'>Three.js Sandbox</h1>
+		
+		<div class='menu-middle'>
+			<!-- <a href='#/level/titles' class='menu-level menu-level-titles'>Main Titles</a> -->
+			<div class='menu-levels' id='menu-levels'></div>
+		</div>
+		
+		<script type='text/template' id='menu-level-template'>
+			<a href='#/level/<%- slug %>' class='menu-level'>
+				<h2 class='menu-level-name'><%- name %></h1>
+				<div class='menu-level-description'><%- description %></div>
+			</a>
+		</script>
+		
+		<div class='menu-bottom'>
+			
+			<div class='menu-bottom-mute'>
+				<a href='#mute' id='mute' title='Hit S key to mute'>
+					<img />
+				</a>
+			</div>
+		</div>
+		
+	</div>
+		
+	<div class='container' id='container'>
+		
 		<div class='info' style='display:none;' id="info">
 			<a href='../0/' style='display:none;' title="Prev" class='arrow-prev'>Previous</a>
 			<h1 id="info-title"></h1>
@@ -35,20 +75,44 @@
 			Why not <a href='https://twitter.com/intent/tweet/?text=%40TatumCreative' target='_new'>tweet @ me</a>?
 			Fork this on <a href='http://github.com/TatumCreative/'>GitHub</a>.
 		</footer>
-		<select id="LevelSelect" class='level-select'></select>
+
+		<div class='title-webgl-error'>
+			<p>Sorry, it looks like WebGL is not supported by your browser or graphics card.</p>
+			<p><a href='http://get.webgl.org/'>Find out more about WebGL support here.</a></p>
+		</div>
+		
+		<!--
+		<div class='title' id='title'>
+			<img src='' class='title-logo'/>
+			<div class='title-left'>
+				<a href='#keys'>
+					<img src='assets/images/keys.png'/><br/>
+					Mash Keys
+				</a>
+			</div>
+			<div class='title-right'>
+				<a href='#tilt'>
+					<img src='assets/images/tilt.png'/><br/>
+					Tilt + Tap
+				</a>
+			</div>
+			<div class='title-credits'>
+				A WebGL game by <a href='//gregtatum.com/'>Greg Tatum</a>
+			</div>
+		</div>
+		-->
+			
+		<div class='container-blocker' id='container-blocker'></div>
+		
 	</div>
 
-	<script type="text/javascript">
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-3859613-1']);
-		_gaq.push(['_trackPageview']);
-
-		(function() {
-		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-	</script>
+	<!-- Vendor -->
+	<script src='assets/vendor/jquery-2.1.1.min.js'></script>
+	<script src="assets/vendor/three.js"></script>
+	<script src="assets/vendor/underscore-min.js"></script>
+	
+	<!-- Poem -->
+	<script src='assets/build/bundle.js?v=9'></script>
 	
 </body>
 </html>

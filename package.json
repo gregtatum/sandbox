@@ -29,11 +29,15 @@
     }
   },
   "devDependencies": {
+    "crossroads": "^0.12.0",
     "glsl-hsv2rgb": "^1.0.0",
     "glsl-noise": "0.0.0",
+    "glsl-random": "0.0.4",
     "glslify": "^1.6.0",
     "gulp": "^3.8.7",
     "gulpfile": "git://github.com/TatumCreative/gulpfile.git#v1.2.1",
+    "hasher": "^1.2.0",
+    "localforage": "^1.2.0",
     "perlin-simplex": "0.0.2",
     "rsvp": "^3.0.14",
     "soundcloud-badge": "0.0.0",

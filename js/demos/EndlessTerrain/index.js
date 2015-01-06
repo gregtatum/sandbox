@@ -22,7 +22,6 @@ function createTexture( mesh, scene ) {
 	$(img).on('load', function() {
 		texture.needsUpdate = true;
 		scene.add( mesh );
-		console.log('texture loaded');
 	});
 	
 	return texture;

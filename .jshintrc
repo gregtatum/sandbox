@@ -5,15 +5,17 @@
 		"poem": true,
 		"LevelLoader": true,
 		"webkitAudioContext": true,
-		"AudioContext": true
+		"AudioContext": true,
+		"_gaq": true
 	},
 	"laxcomma": true,
 	"node": true,
 	"devel": true,
 	"jquery": true,
+	"sub": true,
 	"browser": true,
 	"debug": true, //allow debug statements
 	"eqeqeq": true, //must use ===
-	"latedef": true, //variables must be defined before use
+	"latedef": "nofunc", //variables must be defined before use
 	"undef": true //all variables must be declared
 }

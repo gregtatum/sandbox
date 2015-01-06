@@ -1,4 +1,7 @@
 module.exports = {
+	name : "MeshGroup() Pre-Cursor 1",
+	description : "Position matrices set in uniforms",
+	order : 51,
 	config : {
 		camera : {
 			x : -400
