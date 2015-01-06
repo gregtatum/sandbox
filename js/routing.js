@@ -2,7 +2,7 @@ var crossroads = require('crossroads');
 var hasher = require('hasher');
 var levelLoader = require('./levelLoader');
 
-var baseUrl = '/polar';
+var baseUrl = '/sandbox';
 var defaultLevel = "sineGravityCloud";
 var currentLevel = "";
 
