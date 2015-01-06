@@ -38,6 +38,12 @@ function mouseDown( canvas, cameraObj, poem ) {
 			rotationY += offsetX * 0.005;
 			rotationX += offsetY * 0.005;
 			
+			if( window.foo ) debugger;
+			
+			rotationX = Math.min( rotationX, Math.PI * 0.45 );
+			rotationX = Math.max( rotationX, -Math.PI * 0.45 );
+			
+			
 			q1.setFromAxisAngle( axisY, rotationY );
 			q2.setFromAxisAngle( axisX, rotationX );
 			cameraObj.quaternion.multiplyQuaternions( q1, q2 );
@@ -51,6 +57,7 @@ function mouseDown( canvas, cameraObj, poem ) {
 	})();
 	
 	var mouseUpHandler = function() {
+		$canvas.off('mouseleave', mouseUpHandler);
 		$canvas.off('mouseup', mouseUpHandler);
 		$canvas.off('mousemove', dragMouseHandler);
 	};
@@ -62,6 +69,7 @@ function mouseDown( canvas, cameraObj, poem ) {
 		px = e.pageX;
 		py = e.pageY;
 		
+		$canvas.on('mouseleave', mouseUpHandler);
 		$canvas.on('mouseup', mouseUpHandler);
 		$canvas.on('mousemove', dragMouseHandler);
 	};
@@ -69,6 +77,7 @@ function mouseDown( canvas, cameraObj, poem ) {
 	$canvas.on('mousedown', mouseDownHandler);
 	
 	poem.on('destroy', function() {
+		$canvas.off('mouseleave', mouseUpHandler);
 		$canvas.off('mouseup', mouseUpHandler);
 		$canvas.off('mousemove', dragMouseHandler);
 		$canvas.off('mousedown', mouseDownHandler);
