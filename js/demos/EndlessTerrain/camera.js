@@ -7,26 +7,48 @@ function updateCamera( camera ) {
 
 function mouseDown( canvas, cameraObj, poem ) {
 	
+	window.cameraObj = cameraObj;
+	
 	var px, py;
 
 	var $canvas = $(canvas);
 	
-	var dragMouseHandler = function( e ) {
-
-		e.preventDefault();
+	var dragMouseHandler = (function() {
+		
+		var axisX = new THREE.Vector3(1,0,0);
+		var axisY = new THREE.Vector3(0,1,0);
+		
+		var q1 = new THREE.Quaternion();
+		var q2 = new THREE.Quaternion();
+		
+		var rotationX = 0;
+		var rotationY = 0;
+		
+		
+		return function( e ) {
+			
+			e.preventDefault();
 				
-		var x = e.pageX;
-		var y = e.pageY;
-	
-		var offsetX = px - x;
-		var offsetY = py - y;
-	
-		cameraObj.rotation.y += offsetX * 0.005;
-		cameraObj.rotation.x += offsetY * 0.005;
+			var x = e.pageX;
+			var y = e.pageY;
+			
+			var offsetX = px - x;
+			var offsetY = py - y;
 				
-		px = x;
-		py = y;
-	};
+			rotationY += offsetX * 0.005;
+			rotationX += offsetY * 0.005;
+			
+			q1.setFromAxisAngle( axisY, rotationY );
+			q2.setFromAxisAngle( axisX, rotationX );
+			cameraObj.quaternion.multiplyQuaternions( q1, q2 );
+			
+			
+			px = x;
+			py = y;
+		
+		};
+		
+	})();
 	
 	var mouseUpHandler = function() {
 		$canvas.off('mouseup', mouseUpHandler);
