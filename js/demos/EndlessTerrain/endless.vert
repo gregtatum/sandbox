@@ -10,12 +10,12 @@ void main() {
 
 	vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 	
-	vUv = mod( vec2( modelPosition.x, modelPosition.z ), width ) / width;
+	vUv = vec2( modelPosition.x, modelPosition.z ) / width;
 
-	height = texture2D( terrain, vUv ).w;
-	
+	height = texture2D( terrain, vUv * 0.3 ).w;
 	
 	vCameraDistance = distance( modelPosition.xyz, cameraPosition );
+	
 	
 	vec4 modifiedPosition = vec4(
 		position.x,

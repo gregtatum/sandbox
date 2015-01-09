@@ -9,16 +9,16 @@ module.exports = {
 	},
 	objects : {
 		controls : {
-			object: require("../components/cameras/Controls"),
+			object: require("../js/components/cameras/Controls"),
 		},
 		pointcloud : {
-			object: require("../demos/SineGravityCloud"),
+			object: require("../js/demos/SineGravityCloud"),
 		},
 		grid : {
-			object: require("../demos/Grid"),
+			object: require("../js/demos/Grid"),
 		},
 		// stats : {
-		// 	object: require("../components/utils/Stats")
+		// 	object: require("../js/components/utils/Stats")
 		// }
 	}
 };

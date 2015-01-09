@@ -13,20 +13,20 @@ module.exports = {
 	},
 	objects : {
 		pointcloud : {
-			object: require("../demos/SineGravityCloud"),
+			object: require("../js/demos/SineGravityCloud"),
 			properties: {
 				count: 50 * 1000,
 				pointSize : 4
 			}
 		},
 		controls : {
-			object: require("../components/cameras/Orientation"),
+			object: require("../js/components/cameras/Orientation"),
 		},
 		cameraRotation : {
-			object: require("../components/cameras/RotateAroundOrigin"),
+			object: require("../js/components/cameras/RotateAroundOrigin"),
 		},
 		grid : {
-			object: require("../demos/Grid"),
+			object: require("../js/demos/Grid"),
 		}
 	}
 };

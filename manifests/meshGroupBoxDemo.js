@@ -9,17 +9,17 @@ module.exports = {
 	},
 	objects : {
 		demo : {
-			object: require("../demos/MeshGroupBoxDemo"),
+			object: require("../js/demos/MeshGroupBoxDemo"),
 			properties: {}
 		},
 		controls : {
-			object: require("../components/cameras/Controls"),
+			object: require("../js/components/cameras/Controls"),
 		},
 		grid : {
-			object: require("../demos/Grid"),
+			object: require("../js/demos/Grid"),
 		},
 		stats : {
-			object: require("../components/utils/Stats")
+			object: require("../js/components/utils/Stats")
 		}
 	}
 };

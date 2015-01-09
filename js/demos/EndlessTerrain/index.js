@@ -19,6 +19,9 @@ function createTexture( mesh, scene ) {
 	var texture = new THREE.Texture( img );
 	img.src = 'assets/images/cloud1024.png';
 	
+	texture.wrapT = THREE.RepeatWrapping;
+	texture.wrapS = THREE.RepeatWrapping;
+	
 	$(img).on('load', function() {
 		texture.needsUpdate = true;
 		scene.add( mesh );
@@ -89,7 +92,8 @@ var EndlessTerrain = function( poem, properties ) {
 	var config = _.extend({
 		width				: 4000,
 		gridLength			: 16,
-		totalPolygonDensity	: 1024
+		totalPolygonDensity	: 1024,
+		positionY			: 0
 	}, properties);
 	
 	var shader = createShader( glslify({
@@ -108,7 +112,7 @@ var EndlessTerrain = function( poem, properties ) {
 		config.totalPolygonDensity
 	);
 	
-	meshGrid.position.y = 100;
+	meshGrid.position.y = config.positionY;
 	
 	shader.uniforms.terrain.value = createTexture( meshGrid, poem.scene );
 	shader.uniforms.heightScale.value = config.width / 20;

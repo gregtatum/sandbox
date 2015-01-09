@@ -10,7 +10,7 @@ var levelKeyPairs = (function sortAndFilterLevels( levels ) {
 		})
 	.value();
 	
-})( require('../levels') );
+})( require('../../manifests') );
 
 function reactiveLevels( $scope, template ) {
 	

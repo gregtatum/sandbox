@@ -8,9 +8,9 @@ var currentLevel = "";
 
 var routing = {
 	
-	start : function( Poem, levels ) {
+	start : function( Poem, manifests ) {
 		
-		levelLoader.init( Poem, levels );
+		levelLoader.init( Poem, manifests );
 		
 		function parseHash( newHash, oldHash ){
 			crossroads.parse( newHash );

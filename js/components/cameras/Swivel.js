@@ -1,11 +1,4 @@
-function updateCamera( camera ) {
-
-	return function(e) {
-		camera.object.position.z -= 1;
-	};
-}
-
-function mouseMove( prevXY, cameraObj ) {
+function mouseMove( prevXY, quaternion, speedX, speedY ) {
 	
 	var axisX = new THREE.Vector3(1,0,0);
 	var axisY = new THREE.Vector3(0,1,0);
@@ -26,18 +19,15 @@ function mouseMove( prevXY, cameraObj ) {
 		var offsetX = prevXY.x - x;
 		var offsetY = prevXY.y - y;
 			
-		rotationY += offsetX * 0.005;
-		rotationX += offsetY * 0.005;
-		
-		if( window.foo ) debugger;
+		rotationY += offsetX * speedX;
+		rotationX += offsetY * speedY;
 		
 		rotationX = Math.min( rotationX, Math.PI * 0.45 );
 		rotationX = Math.max( rotationX, -Math.PI * 0.45 );
 		
-		
 		q1.setFromAxisAngle( axisY, rotationY );
 		q2.setFromAxisAngle( axisX, rotationX );
-		cameraObj.quaternion.multiplyQuaternions( q1, q2 );
+		quaternion.multiplyQuaternions( q1, q2 );
 		
 		
 		prevXY.x = x;
@@ -79,24 +69,49 @@ function stopHandlers( $canvas, handlers ) {
 	};
 }
 
-function startHandlers( canvas, cameraObj, poem ) {
+function startMouseHandlers( canvas, cameraObj, poem, speedX, speedY ) {
 	
 	var prevXY = {x:0,y:0};
 	var $canvas = $(canvas);
 	var handlers = {};	
+	var quaternion = new THREE.Quaternion().copy( cameraObj.quaternion );
 	
-	handlers.mouseMove = mouseMove( prevXY, cameraObj );
+	handlers.mouseMove = mouseMove( prevXY, quaternion, speedX, speedY );
 	handlers.mouseUp = mouseUp( $canvas, handlers );
 	handlers.mouseDown = mouseDown( $canvas, handlers, prevXY );
 	
 	$canvas.on('mousedown', handlers.mouseDown);
 	poem.on('destroy', stopHandlers( $canvas, handlers ) );
+	
+	return quaternion;
 }
 
-var EndlessCamera = function( poem ) {
+function updateCamera( cameraQuaternion, targetQuaternion, unitI ) {
 	
-	poem.on('update', updateCamera( poem.camera ));
-	startHandlers( poem.canvas, poem.camera.object, poem );
+	return function( e ) {
+		
+		cameraQuaternion.slerp( targetQuaternion, unitI * e.unitDt );
+		
+	};
+}
+
+var Swivel = function( poem, properties ) {
+	
+	var config = _.extend({
+		easing : 0.5,
+		speedX : 0.002,
+		speedY : 0.002
+	}, properties);
+	
+	var targetQuaternion = startMouseHandlers(
+		poem.canvas,
+		poem.camera.object,
+		poem,
+		config.speedX, config.speedY
+	);
+	
+	poem.on('update', updateCamera( poem.camera.object.quaternion, targetQuaternion, config.easing ) );
+	
 };
 
-module.exports = EndlessCamera;
+module.exports = Swivel;

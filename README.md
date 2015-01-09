@@ -26,7 +26,7 @@ Usage: `poem.on('update', callback);`
 
 ### Levels
 
-Create multiple levels by declaring them in the `/js/levels/` folder. Create reusable components in `/js/components/` or other folders.
+Create multiple levels by declaring them in the `/manifests` folder. Create reusable components in `/js/components` or other folders.
 
 #### Example level manifest:
 
@@ -36,7 +36,7 @@ Create multiple levels by declaring them in the `/js/levels/` folder. Create reu
 		},
 		objects : {
 			sphere : {
-				object: require("../components/Spheres"),
+				object: require("./js/components/Spheres"),
 				properties: {
 					count : 50,
 					dispersion : 120,
@@ -44,13 +44,13 @@ Create multiple levels by declaring them in the `/js/levels/` folder. Create reu
 				} 
 			},
 			controls : {
-				object: require("../components/CameraControls"),
+				object: require("./js/components/CameraControls"),
 			},
 			grid : {
-				object: require("../components/Grid"),
+				object: require("./js/components/Grid"),
 			},
 			stats : {
-				object: require("../components/Stats")
+				object: require("./js/components/Stats")
 			}
 		}
 	}
@@ -65,10 +65,10 @@ Use the properties value to configure your object.
 
 To load a level using the level manifest:
 
-	var LevelLoader = require('./LevelLoader');
-	LevelLoader("demo");
+	var levelLoader = require('./levelLoader');
+	levelLoader("demo");
 
-Loading a new level will load the `levels/demo.js` file. It will then destroy the current poem if it exists, and initiate a new one. `LevelLoader` is set as a global variable for debugging purposes.
+Loading a new level will load the `levels/demo.js` file. It will then destroy the current poem if it exists, and initiate a new one. `levelLoader` is set as a global variable for debugging purposes.
 
 ### Components
 

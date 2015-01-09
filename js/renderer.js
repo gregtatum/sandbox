@@ -15,7 +15,7 @@ var _composer = addEffectsComposer( _rendererPass );
 
 function addEffectsComposer( renderPass ) {
 	
-	var bloom = new THREE.BloomPass( 4, 10, 16, 512 );
+	var bloom = new THREE.BloomPass( 1.5, 15, 16, 512 );
 	var copy = new THREE.ShaderPass( THREE.CopyShader );
 	var antialias = new THREE.ShaderPass( THREE.FXAAShader );
 	var chromaticAberration = new THREE.ShaderPass( chromaticAberrationShader );
@@ -32,7 +32,7 @@ function addEffectsComposer( renderPass ) {
 
 	composer.addPass( renderPass );
 	composer.addPass( antialias );
-	composer.addPass( chromaticAberration );
+	// composer.addPass( chromaticAberration );
 	composer.addPass( bloom );
 	composer.addPass( copy );
 	
@@ -86,11 +86,8 @@ function addRenderer() {
 		window.innerWidth,
 		window.innerHeight
 	);
-	renderer.setClearColor( 0x111111 );
 	document.getElementById( 'container' ).appendChild( renderer.domElement );
-	
-	renderer.autoClear = false;
-	
+		
 	return renderer;
 	
 }
@@ -98,12 +95,15 @@ function addRenderer() {
 function handleNewPoem( poem, properties ) {
 	
 	var config = _.extend({
+		clearColor : 0x222222,
 		useEffects : false,
 		useVR : false
 	}, properties);
 	
 	var scene = poem.scene;
 	var camera = poem.camera.object;
+	
+	_renderer.setClearColor( config.clearColor );
 	
 	if( config.useVR ) {
 		_renderer = new StereoEffect( _webGLRenderer );
@@ -118,15 +118,18 @@ function handleNewPoem( poem, properties ) {
 	newResizeHandler( camera );
 	
 	if( config.useEffects ) {
+		_renderer.autoClear = false;
 		poem.on( 'draw', function() {
 			_composer.render( scene, camera );
 		});
 	} else {
+		_renderer.autoClear = true;
 		poem.on( 'draw', function() {
 			_renderer.render( scene, camera );
 		});
 	}
 	
+	return _renderer;
 }
 
 module.exports = handleNewPoem;

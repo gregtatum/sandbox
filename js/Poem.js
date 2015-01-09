@@ -35,7 +35,7 @@ var Poem = function( level, slug ) {
 	this.camera = new Camera( this, level.config.camera || {} );
 	this.scene.fog = createFog( level.config.fog, this.camera.object.position.z );
 
-	renderer( this, level.config.renderer );
+	this.renderer = renderer( this, level.config.renderer );
 	this.canvas = $("canvas")[0];
 	
 	this.parseLevel( level );
@@ -106,12 +106,13 @@ Poem.prototype = {
 			
 	update : function() {
 		
-		
+		var dt = this.clock.getDelta();
 		
 		this.dispatch({
 			type: "update",
-			dt: this.clock.getDelta(),
-			time: this.clock.time
+			dt: dt,
+			time: this.clock.time,
+			unitDt: dt * 0.016666667
 		});
 
 		this.dispatch({

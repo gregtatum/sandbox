@@ -9,10 +9,12 @@
       "entry": "./js",
       "js": [
         "js/**/*.js",
+        "manifests/**/*.js",
         "gulpfile.js"
       ],
       "jsWatch": [
         "js/**/*",
+        "manifests/**/*.js",
         "gulpfile.js"
       ],
       "hint": [

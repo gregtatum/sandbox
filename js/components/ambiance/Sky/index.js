@@ -9,7 +9,7 @@ var Sky = function( poem, properties ) {
 		
 	}, properties );
 	
-	var geometry = new THREE.SphereGeometry( config.width, 32, 15 );
+	var geometry = new THREE.SphereGeometry( config.width, 64, 30 );
 	
 	var shader = createShader( glslify({
 		vertex: './sky.vert',
@@ -24,7 +24,6 @@ var Sky = function( poem, properties ) {
 	
 	var material = new THREE.ShaderMaterial( shader );
 	material.transparent = true;
-	material.blending = THREE.AdditiveBlending;
 	material.depthTest = false;
 	
 	var mesh = new THREE.Mesh( geometry, material );
