@@ -81,7 +81,7 @@ function startMouseHandlers( canvas, cameraObj, poem, speedX, speedY ) {
 	handlers.mouseDown = mouseDown( $canvas, handlers, prevXY );
 	
 	$canvas.on('mousedown', handlers.mouseDown);
-	poem.on('destroy', stopHandlers( $canvas, handlers ) );
+	poem.emitter.on('destroy', stopHandlers( $canvas, handlers ) );
 	
 	return quaternion;
 }
@@ -110,7 +110,7 @@ var Swivel = function( poem, properties ) {
 		config.speedX, config.speedY
 	);
 	
-	poem.on('update', updateCamera( poem.camera.object.quaternion, targetQuaternion, config.easing ) );
+	poem.emitter.on('update', updateCamera( poem.camera.object.quaternion, targetQuaternion, config.easing ) );
 	
 };
 

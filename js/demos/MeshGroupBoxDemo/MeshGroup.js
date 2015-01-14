@@ -44,7 +44,7 @@ MeshGroup.prototype = _.extend( Object.create( THREE.Object3D.prototype ), {
 			
 			scene.add( this.object );
 			
-			this.poem.on( 'update', this.update.bind(this) );
+			this.poem.emitter.on( 'update', this.update.bind(this) );
 			
 			
 		}.bind(this) );

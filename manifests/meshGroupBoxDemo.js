@@ -7,19 +7,19 @@ module.exports = {
 			x : -400
 		}
 	},
-	objects : {
+	components : {
 		demo : {
-			object: require("../js/demos/MeshGroupBoxDemo"),
+			construct: require("../js/demos/MeshGroupBoxDemo"),
 			properties: {}
 		},
 		controls : {
-			object: require("../js/components/cameras/Controls"),
+			construct: require("../js/components/cameras/Controls"),
 		},
 		grid : {
-			object: require("../js/demos/Grid"),
+			construct: require("../js/demos/Grid"),
 		},
 		stats : {
-			object: require("../js/components/utils/Stats")
+			construct: require("../js/components/utils/Stats")
 		}
 	}
 };

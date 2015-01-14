@@ -1,4 +1,9 @@
+# Three.js Sandbox - (Readme Outdated)
+
+Everything below this paragraph is outdated due to a major refactor. I will be rewriting at some point.
+
 ##Three.js and Browserify Enviroment
+
 
 This is a basic starting point for a project using Three.js and Browserify. It includes a central project graph called a poem, and a level manifest to load in multiple poem configurations. There is a components directory for reusable modules.
 
@@ -12,7 +17,7 @@ The main graph for your project is the `Poem` object, as in programing poem (or 
  * `poem.clock` - Custom clock object
  * `poem.div` - div element that holds the canvas
  * `poem.ratio` - pixel ratio
- * `poem.on` - add event listener
+ * `poem.emitter.on` - add event listener
  * `poem.off` - remove event listener
  * `poem.trigger` - trigger event listener
  
@@ -22,7 +27,7 @@ The main graph for your project is the `Poem` object, as in programing poem (or 
  * resize - dispatched on window resize
  * destroy - dispatched when destroying the poem's level
 
-Usage: `poem.on('update', callback);`
+Usage: `poem.emitter.on('update', callback);`
 
 ### Levels
 

@@ -118,7 +118,7 @@ var EndlessTerrain = function( poem, properties ) {
 	shader.uniforms.heightScale.value = config.width / 20;
 	shader.uniforms.width.value = config.width / 2;
 	
-	poem.on( 'update', updateModuloMeshGrid(
+	poem.emitter.on( 'update', updateModuloMeshGrid(
 		poem.camera.object.position,
 		meshGrid.children,
 		config.width

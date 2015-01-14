@@ -1,21 +1,28 @@
-var Camera = function( poem, properties ) {
+
+
+var Camera = function( properties, scene, poemEmitter ) {
 	
-	this.poem = poem;
-		
+	var config = _.extend({
+		fov : 50,
+		near : 3,
+		far : 10000,
+		aspectRatio : window.innerWidth / window.innerHeight
+	}, properties);
+	
 	this.object = new THREE.PerspectiveCamera(
-		properties.fov || 50,					// fov
-		window.innerWidth / window.innerHeight,	// aspect ratio
-		properties.near || 3,					// near frustum
-		properties.far || 10000					// far frustum
+		config.fov,
+		config.aspect,
+		config.near,
+		config.far
 	);
 	
 	this.object.position.x = _.isNumber( properties.x ) ? properties.x : 0;
 	this.object.position.y = _.isNumber( properties.y ) ? properties.y : 0;
 	this.object.position.z = _.isNumber( properties.z ) ? properties.z : 500;
 	
-	this.poem.scene.add( this.object );
+	scene.add( this.object );
 	
-	this.poem.on( 'resize', this.resize.bind(this) );
+	poemEmitter.on( 'resize', this.resize.bind(this) );
 	
 };
 

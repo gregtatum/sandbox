@@ -8,7 +8,7 @@ var MeshGroupBoxDemo = function( poem, properties ) {
 	
 	this.count = 10000;
 	
-	this.poem.on('update', this.update.bind(this) );
+	this.poem.emitter.on('update', this.update.bind(this) );
 	
 	this.group = new MeshGroup( poem );
 	

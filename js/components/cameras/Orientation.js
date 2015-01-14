@@ -26,8 +26,8 @@ var Orientation = function( poem ) {
 
 	$(window).on( 'deviceorientation', this.deviceOrientationHandler );
 	
-	this.poem.on( 'update', this.update.bind(this) );
-	this.poem.on( 'destroy', this.destroy.bind(this) );
+	this.poem.emitter.on( 'update', this.update.bind(this) );
+	this.poem.emitter.on( 'destroy', this.destroy.bind(this) );
 	
 	if( _e ) this.setOrientationControls( _e );
 	

@@ -9,7 +9,7 @@ var Controls = function( poem, properties ) {
 	
 	_.extend( this.controls, properties );
 	
-	this.poem.on( 'update', this.controls.update.bind( this.controls ) );
+	this.poem.emitter.on( 'update', this.controls.update.bind( this.controls ) );
 	
 };
 

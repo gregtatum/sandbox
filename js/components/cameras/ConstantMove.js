@@ -23,7 +23,7 @@ var ConstantMove = function( poem, properties ) {
 	
 	var movement = new THREE.Vector3( config.x, config.y, config.z );
 	
-	poem.on('update', updateCamera( poem.camera.object.position, movement));
+	poem.emitter.on('update', updateCamera( poem.camera.object.position, movement));
 };
 
 module.exports = ConstantMove;

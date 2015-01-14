@@ -181,7 +181,7 @@ TexturePositionalMatrices.prototype = {
 		this.poem.scene.add( this.object );
 	
 	
-		this.poem.on( 'update', this.update.bind(this) );
+		this.poem.emitter.on( 'update', this.update.bind(this) );
 		
 	},
 	
@@ -211,13 +211,13 @@ TexturePositionalMatrices.prototype = {
 		
 		return function(e) {
 
-			this.uniforms.time.value = e.time;
+			this.uniforms.time.value = e.now;
 			
 			var x,y;
 		
 			for( var i = 0; i < this.count ; i++ ) {
 				
-				x = e.time / 1000;
+				x = e.now / 1000;
 				y = i * 1000;
 				
 				translation.makeTranslation(

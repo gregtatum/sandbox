@@ -9,7 +9,7 @@ var Stats = function( poem ) {
 	this.stats.domElement.style.top = '0px';
 	$( this.poem.div ).append( this.stats.domElement );
 	
-	this.poem.on( 'update', this.stats.update.bind( this.stats ) );
+	this.poem.emitter.on( 'update', this.stats.update.bind( this.stats ) );
 	
 };
 

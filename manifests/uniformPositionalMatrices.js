@@ -7,18 +7,18 @@ module.exports = {
 			x : -400
 		}
 	},
-	objects : {
+	components : {
 		controls : {
-			object: require("../js/components/cameras/Controls"),
+			construct: require("../js/components/cameras/Controls"),
 		},
 		uniformPositionalMatrices : {
-			object: require("../js/demos/uniformPositionalMatrices"),
+			construct: require("../js/demos/uniformPositionalMatrices"),
 		},
 		grid : {
-			object: require("../js/demos/Grid"),
+			construct: require("../js/demos/Grid"),
 		},
 		stats : {
-			object: require("../js/components/utils/Stats")
+			construct: require("../js/components/utils/Stats")
 		}
 	}
 };

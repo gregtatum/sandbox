@@ -8,13 +8,13 @@ module.exports = {
 			far : 3000
 		}
 	},
-	objects : {
+	components : {
 		sphere : {
-			object: require("../js/demos/Earth"),
+			construct: require("../js/demos/Earth"),
 			properties: {}
 		},
 		controls : {
-			object: require("../js/components/cameras/Controls"),
+			construct: require("../js/components/cameras/Controls"),
 			properties: {
 				minDistance : 500,
 				maxDistance : 1000,
@@ -24,7 +24,7 @@ module.exports = {
 			}
 		},
 		info : {
-			object: require("../js/components/Info"),
+			construct: require("../js/components/Info"),
 			properties : {
 				documentTitle : "Earth's CO2 – a Three.js Visualization adapted by Greg Tatum",
 				title : "Earth's CO2",
@@ -36,13 +36,13 @@ module.exports = {
 			}
 		},
 		stars : {
-			object: require("../js/components/Stars"),
+			construct: require("../js/components/Stars"),
 		},
 		// stats : {
-		// 	object: require("../js/components/utils/Stats")
+		// 	construct: require("../js/components/utils/Stats")
 		// },
 		lights : {
-			object: require("../js/components/lights/TrackCameraLights")
+			construct: require("../js/components/lights/TrackCameraLights")
 		}
 	}
 };

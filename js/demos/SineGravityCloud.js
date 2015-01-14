@@ -115,7 +115,7 @@ SineGravityCloud.prototype = {
 			this.colors[ v * 3 + 2 ] = color.b;
 
 		}
-
+		
 		this.geometry.addAttribute( 'position', new THREE.BufferAttribute( this.positions, 3 ) );
 		this.geometry.addAttribute( 'customColor', new THREE.BufferAttribute( this.colors, 3 ) );
 		this.geometry.addAttribute( 'size', new THREE.BufferAttribute( this.sizes, 1 ) );
@@ -129,7 +129,7 @@ SineGravityCloud.prototype = {
 		
 	
 	
-		this.poem.on( 'update', this.update.bind(this) );
+		this.poem.emitter.on( 'update', this.update.bind(this) );
 		
 	},
 	
@@ -139,9 +139,9 @@ SineGravityCloud.prototype = {
 	
 	update : function(e) {
 		
-		var unitTimeX = Math.cos( e.time * 0.00005 * 1 );
-		var unitTimeY = Math.cos( e.time * 0.00005 * 2 );
-		var unitTimeZ = Math.cos( e.time * 0.00005 * 3 );
+		var unitTimeX = Math.cos( e.now * 0.00005 * 1 );
+		var unitTimeY = Math.cos( e.now * 0.00005 * 2 );
+		var unitTimeZ = Math.cos( e.now * 0.00005 * 3 );
 		
 		var d2;
 	

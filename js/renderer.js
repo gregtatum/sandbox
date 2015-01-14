@@ -92,7 +92,7 @@ function addRenderer() {
 	
 }
 
-function handleNewPoem( poem, properties ) {
+function handleNewPoem( properties, scene, cameraObj, poemEmitter ) {
 	
 	var config = _.extend({
 		clearColor : 0x222222,
@@ -100,10 +100,7 @@ function handleNewPoem( poem, properties ) {
 		useVR : false
 	}, properties);
 	
-	var scene = poem.scene;
-	var camera = poem.camera.object;
-	
-	_renderer.setClearColor( config.clearColor );
+	_webGLRenderer.setClearColor( config.clearColor );
 	
 	if( config.useVR ) {
 		_renderer = new StereoEffect( _webGLRenderer );
@@ -114,18 +111,18 @@ function handleNewPoem( poem, properties ) {
 		// this.showUI();
 	}
 	
-	addSceneAndCameraToEffects( scene, camera );
-	newResizeHandler( camera );
+	addSceneAndCameraToEffects( scene, cameraObj );
+	newResizeHandler( cameraObj );
 	
 	if( config.useEffects ) {
-		_renderer.autoClear = false;
-		poem.on( 'draw', function() {
-			_composer.render( scene, camera );
+		_webGLRenderer.autoClear = false;
+		poemEmitter.on( 'draw', function() {
+			_composer.render( scene, cameraObj );
 		});
 	} else {
-		_renderer.autoClear = true;
-		poem.on( 'draw', function() {
-			_renderer.render( scene, camera );
+		_webGLRenderer.autoClear = true;
+		poemEmitter.on( 'draw', function() {
+			_renderer.render( scene, cameraObj );
 		});
 	}
 	

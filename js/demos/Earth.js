@@ -1,6 +1,8 @@
 var random = require('../utils/random')
   , loadTexture	= require('../utils/loadTexture')
-  , RSVP = require('rsvp');
+  , RSVP = require('rsvp')
+  , destroyMesh = require('../utils/destroyMesh')
+  , muter = require('../sound/muter');
 
 var Earth = function(poem, properties) {
 	
@@ -15,11 +17,13 @@ var Earth = function(poem, properties) {
 	
 	this.radius = properties.radius > 0 ? properties.radius : 250;
 
-	var $a = $("<a href='http://svs.gsfc.nasa.gov/cgi-bin/details.cgi?aid=11719'></a>");
-	$a.append( $("<img class='nasa-logo wide' src='assets/images/nasa-goddard.png' />") );
-	$a.attr("title", "Map visualization credit to NASA's Goddard Space Flight Center");
+	this.$a = $("<a href='http://svs.gsfc.nasa.gov/cgi-bin/details.cgi?aid=11719'></a>");
+	this.$a.append( $("<img class='nasa-logo wide' src='assets/images/nasa-goddard.png' />") );
+	this.$a.attr("title", "Map visualization credit to NASA's Goddard Space Flight Center");
 	
-	this.poem.$div.append( $a );
+	this.poem.$div.append( this.$a );
+	
+	this.poem.emitter.on('destroy', this.destroy.bind(this));
 	
 	this.start();
 };
@@ -44,7 +48,7 @@ Earth.prototype = {
 	
 		this.poem.scene.add( this.mesh );
 	
-		this.poem.on( 'update', this.update.bind(this) );
+		this.poem.emitter.on( 'update', this.update.bind(this) );
 		
 	},
 	
@@ -56,6 +60,17 @@ Earth.prototype = {
 		// this.video.muted = true;
 		this.video.controls = true;
 		this.video.loop = true;
+		this.video.muted = muter.muted ? 0 : 1;
+		
+		muter.on('mute', function() {
+			this.video.muted = true;
+		}.bind(this));
+		
+		muter.on('unmute', function() {
+			this.video.muted = false;
+		}.bind(this));
+		
+		
 		
 		// this.poem.$div.append( this.video );
 		
@@ -122,6 +137,13 @@ Earth.prototype = {
 		
 		this.mesh.rotation.y += e.dt * 0.00005;
 		
+	},
+	
+	destroy : function() {
+		this.$a.remove();
+		this.video.pause();
+		destroyMesh( this.mesh );
+		this.texture.dispose();
 	}
 	
 };

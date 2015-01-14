@@ -5,7 +5,7 @@ var poem;
 var isOpen = false;
 var $body;
 
-routing.on( 'newLevel', function( e ) {
+routing.emitter.on( 'load', function( e ) {
 
 	poem = e.poem;
 	
@@ -22,7 +22,7 @@ var menu = {
 		
 		$('#menu-button').off().click( this.toggle );
 		
-		routing.on( 'newLevel', menu.close );
+		routing.emitter.on( 'load', menu.close );
 		
 		$(window).on('keydown', function toggleMenuHandler( e ) {
 	

@@ -130,7 +130,7 @@ UniformPositionalMatrices.prototype = {
 		this.poem.scene.add( this.object );
 	
 	
-		this.poem.on( 'update', this.update.bind(this) );
+		this.poem.emitter.on( 'update', this.update.bind(this) );
 		
 	},
 	
@@ -139,8 +139,7 @@ UniformPositionalMatrices.prototype = {
 	},
 	
 	update : function(e) {
-
-		this.uniforms.time.value = e.time;
+		this.uniforms.time.value = e.now;
 		
 	}
 	

@@ -29,8 +29,8 @@ var Sky = function( poem, properties ) {
 	var mesh = new THREE.Mesh( geometry, material );
 	poem.scene.add( mesh );
 	
-	poem.on('update', function( e ) {
-		shader.uniforms.time.value = e.time;
+	poem.emitter.on('update', function( e ) {
+		shader.uniforms.time.value = e.now;
 		mesh.position.copy( poem.camera.object.position );
 	});
 };

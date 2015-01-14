@@ -11,22 +11,22 @@ module.exports = {
 			useVR : true
 		}
 	},
-	objects : {
+	components : {
 		pointcloud : {
-			object: require("../js/demos/SineGravityCloud"),
+			construct: require("../js/demos/SineGravityCloud"),
 			properties: {
 				count: 50 * 1000,
 				pointSize : 4
 			}
 		},
 		controls : {
-			object: require("../js/components/cameras/Orientation"),
+			construct: require("../js/components/cameras/Orientation"),
 		},
 		cameraRotation : {
-			object: require("../js/components/cameras/RotateAroundOrigin"),
+			construct: require("../js/components/cameras/RotateAroundOrigin"),
 		},
 		grid : {
-			object: require("../js/demos/Grid"),
+			construct: require("../js/demos/Grid"),
 		}
 	}
 };

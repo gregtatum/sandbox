@@ -26,7 +26,7 @@ var Spheres = function(poem, properties) {
 		this.meshes.push( mesh );
 	}
 	
-	this.poem.on( 'update', this.update.bind(this) );
+	this.poem.emitter.on( 'update', this.update.bind(this) );
 	
 };
 

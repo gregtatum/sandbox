@@ -41,7 +41,7 @@ var Music = function( poem, properties ) {
 
 		});
 	
-		poem.on('destroy', function() {
+		poem.emitter.on('destroy', function() {
 			
 			if( audio ) {
 				audio.pause();

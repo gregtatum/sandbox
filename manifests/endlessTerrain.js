@@ -12,37 +12,37 @@ module.exports = {
 			useEffects : true
 		}
 	},
-	objects : {
+	components : {
 		endlessTerrain : {
-			object: require("../js/demos/EndlessTerrain"),
+			construct: require("../js/demos/EndlessTerrain"),
 			properties: {
 				positionY: -250
 			}
 		},
 		swivelCamera : {
-			object: require("../js/components/cameras/Swivel"),
+			construct: require("../js/components/cameras/Swivel"),
 		},
 		constantMove : {
-			object: require("../js/components/cameras/ConstantMove"),
+			construct: require("../js/components/cameras/ConstantMove"),
 			properties: {
 				z: -2
 			}
 		},
 		cloudsTop : {
-			object: require("../js/components/ambiance/Clouds"),
+			construct: require("../js/components/ambiance/Clouds"),
 			properties: {
 				height: 200,
 				rotation: Math.PI / 2
 			}
 		},
 		music : {
-			object: require("../js/sound/Music"),
+			construct: require("../js/sound/Music"),
 			properties: {
 				url: "https://soundcloud.com/synaptyx/mech-attack"
 			}
 		}
 		// stats : {
-		// 	object: require("../js/components/utils/Stats")
+		// 	construct: require("../js/components/utils/Stats")
 		// }
 	}
 };

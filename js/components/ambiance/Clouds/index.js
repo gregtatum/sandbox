@@ -59,9 +59,9 @@ var Clouds = function( poem, properties ) {
 	
 	shader.uniforms.texture.value = setupTexture( mesh, poem.scene );
 	
-	poem.on('update', function( e ) {
+	poem.emitter.on('update', function( e ) {
 		var cameraPosition = poem.camera.object.position;
-		shader.uniforms.time.value = e.time;
+		shader.uniforms.time.value = e.now;
 		mesh.position.set(
 			cameraPosition.x,
 			mesh.position.y,
