@@ -2,7 +2,7 @@ var random = require('../utils/random')
   , loadTexture	= require('../utils/loadTexture')
   , RSVP = require('rsvp')
   , destroyMesh = require('../utils/destroyMesh')
-  , muter = require('../sound/muter');
+  , mute = require('../sound/mute');
 
 var Earth = function(poem, properties) {
 	
@@ -60,13 +60,13 @@ Earth.prototype = {
 		// this.video.muted = true;
 		this.video.controls = true;
 		this.video.loop = true;
-		this.video.muted = muter.muted ? 0 : 1;
+		this.video.muted = mute.muted() ? 0 : 1;
 		
-		muter.on('mute', function() {
+		mute.emitter.on('mute', function() {
 			this.video.muted = true;
 		}.bind(this));
 		
-		muter.on('unmute', function() {
+		mute.emitter.on('unmute', function() {
 			this.video.muted = false;
 		}.bind(this));
 		

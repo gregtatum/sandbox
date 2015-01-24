@@ -371,7 +371,12 @@ a:hover {
 	bottom:1.3em;
 	left:1em;
 }
-
+.poem-mute-svg {
+    width: 65px;
+}
+.poem-menu-bottom {
+    text-align: right;
+}
 @media screen and (min-width:1200px) {
 	.info {
 		font-size:1.3em;

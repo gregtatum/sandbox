@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var context = window.AudioContext || window.webkitAudioContext || null;
-var muter = require('./muter');
+var mute = require('./mute');
 
 var SoundGenerator = function() {
 	
@@ -13,8 +13,8 @@ var SoundGenerator = function() {
 	this.totalCreated++;
 	this.totalCreatedSq = this.totalCreated * this.totalCreated;
 	
-	muter.on('mute', this.handleMute.bind(this));
-	muter.on('unmute', this.handleUnMute.bind(this));
+	mute.emitter.on('mute', this.handleMute.bind(this));
+	mute.emitter.on('unmute', this.handleUnMute.bind(this));
 	
 };
 
@@ -152,7 +152,7 @@ SoundGenerator.prototype = {
 		
 		this.lastGainValue = gain;
 		
-		if( !this.enabled || muter.muted ) return;
+		if( !this.enabled || mute.muted() ) return;
 		// Math.max( Math.abs( gain ), 1);
 		// gain / this.totalCreatedSq;
 				

@@ -1,6 +1,6 @@
 var MeshGroup = require('./MeshGroup')
   , random = require('../../utils/random')
-  , twoπ = Math.PI * 2;
+  , twoPi = Math.PI * 2;
 
 var MeshGroupBoxDemo = function( poem, properties ) {
 	
@@ -38,9 +38,9 @@ MeshGroupBoxDemo.prototype = {
 			box.position.y = random.range( -100, 100 );
 			box.position.z = random.range( -100, 100 );
 			
-			box.rotation.x = random.range( -twoπ, twoπ );
-			box.rotation.y = random.range( -twoπ, twoπ );
-			box.rotation.z = random.range( -twoπ, twoπ );
+			box.rotation.x = random.range( -twoPi, twoPi );
+			box.rotation.y = random.range( -twoPi, twoPi );
+			box.rotation.z = random.range( -twoPi, twoPi );
 			
 			box.velocity = new THREE.Vector3(
 				
@@ -52,9 +52,9 @@ MeshGroupBoxDemo.prototype = {
 			
 			box.spin = new THREE.Vector3(
 				
-				random.range( -twoπ, twoπ ),
-				random.range( -twoπ, twoπ ),
-				random.range( -twoπ, twoπ )
+				random.range( -twoPi, twoPi ),
+				random.range( -twoPi, twoPi ),
+				random.range( -twoPi, twoPi )
 				
 			).multiplyScalar(0.01);
 			

@@ -1,10 +1,10 @@
-require('./postprocessing');
-require('./shaders/CopyShader');
-require('./shaders/FilmShader');
-require('./shaders/ConvolutionShader');
-require('./shaders/FXAAShader');
-var chromaticAberrationShader = require('./postprocessing/chromaticAberration');
-var StereoEffect = require('./vendor/StereoEffect');
+require('../postprocessing');
+require('../shaders/CopyShader');
+require('../shaders/FilmShader');
+require('../shaders/ConvolutionShader');
+require('../shaders/FXAAShader');
+var chromaticAberrationShader = require('../postprocessing/chromaticAberration');
+var StereoEffect = require('../vendor/StereoEffect');
 
 //Singletons
 var _ratio = _.isNumber( window.devicePixelRatio ) ? window.devicePixelRatio : 1;

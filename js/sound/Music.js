@@ -1,5 +1,5 @@
 var soundcloud = require('soundcloud-badge');
-var muter = require('./muter');
+var mute = require('./mute');
 
 var soundOff = false;
 
@@ -24,7 +24,7 @@ var Music = function( poem, properties ) {
 			
 			//Nullify callbacks that are out of order
 			if( currentTime !== timesCalledSoundcloud ) return;
-			if( muter.muted ) return;
+			if( mute.muted() ) return;
 
 			if( err ) throw err;
 
@@ -54,7 +54,7 @@ var Music = function( poem, properties ) {
 		
 	};
 	
-	if( !muter.muted ) {
+	if( !mute.muted() ) {
 		
 		fetchAndPlaySong();
 		fetchAndPlaySong = null;
@@ -65,7 +65,7 @@ var Music = function( poem, properties ) {
 
 Music.prototype.muted = false;
 
-muter.on('mute', function muteMusic( e ) {
+mute.emitter.on('mute', function muteMusic( e ) {
 
 	if( audio ) audio.pause();
 	
@@ -73,7 +73,7 @@ muter.on('mute', function muteMusic( e ) {
 
 });
 
-muter.on('unmute', function unmuteMusic( e ) {
+mute.emitter.on('unmute', function unmuteMusic( e ) {
 
 	if( audio ) audio.play();
 

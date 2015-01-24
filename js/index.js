@@ -1,9 +1,9 @@
-require('./utils/ThreeConsole');
+var manifests = require('../manifests');
 
-var routing = require('./routing');
-var ui = require('./ui');
+var routing = require('./core/routing');
+var ui = require('./core/ui')( manifests );
 
 routing.start(
-	require('./Poem'),
-	require('../manifests')
+	require('./core/poem'),
+	manifests
 );

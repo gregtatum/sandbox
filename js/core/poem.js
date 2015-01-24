@@ -1,4 +1,4 @@
-var Camera = require('./components/cameras/Camera');
+var Camera = require('../components/cameras/Camera');
 var renderer = require('./renderer');
 var createLoop = require('poem-loop');
 
@@ -49,7 +49,10 @@ module.exports = function poem( manifest, loaderEmitter ) {
 		scene : scene,
 		ratio : _ratio,
 		camera : camera,
-		$div : $("#container")
+		$div : $("#container"),
+		loop : loop,
+		start : loop.start,
+		stop : loop.stop
 	};
 	
 };
