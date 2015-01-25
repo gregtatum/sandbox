@@ -24,36 +24,6 @@
 	
 </head>
 <body>
-	
-	<div id='menu' class='menu'>
-		
-		<a class="burger-wrapper" href="#menu" id="menu-button" title='Hit ESC key to open/close'>
-			<div class="burger"></div>
-		</a>
-		<h1 class='menu-title'>Three.js Sandbox</h1>
-		
-		<div class='menu-middle'>
-			<!-- <a href='#/level/titles' class='menu-level menu-level-titles'>Main Titles</a> -->
-			<div class='menu-levels' id='menu-levels'></div>
-		</div>
-		
-		<script type='text/template' id='menu-level-template'>
-			<a href='#/level/<%- slug %>' class='menu-level'>
-				<h2 class='menu-level-name'><%- name %></h1>
-				<div class='menu-level-description'><%- description %></div>
-			</a>
-		</script>
-		
-		<div class='menu-bottom'>
-			
-			<div class='menu-bottom-mute'>
-				<a href='#mute' id='mute' title='Hit S key to mute'>
-					<img />
-				</a>
-			</div>
-		</div>
-		
-	</div>
 		
 	<div class='container' id='container'>
 		
@@ -73,28 +43,7 @@
 			<p>Sorry, it looks like WebGL is not supported by your browser or graphics card.</p>
 			<p><a href='http://get.webgl.org/'>Find out more about WebGL support here.</a></p>
 		</div>
-		
-		<!--
-		<div class='title' id='title'>
-			<img src='' class='title-logo'/>
-			<div class='title-left'>
-				<a href='#keys'>
-					<img src='assets/images/keys.png'/><br/>
-					Mash Keys
-				</a>
-			</div>
-			<div class='title-right'>
-				<a href='#tilt'>
-					<img src='assets/images/tilt.png'/><br/>
-					Tilt + Tap
-				</a>
-			</div>
-			<div class='title-credits'>
-				A WebGL game by <a href='//gregtatum.com/'>Greg Tatum</a>
-			</div>
-		</div>
-		-->
-			
+					
 		<div class='container-blocker' id='container-blocker'></div>
 		
 	</div>

@@ -24,7 +24,12 @@ var Music = function( poem, properties ) {
 			
 			//Nullify callbacks that are out of order
 			if( currentTime !== timesCalledSoundcloud ) return;
-			if( mute.muted() ) return;
+			if( mute.muted() ) {
+				$('.npm-scb-white').hide();
+				return;
+			} else {
+				$('.npm-scb-white').show();
+			}
 
 			if( err ) throw err;
 

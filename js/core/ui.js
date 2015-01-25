@@ -1,13 +1,16 @@
 var poemMenu = require('poem-menu');
 var	routing	= require('./routing');
 var mute = require('../sound/mute');
-var manifestLoader = require('./manifestLoader');
+var manifestToPoem = require('./manifestToPoem');
+
+window.mute = mute;
 
 function handlers( menu ) {
 	
 	var poem;
 
-	manifestLoader.emitter.on( 'load', function( e ) {
+	console.log('menu handlers');
+	manifestToPoem.emitter.on( 'load', function( e ) {
 		poem = e.graph;
 	});
 
@@ -26,6 +29,7 @@ function handlers( menu ) {
 module.exports = function startUI( manifests ) {
 	
 	var menu = poemMenu( manifests, {
+		top: "Three.js Sandbox",
 		bottom : mute.el
 	});
 

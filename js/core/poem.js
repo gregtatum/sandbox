@@ -37,7 +37,7 @@ module.exports = function poem( manifest, loaderEmitter ) {
 	
 	renderer( config.renderer, scene, camera.object, emitter );
 	
-	loaderEmitter.on( 'load', loop.start );
+	loaderEmitter.once( 'load', loop.start );
 	loaderEmitter.on( 'unload', function() {
 		loop.stop();
 		emitter.emit('destroy');

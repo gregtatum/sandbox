@@ -1,6 +1,6 @@
 var crossroads = require('crossroads');
 var hasher = require('hasher');
-var manifestLoader = require('./manifestLoader');
+var manifestToPoem = require('./manifestToPoem');
 
 var _baseUrl = '/sandbox';
 var _defaultLevel = "sineGravityCloud";
@@ -8,14 +8,14 @@ var _defaultLevel = "sineGravityCloud";
 var routing = {
 	
 	start : function( Poem, manifests ) {
-		manifestLoader.init( Poem, manifests );
+		manifestToPoem.init( Poem, manifests );
 		
 		function parseHash( newHash, oldHash ){
 			crossroads.parse( newHash );
 		}
 		
-		crossroads.addRoute( '/',				routing.showMainTitles );
-		crossroads.addRoute( 'level/{name}',	routing.loadUpALevel );
+		crossroads.addRoute( '/',		routing.showMainTitles );
+		crossroads.addRoute( '/{name}',	routing.loadUpALevel );
 	
 		crossroads.addRoute( /.*/, function reRouteToMainTitlesIfNoMatch() {
 			hasher.replaceHash('');
@@ -31,7 +31,7 @@ var routing = {
 
 		_gaq.push( [ '_trackPageview', _baseUrl ] );
 	
-		manifestLoader.load( _defaultLevel );		
+		manifestToPoem.load( _defaultLevel );		
 
 	},
 
@@ -39,10 +39,10 @@ var routing = {
 
 		_gaq.push( [ '_trackPageview', _baseUrl+'/#level/'+levelName ] );
 	
-		var levelFound = manifestLoader.load( levelName );
+		var levelFound = manifestToPoem.load( levelName );
 	
 		if( !levelFound ) {
-			manifestLoader.load( _defaultLevel );
+			manifestToPoem.load( _defaultLevel );
 		}
 		
 	}

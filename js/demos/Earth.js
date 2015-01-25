@@ -60,17 +60,12 @@ Earth.prototype = {
 		// this.video.muted = true;
 		this.video.controls = true;
 		this.video.loop = true;
-		this.video.muted = mute.muted() ? 0 : 1;
+		this.video.muted = mute.muted();
 		
-		mute.emitter.on('mute', function() {
-			this.video.muted = true;
+		
+		mute.emitter.on('change', function( muted ) {
+			this.video.muted = muted;
 		}.bind(this));
-		
-		mute.emitter.on('unmute', function() {
-			this.video.muted = false;
-		}.bind(this));
-		
-		
 		
 		// this.poem.$div.append( this.video );
 		
