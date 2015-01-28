@@ -35,6 +35,25 @@ THREE.Console = {
 		
 	},
 	
+	face : function( faceOrList ) {
+		
+		var results = [];
+		var list;
+		
+		if( faceOrList instanceof THREE.Face3 ) {
+			list = [ faceOrList ];
+		} else {
+			list = faceOrList;
+		}
+		
+		console.table(
+			_.map( list, function( face ) {
+				return [face.a, face.b, face.c];
+			})
+		);
+		
+	},
+	
 	matrix : function( matrixOrElements, decimalPlaces ) {
  
 		var i, j, el, els, results;
@@ -42,7 +61,7 @@ THREE.Console = {
 		results = [];
 		j = 0;
 		
-		if( matrixOrElements instanceof THREE.Matrix3 || matrixOrElements instanceof THREE.Matrix3 ) {
+		if( matrixOrElements instanceof THREE.Matrix4 ) {
 			els = matrixOrElements.elements;
 		} else {
 			els = matrixOrElements;
@@ -70,5 +89,9 @@ THREE.Console = {
  
 	},
 };
+
+window.consoleMatrix = THREE.Console.matrix;
+window.consoleVector = THREE.Console.vector;
+window.consoleFace = THREE.Console.face;
 
 module.exports = THREE.Console;

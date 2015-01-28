@@ -1,16 +1,19 @@
 var glslify = require('glslify');
 var createShader = require('three-glslify')(THREE);
 
-function setupTexture( mesh, scene ) {
+function setupTexture( mesh, scene, material ) {
 	
 	var img = new Image();
 	var texture = new THREE.Texture( img );
 	img.src = 'assets/images/cloud1024.png';
 	
+	$('body').append(img);
+	
 	texture.wrapS = THREE.RepeatWrapping;
 	texture.wrapT = THREE.RepeatWrapping;
 	
 	$(img).on('load', function() {
+		material.needsUpdate = true;
 		texture.needsUpdate = true;
 		scene.add( mesh );
 	});
@@ -20,7 +23,7 @@ function setupTexture( mesh, scene ) {
 }
 
 var Clouds = function( poem, properties ) {
-	
+
 	var config = _.extend({
 		width		: 500,
 		offset		: new THREE.Vector2(1,1),
@@ -57,7 +60,7 @@ var Clouds = function( poem, properties ) {
 	mesh.position.y = config.height;
 	mesh.scale.multiplyScalar( 10 );
 	
-	shader.uniforms.texture.value = setupTexture( mesh, poem.scene );
+	shader.uniforms.texture.value = setupTexture( mesh, poem.scene, material );
 	
 	poem.emitter.on('update', function( e ) {
 		var cameraPosition = poem.camera.object.position;

@@ -1,3 +1,5 @@
+require('./utils/ThreeConsole');
+
 var manifests = require('../manifests');
 
 var routing = require('./core/routing');

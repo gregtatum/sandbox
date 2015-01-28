@@ -5,6 +5,9 @@ module.exports = {
 	config : {
 		camera : {
 			x : -400
+		},
+		renderer : {
+			useEffects : false
 		}
 	},
 	components : {
