@@ -69,7 +69,6 @@ function updateModuloMeshGrid( cameraPosition, meshes, width ) {
 	var halfWidth = width / 2;
 	
 	return function() {
-		
 		var position;
 		
 		for( var i=0; i < il; i++ ) {

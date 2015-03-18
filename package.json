@@ -2,9 +2,6 @@
   "name": "sandbox",
   "version": "0.0.1",
   "gulpfile": {
-    "transforms": [
-      "glslify"
-    ],
     "paths": {
       "entry": "./js",
       "js": [
@@ -32,6 +29,7 @@
   },
   "devDependencies": {
     "crossroads": "^0.12.0",
+    "events": "^1.0.2",
     "glsl-hsv2rgb": "^1.0.0",
     "glsl-noise": "0.0.0",
     "glsl-random": "0.0.4",
@@ -41,12 +39,20 @@
     "hasher": "^1.2.0",
     "localforage": "^1.2.0",
     "perlin-simplex": "0.0.2",
+    "poem-loop": "^1.0.4",
+    "poem-manifests": "^1.2.2",
+    "poem-menu": "^1.0.2",
+    "poem-mute": "^1.0.2",
     "rsvp": "^3.0.14",
     "soundcloud-badge": "0.0.0",
-    "three-glslify": "^2.0.1",
-    "events": "^1.0.2"
+    "three-glslify": "^2.0.1"
   },
   "dependencies": {
     "underscore": "^1.7.0"
+  },
+  "browserify": {
+    "transform": [
+      "glslify"
+    ]
   }
 }

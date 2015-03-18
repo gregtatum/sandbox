@@ -21,7 +21,7 @@ var createFog = function( scene, properties, cameraPositionZ ) {
 };
 
 module.exports = function poem( manifest, loaderEmitter ) {
-	
+
 	var config = _.extend({
 		camera : null,
 		fog : null,
