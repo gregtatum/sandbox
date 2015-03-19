@@ -1,10 +1,10 @@
 module.exports = {
-	name : "Spheres",
-	description : "Hello World",
+	name : "Tetrahedra",
+	description : "Live coding demo",
 	order : 0,
 	config : {
 		camera : {
-			x : -100,
+			x : -300,
 			near : 0.1,
 			far : 10000,
 			fov : 40
@@ -20,15 +20,15 @@ module.exports = {
 		mouse : {
 			function: require('../js/components/hids/mouse-tracker')
 		},
-		grid : {
-			construct: require("../js/demos/Grid"),
-		},
-		spheres : {
-			function: require('../js/demos/Spheres'),
+		// grid : {
+		// 	construct: require("../js/demos/Grid"),
+		// },
+		tetrahedra : {
+			function: require('../js/demos/tetrahedra'),
 			properties: {
-				dispersion: 1000,
+				dispersion: 150,
 				radius: 10,
-				count: 500,
+				count: 100,
 				mouseRef: "mouse"
 			}
 		},
@@ -44,7 +44,6 @@ module.exports = {
 				rotation: -Math.PI / 2
 			}
 		},
-		
 
 		cloudsBottom : {
 			construct: require("../js/components/ambiance/Clouds"),

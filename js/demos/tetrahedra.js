@@ -1,4 +1,5 @@
-var Random = require('../utils/random');
+var Random = require('../utils/random')
+  , lerp = require('lerp')
 
 var internals = {
 	
@@ -18,6 +19,10 @@ var internals = {
 			mesh.rotation.y = Random.range( -Math.PI, Math.PI )
 			mesh.rotation.z = Random.range( -Math.PI, Math.PI )
 			
+			// mesh.velocity = Random.range( config.velocity * 0.6, config.velocity * 1 )
+			mesh.velocity = config.velocity
+			
+			mesh.flee = 1
 			
 			mesh.direction = new THREE.Vector3(
 				Random.range( -1, 1 ),
@@ -40,9 +45,9 @@ var internals = {
 		return meshes
 	},
 	
-	physicsMotionFn : function( meshes, velocity, turnSpeed ) {
+	physicsMotionFn : function( meshes, config ) {
 		
-		var scratch = new THREE.Vector3()
+		var targetDiff = new THREE.Vector3()
 		
 		return function(e) {
 			
@@ -50,15 +55,21 @@ var internals = {
 				
 				var mesh = meshes[i]
 				
-				scratch.subVectors( mesh.target, mesh.position )
-				scratch.normalize()
+				targetDiff.subVectors( mesh.target, mesh.position )
+				targetDiff.normalize()
 				
-				mesh.direction.lerp( scratch, turnSpeed * e.unitDt )
+				mesh.direction.lerp( targetDiff, config.turnSpeed * e.unitDt )
+
+				mesh.flee = lerp( mesh.flee, 1, config.fleeSlowdown )
 				
-				mesh.position.x += mesh.direction.x * velocity * e.unitDt
-				mesh.position.y += mesh.direction.y * velocity * e.unitDt
-				mesh.position.z += mesh.direction.z * velocity * e.unitDt
+				mesh.position.x += mesh.direction.x * mesh.velocity * mesh.flee * e.unitDt
+				mesh.position.y += mesh.direction.y * mesh.velocity * mesh.flee * e.unitDt
+				mesh.position.z += mesh.direction.z * mesh.velocity * mesh.flee * e.unitDt
 				
+				
+				// if( Math.random() > 0.98 ) {
+				// 	mesh.target = _.sample( meshes ).position
+				// }
 			}
 		}
 	},
@@ -77,7 +88,7 @@ var internals = {
 		}
 	},
 	
-	raycastFn : function( meshes, mouse, camera ) {
+	raycastFn : function( meshes, mouse, camera, config ) {
 		
 		var raycaster = new THREE.Raycaster();
 		var range = 30
@@ -91,8 +102,8 @@ var internals = {
 				var mesh = meshes[i]
 				var distance = raycaster.ray.distanceToPoint( mesh.position )
 				
-				if( distance < range ) {
-					mesh.position.y += 5 * (range - distance) / range
+				if( distance < config.mouseRange ) {
+					mesh.flee += config.fleeSpeed * (config.mouseRange - distance) / config.mouseRange
 				}
 			}
 		}
@@ -107,7 +118,10 @@ module.exports = function createSpheres( poem, properties ) {
 	  , radius : 1
 	  , mouseRef : "mouse"
 	  , velocity : 5
-	  , turnSpeed : 0.05
+	  , turnSpeed : 0.025
+	  , fleeSlowdown : 0.1
+	  , mouseRange : 50
+	  , fleeSpeed : 1
 	}, properties)
 	
 	var geometry = new THREE.TetrahedronGeometry( config.radius, 0 )
@@ -125,17 +139,13 @@ module.exports = function createSpheres( poem, properties ) {
 	// 	config.dispersion
 	// ))
 
-	poem.emitter.on( 'update', internals.physicsMotionFn(
-		meshes,
-		config.velocity,
-		config.turnSpeed
-		
-	))
+	poem.emitter.on( 'update', internals.physicsMotionFn( meshes, config ))
 	
 	poem.emitter.on( 'update', internals.raycastFn(
 		meshes,
 		mouse.normalizedPosition,
-		poem.camera.object
+		poem.camera.object,
+		config
 	))
 	
 }
