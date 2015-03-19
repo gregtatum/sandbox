@@ -27,6 +27,9 @@
       "svgTemplates": "./assets/svg/templates/"
     }
   },
+  "scripts" : {
+    "start" : "beefy ./js/index.js:assets/build/bundle.js --open"
+  },
   "devDependencies": {
     "crossroads": "^0.12.0",
     "events": "^1.0.2",
@@ -45,7 +48,8 @@
     "poem-mute": "^1.0.2",
     "rsvp": "^3.0.14",
     "soundcloud-badge": "0.0.0",
-    "three-glslify": "^2.0.1"
+    "three-glslify": "^2.0.1",
+    "touches": "^1.1.1"
   },
   "dependencies": {
     "underscore": "^1.7.0"

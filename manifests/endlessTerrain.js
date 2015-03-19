@@ -19,8 +19,11 @@ module.exports = {
 				positionY: -250
 			}
 		},
-		swivelCamera : {
-			construct: require("../js/components/cameras/Swivel"),
+		// swivelCamera : {
+		// 	construct: require("../js/components/cameras/Swivel"),
+		// },
+		particles : {
+			function: require('../js/components/ambiance/particles'),
 		},
 		constantMove : {
 			construct: require("../js/components/cameras/ConstantMove"),

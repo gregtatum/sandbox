@@ -304,10 +304,13 @@ var update = function( mesh ) {
 		mesh.skeletonHelper.update();
 		var now = e.now * 0.001;
 		
+		/* jshint ignore:start */
 		while( bone = bone.children[0] ) {
+			
 			bone.rotation.x = Math.sin( now ) * 0.5;
 			// bone.rotation.z = Math.sin( now  * 0.3) * 0.3;
 		}
+		/* jshint ignore:end */
 		
 	};
 };

@@ -13,6 +13,6 @@ void main() {
 	
 	float edges = 0.5 - length(vUv - 0.5);
 	
-	gl_FragColor = color * edges * vec4( 1.0, 1.0, 1.0, texel.w * texel.w * 2.5 );
+  gl_FragColor = color * edges * vec4( 1.0, 1.0, 1.0, texel.w * texel.w * 2.5 );
 	
 }

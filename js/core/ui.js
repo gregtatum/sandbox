@@ -9,7 +9,6 @@ function handlers( menu ) {
 	
 	var poem;
 
-	console.log('menu handlers');
 	manifestToPoem.emitter.on( 'load', function( e ) {
 		poem = e.graph;
 	});

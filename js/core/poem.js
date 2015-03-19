@@ -1,24 +1,27 @@
-var Camera = require('../components/cameras/Camera');
-var renderer = require('./renderer');
-var createLoop = require('poem-loop');
+var Camera = require('../components/cameras/Camera')
+var Renderer = require('./renderer')
+var CreateLoop = require('poem-loop')
 
-var _ratio = _.isNumber( window.devicePixelRatio ) ? window.devicePixelRatio : 1;
-
-var createFog = function( scene, properties, cameraPositionZ ) {
+var internals = {
 	
-	var config = _.extend({
-		color : 0x222222,
-		nearFactor : 0.5,
-		farFactor : 2
-	}, properties );
+	ratio : _.isNumber( window.devicePixelRatio ) ? window.devicePixelRatio : 1,
 	
-	scene.fog = new THREE.Fog(
-		config.color,
-		cameraPositionZ * config.nearFactor,
-		cameraPositionZ * config.farFactor
-	);
+	createFog : function( scene, properties, cameraPositionZ ) {
 	
-};
+		var config = _.extend({
+			color : 0x222222,
+			nearFactor : 0.5,
+			farFactor : 2
+		}, properties )
+	
+		scene.fog = new THREE.Fog(
+			config.color,
+			cameraPositionZ * config.nearFactor,
+			cameraPositionZ * config.farFactor
+		)
+	
+	}
+}
 
 module.exports = function poem( manifest, loaderEmitter ) {
 
@@ -26,33 +29,34 @@ module.exports = function poem( manifest, loaderEmitter ) {
 		camera : null,
 		fog : null,
 		renderer : null		
-	}, manifest.config);
+	}, manifest.config)
 	
-	var loop = createLoop();
-	var emitter = loop.emitter; // Steal the emitter for the poem
+	var loop = CreateLoop()
+	var emitter = loop.emitter // Steal the emitter for the poem
 	
-	var scene = new THREE.Scene();
-	var camera = new Camera( config.camera, scene, emitter );
-	createFog( scene, config.fog, camera.object.position.z );
+	var scene = new THREE.Scene()
+	var camera = new Camera( config.camera, scene, emitter )
 	
-	renderer( config.renderer, scene, camera.object, emitter );
+	internals.createFog( scene, config.fog, camera.object.position.z )
 	
-	loaderEmitter.once( 'load', loop.start );
+	Renderer( config.renderer, scene, camera.object, emitter )
+	
+	loaderEmitter.once( 'load', loop.start )
 	loaderEmitter.on( 'unload', function() {
-		loop.stop();
-		emitter.emit('destroy');
-	});
+		loop.stop()
+		emitter.emit('destroy')
+	})
 	
 	return {
 		emitter : emitter,
 		canvas : $("canvas")[0],
 		scene : scene,
-		ratio : _ratio,
+		ratio : internals.ratio,
 		camera : camera,
 		$div : $("#container"),
 		loop : loop,
 		start : loop.start,
 		stop : loop.stop
-	};
+	}
 	
-};
+}

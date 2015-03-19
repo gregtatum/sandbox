@@ -11,12 +11,13 @@ function setupTexture( mesh, scene, material ) {
 	
 	texture.wrapS = THREE.RepeatWrapping;
 	texture.wrapT = THREE.RepeatWrapping;
-	
+
 	$(img).on('load', function() {
 		material.needsUpdate = true;
 		texture.needsUpdate = true;
-		scene.add( mesh );
 	});
+	
+	scene.add( mesh );
 	
 	return texture;
 	
@@ -64,7 +65,7 @@ var Clouds = function( poem, properties ) {
 	
 	poem.emitter.on('update', function( e ) {
 		var cameraPosition = poem.camera.object.position;
-		shader.uniforms.time.value = e.now;
+		shader.uniforms.time.value = e.elapsed;
 		mesh.position.set(
 			cameraPosition.x,
 			mesh.position.y,

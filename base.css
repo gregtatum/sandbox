@@ -3,6 +3,7 @@ body {
 	background-color: #222;
 	margin: 0px;
 	overflow: hidden;
+    color: #999;
 }
 *, *:before, *:after {
 	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;

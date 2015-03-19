@@ -11,6 +11,7 @@
 	"laxcomma": true,
 	"node": true,
 	"devel": true,
+	"asi": true,
 	"jquery": true,
 	"sub": true,
 	"browser": true,

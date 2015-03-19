@@ -14,7 +14,7 @@ var Spheres = function(poem, properties) {
 
 	this.meshes = [];
 	
-	var i= -1; while( ++i < properties.count ) {
+	var i= -1; while( ++i < this.count ) {
 		
 		var mesh = new THREE.Mesh( this.geometry, this.material );
 		
