@@ -3,7 +3,7 @@ module.exports = {
 	// "growth-1" : require("./growth-1"),
 	// carbonDioxideEarth : require("./carbonDioxideEarth"),
 	// endlessTerrain : require("./endlessTerrain")
-	greenBlocks : require("./green-blocks")
+	spheres : require("./spheres")
 	// vr : require("./vr"),
 	// sineGravityCloud : require("./sineGravityCloud"),
 	// uniformPositionalMatrices : require("./uniformPositionalMatrices"),

@@ -3,11 +3,14 @@ var hasher = require('hasher');
 var manifestToPoem = require('./manifestToPoem');
 
 var _baseUrl = '/sandbox';
-var _defaultLevel = "sineGravityCloud";
+var _defaultLevel
 
 var routing = {
 	
 	start : function( Poem, manifests ) {
+		
+		_defaultLevel = _.first( _.keys( manifests ) )
+		
 		manifestToPoem.init( Poem, manifests );
 		
 		function parseHash( newHash, oldHash ){

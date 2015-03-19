@@ -34,7 +34,7 @@ var internals = {
 		}
 	},
 	
-	raypickingFn : function( meshes, mouse, camera ) {
+	raycastFn : function( meshes, mouse, camera ) {
 		
 		var raycaster = new THREE.Raycaster();
 		var range = 30
@@ -53,10 +53,7 @@ var internals = {
 				}
 			}
 		}
-	},
-	
-	
-	
+	}
 }
 
 module.exports = function createSpheres( poem, properties ) {
@@ -79,7 +76,7 @@ module.exports = function createSpheres( poem, properties ) {
 		config.dispersion
 	))
 	
-	poem.emitter.on( 'update', internals.raypickingFn(
+	poem.emitter.on( 'update', internals.raycastFn(
 		meshes,
 		mouse.normalizedPosition,
 		poem.camera.object

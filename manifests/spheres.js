@@ -1,6 +1,6 @@
 module.exports = {
-	name : "Green Blocks",
-	description : "A Live Coding Demo",
+	name : "Spheres",
+	description : "Hello World",
 	order : 0,
 	config : {
 		camera : {
@@ -20,14 +20,6 @@ module.exports = {
 		mouse : {
 			function: require('../js/components/hids/mouse-tracker')
 		},
-		cloudsTop : {
-			construct: require("../js/components/ambiance/Clouds"),
-			properties: {
-				width: 2000,
-				height: 1000,
-				rotation: -Math.PI / 2
-			}
-		},
 		grid : {
 			construct: require("../js/demos/Grid"),
 		},
@@ -40,7 +32,15 @@ module.exports = {
 				mouseRef: "mouse"
 			}
 		}
-		
+
+		// cloudsTop : {
+		// 	construct: require("../js/components/ambiance/Clouds"),
+		// 	properties: {
+		// 		width: 2000,
+		// 		height: 1000,
+		// 		rotation: -Math.PI / 2
+		// 	}
+		// },
 		// music : {
 		// 	construct: require("../js/sound/Music"),
 		// 	properties: {
