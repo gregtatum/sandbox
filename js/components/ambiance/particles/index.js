@@ -67,7 +67,7 @@ var internals = {
 		var p = LoadTexture( "assets/images/sinegravitycloud.png", material.uniforms.texture, "value" ).then(function() {
 
 			poem.scene.add( mesh )
-			poem.on('update', internals.updateFn( poem, mesh ))
+			poem.emitter.on('update', internals.updateFn( poem, mesh ))
 		})
 		
 		return mesh

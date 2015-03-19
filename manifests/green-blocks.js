@@ -17,6 +17,9 @@ module.exports = {
 		controls : {
 			construct: require("../js/components/cameras/Controls"),
 		},
+		mouse : {
+			function: require('../js/components/hids/mouse-tracker')
+		},
 		cloudsTop : {
 			construct: require("../js/components/ambiance/Clouds"),
 			properties: {
@@ -29,11 +32,12 @@ module.exports = {
 			construct: require("../js/demos/Grid"),
 		},
 		spheres : {
-			construct: require('../js/demos/Spheres'),
+			function: require('../js/demos/Spheres'),
 			properties: {
 				dispersion: 50,
 				radius: 5,
-				count: 10
+				count: 10,
+				mouseRef: "mouse"
 			}
 		}
 		

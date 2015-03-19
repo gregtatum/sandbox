@@ -1,49 +1,88 @@
-var random = require('../utils/random');
+var Random = require('../utils/random');
 
-var Spheres = function(poem, properties) {
+var internals = {
 	
-	this.poem = poem;
-
-	this.count = properties.count > 0 ? properties.count : 10;
-	this.dispersion = properties.dispersion || 10;
-	this.radius = properties.radius > 0 ? properties.radius : 1;
-	
-	this.geometry = new THREE.SphereGeometry( this.radius, 32, 32 );
-	this.material = new THREE.MeshBasicMaterial( { color : 0xff0000 } );
-	
-
-	this.meshes = [];
-	
-	var i= -1; while( ++i < this.count ) {
+	createMeshes : function( scene, geometry, material, config ) {
 		
-		var mesh = new THREE.Mesh( this.geometry, this.material );
+		var meshes = []
 		
-		mesh.position.x = random.range( -this.dispersion, this.dispersion );
-		mesh.position.y = random.range( -this.dispersion, this.dispersion );
-		mesh.position.z = random.range( -this.dispersion, this.dispersion );
+		for( var i=0; i < config.count; i++ ) {
 		
-		this.poem.scene.add( mesh );
-		this.meshes.push( mesh );
-	}
-	
-	this.poem.emitter.on( 'update', this.update.bind(this) );
-	
-};
-
-module.exports = Spheres;
-
-Spheres.prototype = {
-	
-	update : function(e) {
+			var mesh = new THREE.Mesh( geometry, material )
 		
-		var i= -1; while( ++i < this.count ) {
+			mesh.position.x = Random.range( -config.dispersion, config.dispersion )
+			mesh.position.y = Random.range( -config.dispersion, config.dispersion )
+			mesh.position.z = Random.range( -config.dispersion, config.dispersion )
 		
-			this.meshes[i].position.x += random.range( -0.0005, 0.0005 ) * this.dispersion * e.dt;
-			this.meshes[i].position.y += random.range( -0.0005, 0.0005 ) * this.dispersion * e.dt;
-			this.meshes[i].position.z += random.range( -0.0005, 0.0005 ) * this.dispersion * e.dt;
-		
+			scene.add( mesh )
+			meshes.push( mesh )
 		}
 		
-	}
+		return meshes
+	},
 	
-};
+	brownianMotionFn : function( meshes, dispersion ) {
+		
+		return function(e) {
+			
+			for( var i=0; i < meshes.length; i++ ) {
+				
+				meshes[i].position.x += Random.range( -0.0005, 0.0005 ) * dispersion * e.dt
+				meshes[i].position.y += Random.range( -0.0005, 0.0005 ) * dispersion * e.dt
+				meshes[i].position.z += Random.range( -0.0005, 0.0005 ) * dispersion * e.dt
+			}
+		}
+	},
+	
+	raypickingFn : function( meshes, mouse, camera ) {
+		
+		var raycaster = new THREE.Raycaster();
+		var range = 30
+		
+		return function(e) {
+			
+			raycaster.setFromCamera( mouse, camera )
+			
+			for( var i = 0; i < meshes.length; i++ ) {
+				
+				var mesh = meshes[i]
+				var distance = raycaster.ray.distanceToPoint( mesh.position )
+				
+				if( distance < range ) {
+					mesh.position.y += 5 * (range - distance) / range
+				}
+			}
+		}
+	},
+	
+	
+	
+}
+
+module.exports = function createSpheres( poem, properties ) {
+	
+	var config = _.extend({
+		count : 10
+	  , dispersion : 10
+	  , radius : 1
+	  , mouseRef : "mouse"
+	}, properties)
+	
+	var geometry = new THREE.SphereGeometry( config.radius, 32, 32 )
+	var material = new THREE.MeshBasicMaterial( { color : 0xff0000 } )
+	var meshes = internals.createMeshes( poem.scene, geometry, material, config )
+	
+	var mouse = poem[config.mouseRef]
+
+	poem.emitter.on( 'update', internals.brownianMotionFn(
+		meshes,
+		config.dispersion
+	))
+	
+	poem.emitter.on( 'update', internals.raypickingFn(
+		meshes,
+		mouse.normalizedPosition,
+		poem.camera.object
+	))
+	
+}

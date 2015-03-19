@@ -3,36 +3,39 @@ var EventEmitter = require('events').EventEmitter
 
 module.exports = function createMouseTracker( poem, config ) {
 	
-	var position = {
-		x : null
-	  , y : null
-	}
+	var pixelPosition = new THREE.Vector2()
+	var normalizedPosition = new THREE.Vector2()
 	
+	var savePosition = function(e, position) {
+		e.preventDefault()
+		
+		normalizedPosition.x =  2 * (position[0] / poem.canvas.offsetWidth) - 1
+		normalizedPosition.y = -2 * (position[1] / poem.canvas.offsetHeight) + 1
+		
+		pixelPosition.x = position[0]
+		pixelPosition.y = position[1]			
+	}
+
 	var emitter = Touches( poem.canvas, { filtered: true })
 	
-		.on('start', function(e, position) {
-			e.preventDefault()
-			position.x = position[0]
-			position.y = position[1]
-		})
+		.on('start', savePosition )
 		
-		.on('move', function(e, position) {
-			e.preventDefault()
-			position.x = position[0]
-			position.y = position[1]			
-		})
+		.on('move', savePosition)
 		
 		.on('end', function(e) {
-			position.x = null
-			position.y = null
+			pixelPosition.x = null
+			pixelPosition.y = null
+			normalizedPosition.x = null
+			normalizedPosition.y = null
 		})
 	
-	poem.on('destroy', function() {
+	poem.emitter.on('destroy', function() {
 		emitter.disable()
 	})
 	
 	return {
 		emitter : emitter
-	  , position : position
+	  , pixelPosition : pixelPosition
+	  , normalizedPosition : normalizedPosition
 	}
 }
