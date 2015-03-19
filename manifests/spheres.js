@@ -26,21 +26,35 @@ module.exports = {
 		spheres : {
 			function: require('../js/demos/Spheres'),
 			properties: {
-				dispersion: 50,
-				radius: 5,
-				count: 10,
+				dispersion: 1000,
+				radius: 10,
+				count: 500,
 				mouseRef: "mouse"
 			}
-		}
+		},
+		lights : {
+			construct: require("../js/components/lights/TrackCameraLights")
+		},
 
-		// cloudsTop : {
-		// 	construct: require("../js/components/ambiance/Clouds"),
-		// 	properties: {
-		// 		width: 2000,
-		// 		height: 1000,
-		// 		rotation: -Math.PI / 2
-		// 	}
-		// },
+		cloudsTop : {
+			construct: require("../js/components/ambiance/Clouds"),
+			properties: {
+				width: 2000,
+				height: 1000,
+				rotation: -Math.PI / 2
+			}
+		},
+		
+
+		cloudsBottom : {
+			construct: require("../js/components/ambiance/Clouds"),
+			properties: {
+				width: 2000,
+				height: -1000,
+				rotation: -Math.PI / 2,
+				offset		: new THREE.Vector2(-0.3,0.8),
+			}
+		}
 		// music : {
 		// 	construct: require("../js/sound/Music"),
 		// 	properties: {

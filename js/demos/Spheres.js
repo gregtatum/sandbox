@@ -13,13 +13,56 @@ var internals = {
 			mesh.position.x = Random.range( -config.dispersion, config.dispersion )
 			mesh.position.y = Random.range( -config.dispersion, config.dispersion )
 			mesh.position.z = Random.range( -config.dispersion, config.dispersion )
+
+			mesh.rotation.x = Random.range( -Math.PI, Math.PI )
+			mesh.rotation.y = Random.range( -Math.PI, Math.PI )
+			mesh.rotation.z = Random.range( -Math.PI, Math.PI )
+			
+			
+			mesh.direction = new THREE.Vector3(
+				Random.range( -1, 1 ),
+				Random.range( -1, 1 ),
+				Random.range( -1, 1 )
+			)
+			
+			mesh.direction.normalize()
+
+			if( i > 0 ) {
+				mesh.target = meshes[i-1].position
+			}
 		
 			scene.add( mesh )
 			meshes.push( mesh )
 		}
 		
+		meshes[0].target = meshes[ meshes.length - 1 ].position
+		
 		return meshes
 	},
+	
+	physicsMotionFn : function( meshes, velocity, turnSpeed ) {
+		
+		var scratch = new THREE.Vector3()
+		
+		return function(e) {
+			
+			for( var i=0; i < meshes.length; i++ ) {
+				
+				var mesh = meshes[i]
+				
+				scratch.subVectors( mesh.target, mesh.position )
+				scratch.normalize()
+				
+				mesh.direction.lerp( scratch, turnSpeed * e.unitDt )
+				
+				mesh.position.x += mesh.direction.x * velocity * e.unitDt
+				mesh.position.y += mesh.direction.y * velocity * e.unitDt
+				mesh.position.z += mesh.direction.z * velocity * e.unitDt
+				
+			}
+		}
+	},
+	
 	
 	brownianMotionFn : function( meshes, dispersion ) {
 		
@@ -63,17 +106,30 @@ module.exports = function createSpheres( poem, properties ) {
 	  , dispersion : 10
 	  , radius : 1
 	  , mouseRef : "mouse"
+	  , velocity : 5
+	  , turnSpeed : 0.05
 	}, properties)
 	
-	var geometry = new THREE.SphereGeometry( config.radius, 32, 32 )
-	var material = new THREE.MeshBasicMaterial( { color : 0xff0000 } )
+	var geometry = new THREE.TetrahedronGeometry( config.radius, 0 )
+	var material = new THREE.MeshLambertMaterial( {
+		color : 0x00cc33,
+		shading : THREE.FlatShading,
+		fog: false
+	} )
 	var meshes = internals.createMeshes( poem.scene, geometry, material, config )
 	
 	var mouse = poem[config.mouseRef]
 
-	poem.emitter.on( 'update', internals.brownianMotionFn(
+	// poem.emitter.on( 'update', internals.brownianMotionFn(
+	// 	meshes,
+	// 	config.dispersion
+	// ))
+
+	poem.emitter.on( 'update', internals.physicsMotionFn(
 		meshes,
-		config.dispersion
+		config.velocity,
+		config.turnSpeed
+		
 	))
 	
 	poem.emitter.on( 'update', internals.raycastFn(

@@ -38,6 +38,9 @@ module.exports = {
 				rotation: Math.PI / 2
 			}
 		},
+		stars : {
+			construct: require("../js/components/Stars"),
+		},
 		music : {
 			construct: require("../js/sound/Music"),
 			properties: {
