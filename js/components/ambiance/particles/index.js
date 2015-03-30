@@ -15,18 +15,6 @@ var internals = {
 		
 		var material = new THREE.ShaderMaterial( _.extend({
 
-			uniforms: {				
-				time:	 	{ type: "f", value:0 },
-				range:	 	{ type: "f", value:range },
-				texture:	{ type: "t", value:null },
-				color:		{ type: "c", value:color }
-			},
-			
-			attributes: {
-				size:	{ type: 'f', value: null },
-				offset:	{ type: 'v3', value: null }
-			},
-
 			blending:       THREE.AdditiveBlending,
 			depthTest:      false,
 			transparent:    true

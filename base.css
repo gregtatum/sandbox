@@ -225,6 +225,7 @@ a:hover {
 }
 .npm-scb-white {
 	position: absolute;
+	top:0;
 	width: 100%;
 	left: 3em;
 	-webkit-transition: -webkit-transform 500ms;

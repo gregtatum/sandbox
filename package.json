@@ -29,7 +29,9 @@
   },
   "scripts": {
     "start:live": "beefy ./js/index.js:assets/build/bundle.js --open --live",
-    "start": "beefy ./js/index.js:assets/build/bundle.js --open"
+    "start": "beefy ./js/index.js:assets/build/bundle.js --open",
+    "watch": "watchify ./js/index.js -o assets/build/bundle.js",
+    "build": "browserify ./js/index.js -o assets/build/bundle.js"
   },
   "devDependencies": {
     "crossroads": "^0.12.0",
@@ -51,7 +53,8 @@
     "rsvp": "^3.0.14",
     "soundcloud-badge": "0.0.0",
     "three-glslify": "^2.0.1",
-    "touches": "^1.1.1"
+    "touches": "^1.1.1",
+    "watchify": "^3.0.0"
   },
   "dependencies": {
     "underscore": "^1.7.0"

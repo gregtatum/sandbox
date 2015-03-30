@@ -19,12 +19,12 @@ module.exports = {
 				positionY: -250
 			}
 		},
-		// swivelCamera : {
-		// 	construct: require("../js/components/cameras/Swivel"),
-		// },
-		particles : {
-			function: require('../js/components/ambiance/particles'),
+		swivelCamera : {
+			construct: require("../js/components/cameras/Swivel"),
 		},
+		// particles : {
+		// 	function: require('../js/components/ambiance/particles'),
+		// },
 		constantMove : {
 			construct: require("../js/components/cameras/ConstantMove"),
 			properties: {
@@ -38,9 +38,9 @@ module.exports = {
 				rotation: Math.PI / 2
 			}
 		},
-		stars : {
-			construct: require("../js/components/Stars"),
-		},
+		// stars : {
+		// 	construct: require("../js/components/Stars"),
+		// },
 		music : {
 			construct: require("../js/sound/Music"),
 			properties: {
