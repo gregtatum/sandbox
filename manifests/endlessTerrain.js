@@ -4,7 +4,8 @@ module.exports = {
 	order : 0,
 	config : {
 		camera : {
-			x : -400,
+			x : 0,
+			z: 500,
 			near : 0.1,
 			fov : 40
 		},
@@ -14,7 +15,7 @@ module.exports = {
 	},
 	components : {
 		endlessTerrain : {
-			construct: require("../js/demos/EndlessTerrain"),
+			construct: require("../js/demos/EndlessTerrain/endless"),
 			properties: {
 				positionY: -250
 			}
@@ -22,13 +23,14 @@ module.exports = {
 		swivelCamera : {
 			construct: require("../js/components/cameras/Swivel"),
 		},
-		// particles : {
-		// 	function: require('../js/components/ambiance/particles'),
-		// },
+		particles : {
+			function: require('../js/components/ambiance/particles/particles'),
+		},
 		constantMove : {
 			construct: require("../js/components/cameras/ConstantMove"),
 			properties: {
-				z: -2
+				// z: -2
+				z: -1
 			}
 		},
 		cloudsTop : {
@@ -41,12 +43,12 @@ module.exports = {
 		// stars : {
 		// 	construct: require("../js/components/Stars"),
 		// },
-		music : {
-			construct: require("../js/sound/Music"),
-			properties: {
-				url: "https://soundcloud.com/synaptyx/mech-attack"
-			}
-		}
+		// music : {
+		// 	construct: require("../js/sound/Music"),
+		// 	properties: {
+		// 		url: "https://soundcloud.com/synaptyx/mech-attack"
+		// 	}
+		// }
 		// stats : {
 		// 	construct: require("../js/components/utils/Stats")
 		// }

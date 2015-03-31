@@ -13,13 +13,22 @@ var internals = {
 			sourceOnly: true
 		}))
 		
-		var material = new THREE.ShaderMaterial( _.extend({
+		var material = new THREE.ShaderMaterial( _.extend(shader, {
 
 			blending:       THREE.AdditiveBlending,
 			depthTest:      false,
 			transparent:    true
 
-		}, shader))
+		}))
+		
+		material.uniforms.color = {
+			type: "c",
+			value: color
+		}
+		material.uniforms.uRange = {
+			type: "f",
+			value: range
+		}
 		
 		return material
 	},
@@ -28,29 +37,32 @@ var internals = {
 		
 		var geometry = new THREE.BufferGeometry()
 
-		var offsets = new Float32Array( count * 3 )
+		var positions = new Float32Array( count * 3 )
 		var sizes = new Float32Array( count )
+		var offsets = new Float32Array( count )
 
 		for( var i = 0; i < count; i++ ) {
-
-			sizes[ i ] = sizeRange
 			
-			offsets[ i * 3 + 0 ] = Random.range( -range, range )
-			offsets[ i * 3 + 1 ] = Random.range( -range, range )
-			offsets[ i * 3 + 2 ] = Random.range( -range, range )
+			positions[ i * 3 + 0 ] = Random.range( -range, range )
+			positions[ i * 3 + 1 ] = Random.range( -range, range ) * 0.3
+			positions[ i * 3 + 2 ] = Random.range( -range, range )
 
-			sizes[ i ] = Random.range( -sizeRange, sizeRange )
+			sizes[ i ] = Random.range( sizeRange[0], sizeRange[1] )
+			offsets[ i ] = Random.range( 0, 1 )
 
 		}
 		
-		geometry.addAttribute( 'offset', new THREE.BufferAttribute( offsets, 3 ) )
+		geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) )
 		geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) )
+		geometry.addAttribute( 'aOffset', new THREE.BufferAttribute( offsets, 1 ) )
 		
+		return geometry
 	},
 	
 	createMeshAndStart : function( poem, geometry, material ) {
 		
 		var mesh = new THREE.PointCloud( geometry, material )
+		mesh.frustumCulled = false
 
 		var p = LoadTexture( "assets/images/sinegravitycloud.png", material.uniforms.texture, "value" ).then(function() {
 
@@ -65,20 +77,20 @@ var internals = {
 		
 		return function(e) {
 			
-			mesh.position.copy( poem.camera.object.position )
-			mesh.material.uniforms.time.value = e.elapsed;
+			// mesh.position.copy( poem.camera.object.position )
+			mesh.material.uniforms.elapsed.value = e.elapsed;
 		}
 	}
 }
 
 
 module.exports = function particles( poem, properties ) {
-	
+
 	var config = _.extend({
-		count:		300
-	  , color:		new THREE.Color(0xffffff)
-	  , range:		100
-	  , sizeRange:	[3,6]
+		count:		3000
+	  , color:		new THREE.Color(0x77ffff)
+	  , range:		300
+	  , sizeRange:	[3,8]
 	}, properties)
 	
 	var material = internals.createMaterial(

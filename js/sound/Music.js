@@ -11,6 +11,7 @@ var Music = function( poem, properties ) {
 
 	fetchAndPlaySong = function() {
 		
+		debugger
 		var currentTime = ++timesCalledSoundcloud;
 		
 		soundcloud({
@@ -59,12 +60,12 @@ var Music = function( poem, properties ) {
 		
 	};
 	
-	if( !mute.muted() ) {
-		
-		fetchAndPlaySong();
-		fetchAndPlaySong = null;
-		
-	}
+	setTimeout(function() {
+		if( !mute.muted() ) {
+			fetchAndPlaySong();
+			fetchAndPlaySong = null;
+		}
+	}, 1000)
 	
 };
 
