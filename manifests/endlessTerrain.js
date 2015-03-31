@@ -43,12 +43,12 @@ module.exports = {
 		// stars : {
 		// 	construct: require("../js/components/Stars"),
 		// },
-		// music : {
-		// 	construct: require("../js/sound/Music"),
-		// 	properties: {
-		// 		url: "https://soundcloud.com/synaptyx/mech-attack"
-		// 	}
-		// }
+		music : {
+			construct: require("../js/sound/Music"),
+			properties: {
+				url: "https://soundcloud.com/synaptyx/mech-attack"
+			}
+		}
 		// stats : {
 		// 	construct: require("../js/components/utils/Stats")
 		// }

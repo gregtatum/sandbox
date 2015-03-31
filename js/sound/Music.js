@@ -60,12 +60,10 @@ var Music = function( poem, properties ) {
 		
 	};
 	
-	setTimeout(function() {
-		if( !mute.muted() ) {
-			fetchAndPlaySong();
-			fetchAndPlaySong = null;
-		}
-	}, 1000)
+	if( !mute.muted() ) {
+		fetchAndPlaySong();
+		fetchAndPlaySong = null;
+	}
 	
 };
 
