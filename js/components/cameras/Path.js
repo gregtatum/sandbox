@@ -1,5 +1,7 @@
 var internals = {
 
+	//TODO compute from exposed rotation euler angle
+
 	getXRotation : (function() {
 	
 		var v = new THREE.Vector3()
