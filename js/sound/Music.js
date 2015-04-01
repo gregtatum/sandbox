@@ -11,7 +11,6 @@ var Music = function( poem, properties ) {
 
 	fetchAndPlaySong = function() {
 		
-		debugger
 		var currentTime = ++timesCalledSoundcloud;
 		
 		soundcloud({

@@ -51,6 +51,8 @@ function createMeshGrid( material, width, gridLength, totalPolygonDensity ) {
 		for( var j=0; j < gridLength; j++ ) {
 			
 			mesh = new THREE.Mesh( geometry, material );
+			mesh.frustumCulled = false
+			
 			meshGrid.add( mesh );
 			mesh.position.set(
 				i * step,
