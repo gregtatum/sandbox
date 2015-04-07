@@ -14,17 +14,28 @@ var internals = {
 		)
 	},
 	
+	updateFunctionValue : function( elapsed, prevElapsed, keyframe, action ) {
+		
+		var t = ( elapsed - keyframe.start ) / keyframe.duration
+		
+		action.obj[action.key]( Lerp(
+			action.values[0]
+		  , action.values[1]
+		  , keyframe.easing(t)
+		))
+	},
+	
 	updateObjectValueOnce : function( elapsed, prevElapsed, keyframe, action ) {
 		
-		if( keyframe.start > prevElapsed && keyframe.start <= elapsed ) {
-
+		if( keyframe.start >= prevElapsed && keyframe.start < elapsed ) {
+			
 			action.obj[action.key] = action.values
 		}
 	},
 
 	updateFunctionOnce : function( elapsed, prevElapsed, keyframe, action ) {
 		
-		if( keyframe.start > prevElapsed && keyframe.start <= elapsed ) {
+		if( keyframe.start >= prevElapsed && keyframe.start < elapsed ) {
 			
 			action.obj[action.key]( action.values )
 		}
@@ -42,7 +53,7 @@ var internals = {
 				var keyframe = keyframes[i]
 				
 				//Time is in range
-				if( elapsed >= keyframe.start && elapsed <= keyframe.end ) {
+				if( elapsed >= keyframe.start && elapsed < keyframe.end ) {
 					
 					for( var j=0; j < keyframe.actions.length; j++ ) {
 						
@@ -103,7 +114,7 @@ var internals = {
 		var update
 		
 		if( _.isFunction( obj[key] ) ) {
-			update = internals.updateFunctionOnce
+			update = _.isArray( values ) ? internals.updateFunctionValue : internals.updateFunctionOnce
 		} else {
 			//Either update the value with transitions, or just once
 			update = _.isArray( values ) ? internals.updateObjectValue : internals.updateObjectValueOnce
@@ -117,13 +128,75 @@ var internals = {
 		}
 	},
 	
+	calculateStartEndFn : function() {
+		
+		var lastEnd = 0
+		
+		return function( keyframe ) {
+			
+			var start, end
+			
+			if( _.isNumber( keyframe.start ) ) {
+				start = keyframe.start
+				end = start + keyframe.duration
+			} else {
+				start = lastEnd
+				end = start + keyframe.duration
+				lastEnd = end
+			}
+			
+			return {
+				start: start,
+				end: end
+			}
+		}		
+	},
+	
+	isolateFilter : function( keyframes ) {
+		
+		var isolate = _.find( keyframes, function( keyframe ) {
+			return keyframe.isolate
+		})
+		
+		if( isolate ) {
+			return [isolate]
+		} else {
+			return keyframes
+		}
+	},
+	
+	startHereFilter : function( keyframes ) {
+		
+		var startHere = _.find( keyframes, function( keyframe ) {
+			return keyframe.startHere
+		})
+		
+		if( !startHere ) {
+			return keyframes
+		}
+		
+		var index = keyframes.indexOf( startHere )
+		
+		return keyframes.slice(index)
+		
+	},
+	
 	processKeyframeConfig : function( poem, keyframes ) {
 		
-		return _.map( keyframes, function( keyframe ) {
-
+		var startEndCalculator = internals.calculateStartEndFn()
+		
+		var filters = _.compose(
+			internals.isolateFilter,
+			internals.startHereFilter
+		)
+		
+		return _.map( filters( keyframes ), function( keyframe ) {
+			
+			var timing = startEndCalculator( keyframe )
+			
 			return {
-				start       : (keyframe.start)
-			  , end			: (keyframe.start + keyframe.duration)
+				start       : timing.start
+			  , end			: timing.end
 			  , duration    : keyframe.duration
 			  , easing      : internals.easingFn( keyframe.easing )
 			  , actions     : _.map( keyframe.actions, _.partial( internals.createAction, poem ) )
@@ -154,6 +227,7 @@ module.exports = function( poem, properties ) {
 	var keyframes = internals.processKeyframeConfig( poem, config.keyframes )
 	var maxTime = internals.calcMaxTime( keyframes, config.loop )
 	
+	console.log(keyframes)
 	poem.emitter.on('update', internals.updateFn( poem, keyframes, maxTime, config.speed ) )
 	
 	return {}

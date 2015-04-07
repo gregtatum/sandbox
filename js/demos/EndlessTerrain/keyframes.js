@@ -1,47 +1,72 @@
 var CubicBezier = require('cubic-bezier')
-var QuickIn = CubicBezier(.12,.51,.8,.89,   32)
+var QuickIn = CubicBezier(.12,.51,.8,.85,   32)
 var Pi = Math.PI
+var HalfPi = Math.PI / 2
 
-module.exports = [
-	// {
-	// 	start:    0,
-	// 	duration: 15,
-	// 	easing:   QuickIn,
-	// 	actions:  [
-	// 		[ "camera.object.position.x", [    0,     0  ] ],
-	// 		[ "camera.object.position.y", [ -250,     0  ] ],
-	// 		[ "camera.object.position.z", [    0, -5000  ] ],
-	// 		[ "endlessTerrain.height",    [    0,     1  ] ],
-	//
-	// 		[ "pathCamera.setRotation",   { x:0, y:Pi*0.4, z:-Pi*0.2 }],
-	//
-	// 		[ "pathCamera.rotation.z",    [ -Pi*0.2, 0 ] ],
-	// 		[ "pathCamera.rotation.y",    [  Pi*0.4, -Pi*0.1 ] ]
-	// 	]
-	// },
-	{
-		start:    1,
-		duration: 10,
-		easing:   "cubicOut",
-		actions:  [
-			[ "camera.object.position.x", [     0,     0 ] ],
-			[ "camera.object.position.y", [     0,     0 ] ],
-			[ "camera.object.position.z", [ -5000, -5500 ] ],
+module.exports = {
+	loop : true,
+	speed : 1,
+	keyframes : [
+		{
+			duration: 15,
+			easing:   QuickIn,
+			actions:  [
+				[ "camera.object.position.x",     [    0,     0 ] ],
+				[ "camera.object.position.y",     [ -250,     0 ] ],
+				[ "camera.object.position.z",     [    0, -5000 ] ],
+				[ "camera.setAndUpdateFov",       [   5,    30 ] ],
+				[ "endlessTerrain.height",        [    0,     1 ] ],
+				[ "restrictedCamera.rotation.x",  [ -0.3,     0 ] ],
+				[ "restrictedCamera.rotation.y",  [ -0.3,   0.1 ] ],
+
+				[ "restrictedCamera.rotateAll",   { x:-0.3, y:-0.3, z:0 }],
+
+			]
+		},
+		{
+			duration: 10,
+			easing:   "linear",
+			isolate: false,
+			startHere: false,
+			actions:  [
+				[ "camera.object.position.x", [     0,     0 ] ],
+				[ "camera.object.position.y", [     0,     0 ] ],
+				[ "camera.object.position.z", [ -5000, -5700 ] ],
+				[ "camera.setAndUpdateFov",       [   70,    40 ] ],
 			
-			[ "pathCamera.setRotation",   { x:0, y:(Pi*0.6), z: 0 }],
+				[ "restrictedCamera.rotateAll",   { x:-0.1, y:HalfPi, z: 0 }]
+			]
+		},
+		{
+			duration: 13,
+			easing:   "linear",
+			isolate: false,
+			actions:  [
+				[ "camera.object.position.x", 600 ],
+				[ "camera.object.position.y", [     0,     0 ] ],
+				[ "camera.object.position.z", [ -5700, -6000 ] ],
+				[ "camera.setAndUpdateFov",   [   100,    50 ] ],
 			
-			// [ "pathCamera.rotation.y",    [ Pi*0.6, Pi*0.4 ] ]
+				[ "restrictedCamera.rotateAll",   { x:-Pi*0.5, y:0, z: 0 }],
+
+				[ "restrictedCamera.rotation.x",    [  -Pi*0.5, 0 ] ]
 			
-		]
-	},
-	// {
-	// 	start:    15,
-	// 	duration: 50,
-	// 	easing:   "cubicInOut",
-	// 	actions:  [
-	// 		[ "camera.object.position.x", [ -300 ,     0] ],
-	// 		[ "camera.object.position.y", [  150  , -100] ],
-	// 		[ "camera.object.position.z", [ -900 , -1800] ]
-	// 	]
-	// }
-]
+			]
+		},
+		{
+			duration: 10,
+			easing:   "linear",
+			isolate: false,
+			actions:  [
+				[ "camera.object.position.x", 600 ],
+				[ "camera.object.position.y", [     0,     0 ] ],
+				[ "camera.object.position.z", [ -5700, -6400 ] ],
+			
+				[ "restrictedCamera.rotateAll",   { x:0, y:Pi, z: 0 }],
+
+				// [ "restrictedCamera.rotation.x",    [  -0.2, 0.2 ] ]
+			
+			]
+		}
+	]
+}

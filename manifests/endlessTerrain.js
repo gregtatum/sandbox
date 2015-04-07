@@ -10,12 +10,12 @@ module.exports = {
 			fov : 40
 		},
 		renderer : {
-			useEffects : false
+			useEffects : true
 		}
 	},
 	components : {
-		pathCamera : {
-			construct: require("../js/components/cameras/Path"),
+		restrictedCamera : {
+			construct: require("../js/components/cameras/RestrictedCamera"),
 		},
 		endlessTerrain : {
 			construct: require("../js/demos/EndlessTerrain/endless"),
@@ -41,11 +41,7 @@ module.exports = {
 		},
 		animator : {
 			function: require('../js/components/animator'),
-			properties: {
-				loop : false,
-				speed : 2,
-				keyframes : require('../js/demos/EndlessTerrain/keyframes.js')
-			}
+			properties: require('../js/demos/EndlessTerrain/keyframes.js')
 		},
 		// stats : {
 		// 	construct: require("../js/components/utils/Stats")

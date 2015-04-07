@@ -33,5 +33,10 @@ Camera.prototype = {
 	resize : function() {
 		this.object.aspect = window.innerWidth / window.innerHeight;
 		this.object.updateProjectionMatrix();
+	},
+	
+	setAndUpdateFov : function( fov ) {
+		this.object.fov = fov
+		this.object.updateProjectionMatrix()
 	}
 };

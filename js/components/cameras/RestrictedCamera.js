@@ -75,7 +75,7 @@ var internals = {
 			state.mouseQuaternion.multiply( q1 )
 			state.mouseQuaternion.multiply( q2 )
 			
-			state.mouseRotation.multiplyScalar( 0.95 * e.unitDt )
+			state.mouseRotation.multiplyScalar( 0.95 * Math.min(1, e.unitDt) )
 			
 		}
 	})(),
@@ -152,24 +152,22 @@ var internals = {
 			mouseQuat.copy( easedQuat )
 			
 			cameraQuat.slerp( easedQuat, easing * e.unitDt )
-			
-			console.log(state.mouseRotation.x, state.mouseRotation.y)
 		
 		}
 	},
 	
-	setRotation : function( state, xyz ) {
-		console.log('set rotation!')
+	rotateAll : function( state, xyz ) {
+		console.log('hello')
+		state.mouseRotation.set(0,0,0)
 		state.rotation.setFromVector3( xyz )
 		state.cameraQuaternion.setFromEuler( state.rotation )
 		state.pathQuaternion.copy( state.cameraQuaternion )
 		state.mouseQuaternion.copy( state.cameraQuaternion )
-		
 	}
 }
 //
 
-module.exports = function PathCamera( poem, properties ) {
+module.exports = function RestrictedCamera( poem, properties ) {
 	
 	var config = _.extend({
 		easing      : 0.05,
@@ -179,7 +177,7 @@ module.exports = function PathCamera( poem, properties ) {
 	}, properties)
 	
 	var state = {
-		rotation : new THREE.Euler()
+		rotation : new THREE.Euler(0,0,0,'ZYX')
 	  , mouseRotation : new THREE.Vector3()
 	  , pathQuaternion : new THREE.Quaternion()
 	  , mouseQuaternion : new THREE.Quaternion()
@@ -204,6 +202,6 @@ module.exports = function PathCamera( poem, properties ) {
 		pathQuaternion    : state.pathQuaternion
 	  , mouseQuaternion   : state.mouseQuaternion
 	  , rotation          : state.rotation
-	  , setRotation       : _.partial( internals.setRotation, state )
+	  , rotateAll       : _.partial( internals.rotateAll, state )
 	}
 }
