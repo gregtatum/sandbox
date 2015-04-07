@@ -3,7 +3,7 @@ var Lerp = require('lerp')
 
 var internals = {
 	
-	updateObjectValue : function( elapsed, keyframe, action ) {
+	updateObjectValue : function( elapsed, prevElapsed, keyframe, action ) {
 		
 		var t = ( elapsed - keyframe.start ) / keyframe.duration
 		
@@ -12,14 +12,31 @@ var internals = {
 		  , action.values[1]
 		  , keyframe.easing(t)
 		)
+	},
+	
+	updateObjectValueOnce : function( elapsed, prevElapsed, keyframe, action ) {
 		
+		if( keyframe.start > prevElapsed && keyframe.start <= elapsed ) {
+
+			action.obj[action.key] = action.values
+		}
+	},
+
+	updateFunctionOnce : function( elapsed, prevElapsed, keyframe, action ) {
+		
+		if( keyframe.start > prevElapsed && keyframe.start <= elapsed ) {
+			
+			action.obj[action.key]( action.values )
+		}
 	},
 	
 	updateFn : function( poem, keyframes, maxTime, speed ) {
 		
+		var prevElapsed = 0
+		
 		return function(e) {
 			
-			var elapsed = (e.elapsed * speed) % maxTime
+			var elapsed = (e.elapsed / 1000 * speed) % maxTime
 			
 			for( var i=0; i < keyframes.length; i++ ) {
 				var keyframe = keyframes[i]
@@ -30,10 +47,12 @@ var internals = {
 					for( var j=0; j < keyframe.actions.length; j++ ) {
 						
 						var action = keyframe.actions[j]
-						internals.updateObjectValue( elapsed, keyframe, action )
+						action.update( elapsed, prevElapsed, keyframe, action )
 					}
 				}
 			}
+			
+			prevElapsed = elapsed
 		}
 	},
 	
@@ -81,10 +100,20 @@ var internals = {
 			return nextRef
 		}, poem)
 		
+		var update
+		
+		if( _.isFunction( obj[key] ) ) {
+			update = internals.updateFunctionOnce
+		} else {
+			//Either update the value with transitions, or just once
+			update = _.isArray( values ) ? internals.updateObjectValue : internals.updateObjectValueOnce
+		}
+		
 		return {
 			obj : obj,
 			key : key,
-			values: values
+			values: values,
+			update : update
 		}
 	},
 	
@@ -93,8 +122,8 @@ var internals = {
 		return _.map( keyframes, function( keyframe ) {
 
 			return {
-				start       : keyframe.start
-			  , end			: keyframe.start + keyframe.duration
+				start       : (keyframe.start)
+			  , end			: (keyframe.start + keyframe.duration)
 			  , duration    : keyframe.duration
 			  , easing      : internals.easingFn( keyframe.easing )
 			  , actions     : _.map( keyframe.actions, _.partial( internals.createAction, poem ) )

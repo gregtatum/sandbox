@@ -1,14 +1,13 @@
 var internals = {
 
-	//TODO compute from exposed rotation euler angle
-
 	getXRotation : (function() {
 	
 		var v = new THREE.Vector3()
 	
-		return function( quat ) {
+		return function( quat, baseQuatInverse ) {
 			v.set(0,0,1)
 			v.applyQuaternion( quat )
+			if( baseQuatInverse ) v.applyQuaternion( baseQuatInverse )
 			return -Math.atan2( v.y, v.z )
 		}
 	})(),
@@ -17,9 +16,10 @@ var internals = {
 	
 		var v = new THREE.Vector3()
 	
-		return function( quat ) {
+		return function( quat, baseQuatInverse ) {
 			v.set(1,0,0)
 			v.applyQuaternion( quat )
+			if( baseQuatInverse ) v.applyQuaternion( baseQuatInverse )
 			return -Math.atan2( v.z, v.x )
 		}
 	})(),
@@ -28,26 +28,17 @@ var internals = {
 	
 		var v = new THREE.Vector3()
 	
-		return function( quat ) {
+		return function( quat, baseQuatInverse ) {
 			v.set(0,1,0)
 			v.applyQuaternion( quat )
+			if( baseQuatInverse ) v.applyQuaternion( baseQuatInverse )
 			return -Math.atan2( v.x, v.y )
 		}
 	})(),
 
-	mouseMove : function( prevXY, quaternion, speedX, speedY ) {
-	
-		var axisX = new THREE.Vector3(1,0,0)
-		var axisY = new THREE.Vector3(0,1,0)
-	
-		var q1 = new THREE.Quaternion()
-		var q2 = new THREE.Quaternion()
-	
-		var rotationX = 0
-		var rotationY = 0
-	
+	mouseMove : function( poem, prevXY, state, speedX, speedY ) {
+			
 		return function( e ) {
-		
 			e.preventDefault()
 			
 			var x = e.pageX
@@ -56,23 +47,38 @@ var internals = {
 			var offsetX = prevXY.x - x
 			var offsetY = prevXY.y - y
 			
-			rotationX = internals.getXRotation( quaternion )
-			rotationY = internals.getYRotation( quaternion )
+			state.mouseRotation.y += offsetX * speedX / (poem.canvas.width / poem.ratio)
+			state.mouseRotation.x += offsetY * speedY / (poem.canvas.height / poem.ratio)
 			
-			rotationY += offsetX * speedX
-			rotationX += offsetY * speedY
-		
-			rotationX = Math.min( rotationX, Math.PI * 0.45 )
-			rotationX = Math.max( rotationX, -Math.PI * 0.45 )
-		
-			q1.setFromAxisAngle( axisY, rotationY )
-			q2.setFromAxisAngle( axisX, rotationX )
-			quaternion.multiplyQuaternions( q1, q2 )
-		
+			if( offsetX * speedX / (poem.canvas.width / poem.ratio) > 1 ) debugger
+			if( offsetX * speedX / (poem.canvas.width / poem.ratio) < -1 ) debugger
+			
 			prevXY.x = x
 			prevXY.y = y
 		}
 	},
+	
+	updateMouseQuaternion : (function() {
+		
+		var axisX = new THREE.Vector3(1,0,0)
+		var axisY = new THREE.Vector3(0,1,0)
+	
+		var q1 = new THREE.Quaternion()
+		var q2 = new THREE.Quaternion()
+		
+		return function( state, e ) {
+			
+			q1.setFromAxisAngle( axisY, state.mouseRotation.y )
+			q2.setFromAxisAngle( axisX, state.mouseRotation.x )
+			
+			state.mouseQuaternion.copy( state.pathQuaternion )
+			state.mouseQuaternion.multiply( q1 )
+			state.mouseQuaternion.multiply( q2 )
+			
+			state.mouseRotation.multiplyScalar( 0.95 * e.unitDt )
+			
+		}
+	})(),
 
 	mouseUp : function( $canvas, handlers ) {
 
@@ -107,39 +113,58 @@ var internals = {
 		}
 	},
 
-	startMouseHandlers : function( canvas, cameraObj, poem, speedX, speedY ) {
+	startMouseHandlers : function( poem, cameraObj, state, poem, speedX, speedY ) {
 	
 		var prevXY = {x:0,y:0}
-		var $canvas = $(canvas)
+		var $canvas = $(poem.canvas)
 		var handlers = {}	
-		var quaternion = new THREE.Quaternion().copy( cameraObj.quaternion )
+		var mouseQuaternion = state.mouseQuaternion.copy( cameraObj.quaternion )
 	
-		handlers.mouseMove = internals.mouseMove( prevXY, quaternion, speedX, speedY )
+		handlers.mouseMove = internals.mouseMove( poem, prevXY, state, speedX, speedY )
 		handlers.mouseUp = internals.mouseUp( $canvas, handlers )
 		handlers.mouseDown = internals.mouseDown( $canvas, handlers, prevXY )
 	
 		$canvas.on('mousedown', handlers.mouseDown)
 		poem.emitter.on('destroy', internals.stopHandlers( $canvas, handlers ) )
-	
-		return quaternion
 	},
 
-	updateCamera : function( cameraQuat, pathQuat, targetQuat, rotation, easing, revert ) {
+	updateCameraFn : function( state, easing, revert ) {
 	
-		var easedQuat = new THREE.Quaternion()
-	
+		var easedQuat   = new THREE.Quaternion()
+		var cameraQuat  = state.cameraQuaternion
+		var pathQuat    = state.pathQuaternion
+		var mouseQuat   = state.mouseQuaternion
+		var rotation    = state.rotation
+			
 		return function( e ) {
 		
+			//Feed the euler angle rotation into the path quat
 			pathQuat.setFromEuler( rotation )
 			
-			var dot = Math.max(0, THREE.Vector4.prototype.dot.call(pathQuat, targetQuat))
+			internals.updateMouseQuaternion( state, e )
 			
-			easedQuat.copy( pathQuat ).slerp( targetQuat, dot )
+			//Figure out the distance between the path and mouse quat
+			var dot = Math.max(0, THREE.Vector4.prototype.dot.call(pathQuat, mouseQuat))
+			
+			//Ease the mouse quat down to the path quat the further apart they are
+			easedQuat.copy( pathQuat ).slerp( mouseQuat, dot )
 
-			targetQuat.copy( easedQuat )
-			cameraQuat.slerp( targetQuat, easing * e.unitDt )
+			mouseQuat.copy( easedQuat )
+			
+			cameraQuat.slerp( easedQuat, easing * e.unitDt )
+			
+			console.log(state.mouseRotation.x, state.mouseRotation.y)
 		
 		}
+	},
+	
+	setRotation : function( state, xyz ) {
+		console.log('set rotation!')
+		state.rotation.setFromVector3( xyz )
+		state.cameraQuaternion.setFromEuler( state.rotation )
+		state.pathQuaternion.copy( state.cameraQuaternion )
+		state.mouseQuaternion.copy( state.cameraQuaternion )
+		
 	}
 }
 //
@@ -149,31 +174,36 @@ module.exports = function PathCamera( poem, properties ) {
 	var config = _.extend({
 		easing      : 0.05,
 		revertSpeed : 2,
-		speedX      : 0.002,
-		speedY      : 0.002
+		speedX      : 1,
+		speedY      : 0.5
 	}, properties)
 	
-	var rotation = new THREE.Euler()
-	var pathQuaternion = new THREE.Quaternion()
+	var state = {
+		rotation : new THREE.Euler()
+	  , mouseRotation : new THREE.Vector3()
+	  , pathQuaternion : new THREE.Quaternion()
+	  , mouseQuaternion : new THREE.Quaternion()
+	  , cameraQuaternion : poem.camera.object.quaternion
+	}
 	
-	var targetQuaternion = internals.startMouseHandlers(
-		poem.canvas,
-		poem.camera.object,
-		poem,
-		config.speedX, config.speedY
+	internals.startMouseHandlers(
+		poem
+	  , poem.camera.object
+	  , state
+	  , poem
+	  , config.speedX, config.speedY
 	)
 	
-	poem.emitter.on('update', internals.updateCamera(
-		poem.camera.object.quaternion,
-		pathQuaternion,
-		targetQuaternion,
-		rotation,
-		config.easing,
-		config.revertSpeed
+	poem.emitter.on('update', internals.updateCameraFn(
+		state
+	  , config.easing
+	  , config.revertSpeed
 	))
 	
 	return {
-		quaternion : pathQuaternion
-	  , rotation : rotation
+		pathQuaternion    : state.pathQuaternion
+	  , mouseQuaternion   : state.mouseQuaternion
+	  , rotation          : state.rotation
+	  , setRotation       : _.partial( internals.setRotation, state )
 	}
 }

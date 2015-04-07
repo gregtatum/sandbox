@@ -1,5 +1,5 @@
 uniform sampler2D terrain;
-uniform float heightScale;
+uniform float heightFactor;
 uniform float width;
 
 varying float height;
@@ -19,7 +19,7 @@ void main() {
 	
 	vec4 modifiedPosition = vec4(
 		position.x,
-		position.y + height * heightScale,
+		position.y + height * width / 20.0 * heightFactor,
 		position.z,
 		1.0
 	);

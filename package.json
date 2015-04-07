@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "crossroads": "^0.12.0",
+    "cubic-bezier": "^0.1.2",
     "eases": "^1.0.6",
     "events": "^1.0.2",
     "exorcist": "^0.1.6",

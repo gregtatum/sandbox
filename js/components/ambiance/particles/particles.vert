@@ -4,6 +4,7 @@ attribute float size;
 attribute float aOffset;
 varying float vAlpha;
 
+#pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 
 void main() {
 
@@ -23,9 +24,11 @@ void main() {
 	
 	gl_PointSize = size * ( uRange / (length( mvPosition.xyz ) + 1.0) );
 	
+	float flicker = mix(0.6, 1.0, snoise3( moduloPosition + elapsed * 0.0001 ));
+	
 	vAlpha = 0.5 * min(1.0, max(0.0,
 		1.0 - (length( mvPosition.xyz ) / uRange)
-	));
+	)) * flicker;
 
 	gl_Position = projectionMatrix * mvPosition;
 

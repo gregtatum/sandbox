@@ -88,10 +88,76 @@ THREE.Console = {
 		}
  
 	},
+	
+	quaternion : (function() {
+		
+		var euler = new THREE.Euler()
+		
+		var radToUnitPi = function(n) {
+			return n / Math.PI
+		}
+		
+		var roundToFn = function( decimalPlaces ) {
+			return function(n) {
+				return roundTo(n, decimalPlaces)
+			}
+		}
+		
+		return function( quaternion, decimalPlaces ) {
+			
+			euler.setFromQuaternion( quaternion )
+			
+			var round = roundToFn( decimalPlaces )
+			var eulerArr = euler.toArray().slice(0,3)
+			
+			console.table({
+				quaternion: _.map( quaternion.toArray(), round ),
+				eulerRad  : _.map( eulerArr, round ),
+				eulerUnitPi  : _.map(
+					_.map(eulerArr, radToUnitPi),
+					round
+				)
+			})
+		}
+	})(),
+	
+	euler : (function() {
+		
+		var quaternion = new THREE.Quaternion()
+		
+		var radToUnitPi = function(n) {
+			return n / Math.PI
+		}
+		
+		var roundToFn = function( decimalPlaces ) {
+			return function(n) {
+				return roundTo(n, decimalPlaces)
+			}
+		}
+		
+		return function( euler, decimalPlaces ) {
+			
+			quaternion.setFromEuler( euler )
+			
+			var round = roundToFn( decimalPlaces )
+			var eulerArr = euler.toArray().slice(0,3)
+			
+			console.table({
+				quaternion: _.map( quaternion.toArray(), round ),
+				eulerRad  : _.map( eulerArr, round ),
+				eulerUnitPi  : _.map(
+					_.map(eulerArr, radToUnitPi),
+					round
+				)
+			})
+		}
+	})()
 };
 
 window.consoleMatrix = THREE.Console.matrix;
 window.consoleVector = THREE.Console.vector;
 window.consoleFace = THREE.Console.face;
+window.consoleQuaternion = THREE.Console.quaternion;
+window.consoleEuler = THREE.Console.euler;
 
 module.exports = THREE.Console;

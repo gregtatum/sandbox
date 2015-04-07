@@ -1,5 +1,6 @@
 #pragma glslify: hsv2rgb = require(glsl-hsv2rgb)
 uniform float width;
+uniform float heightFactor;
 
 varying float height;
 varying vec2 vUv;
@@ -11,11 +12,12 @@ void main() {
 	float hueY = abs(0.5 - fract(vUv.y * 0.63)) * 2.0;
 	
     gl_FragColor = vec4(
-		hsv2rgb( vec3(
+		hsv2rgb(
+			vec3(
 				// mod(xHue, 1.0),
 				(hueX + hueY) * 0.2 + 0.3,
-				mix(height, 0.5, 0.8),
-				mix(height, 1.2, 0.35)
+				mix(heightFactor, mix(height, 0.5, 0.8), 0.8),
+				mix(heightFactor, mix(height, 1.2, 0.35), 0.35)
 			)
 		),
 		1.0

@@ -65,7 +65,7 @@ function createMeshGrid( material, width, gridLength, totalPolygonDensity ) {
 	return meshGrid;
 }
 
-function updateModuloMeshGrid( cameraPosition, meshes, width ) {
+function updateModuloMeshGrid( cameraPosition, meshes, width, state ) {
 	
 	var il = meshes.length;
 	var halfWidth = width / 2;
@@ -92,10 +92,16 @@ var EndlessTerrain = function( poem, properties ) {
 	
 	var config = _.extend({
 		width				: 4000,
+		heightScale			: 200,
 		gridLength			: 16,
 		totalPolygonDensity	: 1024,
-		positionY			: 0
+		positionY			: 0,
+		height				: 1
 	}, properties);
+	
+	var state = {
+		height : config.height
+	}
 	
 	var shader = createShader( glslify({
 		vertex		: './endless.vert',
@@ -116,15 +122,21 @@ var EndlessTerrain = function( poem, properties ) {
 	meshGrid.position.y = config.positionY;
 	
 	shader.uniforms.terrain.value = createTexture( meshGrid, poem.scene );
-	shader.uniforms.heightScale.value = config.width / 20;
 	shader.uniforms.width.value = config.width / 2;
+	shader.uniforms.height = state.height
+	
+	poem.emitter.on( 'update', function() {
+		shader.uniforms.heightFactor.value = state.height
+	})
 	
 	poem.emitter.on( 'update', updateModuloMeshGrid(
 		poem.camera.object.position,
 		meshGrid.children,
-		config.width
+		config.width,
+		state
 	));
 	
+	return state
 };
 
 module.exports = EndlessTerrain;

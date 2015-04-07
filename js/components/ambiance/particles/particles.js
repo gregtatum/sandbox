@@ -53,8 +53,8 @@ var internals = {
 		}
 		
 		geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) )
-		geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) )
-		geometry.addAttribute( 'aOffset', new THREE.BufferAttribute( offsets, 1 ) )
+		geometry.addAttribute( 'size',     new THREE.BufferAttribute( sizes, 1 ) )
+		geometry.addAttribute( 'aOffset',  new THREE.BufferAttribute( offsets, 1 ) )
 		
 		return geometry
 	},
@@ -64,7 +64,7 @@ var internals = {
 		var mesh = new THREE.PointCloud( geometry, material )
 		mesh.frustumCulled = false
 
-		var p = LoadTexture( "assets/images/sinegravitycloud.png", material.uniforms.texture, "value" ).then(function() {
+		var p = LoadTexture( "assets/images/bokeh.png", material.uniforms.texture, "value" ).then(function() {
 
 			poem.scene.add( mesh )
 			poem.emitter.on('update', internals.updateFn( poem, mesh ))
