@@ -30,11 +30,12 @@
   "scripts": {
     "start:live": "beefy ./js/index.js:assets/build/bundle.js --open --live",
     "start": "beefy ./js/index.js:assets/build/bundle.js --open",
-    "watch": "watchify ./js/index.js -o assets/build/bundle.js",
+    "watch": "watchify ./js/index.js -d -o assets/build/bundle.js",
     "build": "browserify ./js/index.js -d -g [uglifyify -x .js] | exorcist assets/build/bundle.js.map > assets/build/bundle.js",
     "budo": "budo js/index.js -o assets/build/bundle.js --live --verbose | garnish"
   },
   "devDependencies": {
+    "babelify": "^6.0.2",
     "crossroads": "^0.12.0",
     "cubic-bezier": "^0.1.2",
     "eases": "^1.0.6",
@@ -66,7 +67,8 @@
   },
   "browserify": {
     "transform": [
-      "glslify"
+      "glslify",
+      "babelify"
     ]
   }
 }

@@ -1,8 +1,6 @@
-var RSVP = require('rsvp');
-
 var loadImage = function( url, object, key ) {
 	
-	return new RSVP.Promise(function(resolve, reject) {
+	return new Promise(function(resolve, reject) {
 		
 		var deferred = $.Deferred();
 		var $img = $("<img />");

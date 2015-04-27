@@ -113,7 +113,7 @@ var internals = {
 		}
 	},
 
-	startMouseHandlers : function( poem, cameraObj, state, poem, speedX, speedY ) {
+	startMouseHandlers : function( poem, cameraObj, state, speedX, speedY ) {
 	
 		var prevXY = {x:0,y:0}
 		var $canvas = $(poem.canvas)
@@ -188,7 +188,6 @@ module.exports = function RestrictedCamera( poem, properties ) {
 		poem
 	  , poem.camera.object
 	  , state
-	  , poem
 	  , config.speedX, config.speedY
 	)
 	

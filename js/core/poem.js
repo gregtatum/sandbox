@@ -31,6 +31,7 @@ module.exports = function poem( manifest, loaderEmitter ) {
 		renderer : null		
 	}, manifest.config)
 	
+	var api
 	var loop = CreateLoop()
 	var emitter = loop.emitter // Steal the emitter for the poem
 	
@@ -41,13 +42,28 @@ module.exports = function poem( manifest, loaderEmitter ) {
 	
 	Renderer( config.renderer, scene, camera.object, emitter )
 	
-	loaderEmitter.once( 'load', loop.start )
+	loaderEmitter.once( 'load', function() {
+		
+		var promisesUnfiltered = _.map( api, function( component ) {
+			return component.promise
+		})
+		var promises = _.filter(promisesUnfiltered, function( component ) {
+			return !_.isUndefined( component )
+		})
+		
+		Promise.all( promises ).then( function() {
+			emitter.emit('promises')
+			loop.start()
+		}, alert )
+			
+	})
+		
 	loaderEmitter.on( 'unload', function() {
 		loop.stop()
 		emitter.emit('destroy')
 	})
 	
-	return {
+	return api = {
 		emitter : emitter,
 		canvas : $("canvas")[0],
 		scene : scene,

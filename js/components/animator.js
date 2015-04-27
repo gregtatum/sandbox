@@ -224,11 +224,13 @@ module.exports = function( poem, properties ) {
 	  , speed : 1
 	}, properties)
 	
-	var keyframes = internals.processKeyframeConfig( poem, config.keyframes )
-	var maxTime = internals.calcMaxTime( keyframes, config.loop )
+	poem.emitter.on('promises', function() {
+		var keyframes = internals.processKeyframeConfig( poem, config.keyframes )
+		var maxTime = internals.calcMaxTime( keyframes, config.loop )
 	
-	console.log(keyframes)
-	poem.emitter.on('update', internals.updateFn( poem, keyframes, maxTime, config.speed ) )
+		console.log(keyframes)
+		poem.emitter.on('update', internals.updateFn( poem, keyframes, maxTime, config.speed ) )
+	})
 	
 	return {}
 }

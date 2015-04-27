@@ -23,6 +23,9 @@ module.exports = {
 				positionY: -250
 			}
 		},
+		credits : {
+			function : require('../js/demos/EndlessTerrain/credits')
+		},
 		particles : {
 			function: require('../js/components/ambiance/particles/particles'),
 		},
@@ -33,12 +36,12 @@ module.exports = {
 				rotation: Math.PI / 2
 			}
 		},
-		music : {
-			construct: require("../js/sound/Music"),
-			properties: {
-				url: "https://soundcloud.com/synaptyx/mech-attack"
-			}
-		},
+		// music : {
+		// 	construct: require("../js/sound/Music"),
+		// 	properties: {
+		// 		url: "https://soundcloud.com/synaptyx/mech-attack"
+		// 	}
+		// },
 		animator : {
 			function: require('../js/components/animator'),
 			properties: require('../js/demos/EndlessTerrain/keyframes.js')

@@ -20,6 +20,9 @@ module.exports = {
 				[ "restrictedCamera.rotation.y",  [ -0.3,   0.1 ] ],
 
 				[ "restrictedCamera.rotateAll",   { x:-0.3, y:-0.3, z:0 }],
+				
+				[ "credits.mesh.position.z",     [    -30, -10 ] ],
+				[ "credits.add", {} ]
 
 			]
 		},
@@ -29,6 +32,8 @@ module.exports = {
 			isolate: false,
 			startHere: false,
 			actions:  [
+				[ "credits.remove", {} ],
+				
 				[ "camera.object.position.x", [     0,     0 ] ],
 				[ "camera.object.position.y", [     0,     0 ] ],
 				[ "camera.object.position.z", [ -5000, -5700 ] ],
