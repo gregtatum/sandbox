@@ -10,7 +10,7 @@ Currently it uses gulp for building, but will be moving to run scripts exclusive
 
 To build:
 
-	gulp browserify
+	npm run build
 
 To run and prototype:
 

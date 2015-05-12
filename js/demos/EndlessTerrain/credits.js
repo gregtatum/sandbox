@@ -10,9 +10,6 @@ var internals = {
 
 		var ctx2d = canvas.getContext( '2d' )
 
-		ctx2d.fillStyle = '#0ff000' // background color if no video present
-		ctx2d.fillRect( 0, 0, canvas.width, canvas.height )
-
 		var texture = new THREE.Texture( canvas )
 		texture.minFilter = THREE.LinearFilter
 		texture.magFilter = THREE.LinearFilter
@@ -64,8 +61,8 @@ var internals = {
 			
 			if ( video.readyState === video.HAVE_ENOUGH_DATA && video.ended === false ) {
 				
-				ctx2d.drawImage( video, 0, 0 );
-				texture.needsUpdate = true;
+				ctx2d.drawImage( video, 0, 0 )
+				texture.needsUpdate = true
 			}
 		}
 	},
@@ -95,7 +92,6 @@ var internals = {
 		
 		poem.emitter.removeListener( 'update', update )
 	}
-	
 	
 }
 
