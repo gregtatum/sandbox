@@ -45,7 +45,7 @@ module.exports = function poem( manifest, loaderEmitter ) {
 	loaderEmitter.once( 'load', function() {
 		
 		var promisesUnfiltered = _.map( api, function( component ) {
-			return component.promise
+			return _.isObject( component ) ? component.promise : undefined
 		})
 		var promises = _.filter(promisesUnfiltered, function( component ) {
 			return !_.isUndefined( component )
