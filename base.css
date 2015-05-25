@@ -41,9 +41,11 @@ p {
     top: 0.5em;
     right: 0.5em;
     font-size: 0.7em;
-    color: #777;
+    color: rgba(255, 255, 255, 0.6);
 	text-align: right;
 	line-height: 1.6;
+	z-index:10;
+	
 }
 a {
     color: #4A9DE7;
@@ -228,6 +230,7 @@ a:hover {
 	top:0;
 	width: 100%;
 	left: 3em;
+	z-index:1;
 	-webkit-transition: -webkit-transform 500ms;
 	   -moz-transition: -moz-transform 500ms;
 	    -ms-transition: -ms-transform 500ms;
