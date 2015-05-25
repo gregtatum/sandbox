@@ -1,38 +1,9 @@
 {
   "name": "sandbox",
   "version": "0.0.1",
-  "gulpfile": {
-    "paths": {
-      "entry": "./js",
-      "js": [
-        "js/**/*.js",
-        "manifests/**/*.js",
-        "gulpfile.js"
-      ],
-      "jsWatch": [
-        "js/**/*",
-        "manifests/**/*.js",
-        "gulpfile.js"
-      ],
-      "hint": [
-        "assets/build/bundle.js",
-        "gulpfile.js"
-      ],
-      "build": "./assets/build/",
-      "bundleName": "bundle.js",
-      "minName": "bundle.min.js",
-      "mapName": "bundle.min.map",
-      "svg": "./assets/svg/*.svg",
-      "svgBuild": "./assets/fonts/icons",
-      "svgTemplates": "./assets/svg/templates/"
-    }
-  },
   "scripts": {
-    "start:live": "beefy ./js/index.js:assets/build/bundle.js --open --live",
-    "start": "beefy ./js/index.js:assets/build/bundle.js --open",
-    "watch": "watchify ./js/index.js -d -o assets/build/bundle.js",
     "build": "browserify ./js/index.js -d -g [uglifyify -x .js] | exorcist assets/build/bundle.js.map > assets/build/bundle.js",
-    "budo": "budo js/index.js:assets/build/bundle.js --live --verbose | garnish"
+    "start": "budo js/index.js:assets/build/bundle.js --live --verbose | garnish"
   },
   "devDependencies": {
     "babelify": "^6.0.2",
@@ -57,8 +28,7 @@
     "soundcloud-badge": "0.0.0",
     "three-glslify": "^2.0.1",
     "touches": "^1.1.1",
-    "uglifyify": "^3.0.1",
-    "watchify": "^3.0.0"
+    "uglifyify": "^3.0.1"
   },
   "dependencies": {
     "underscore": "^1.7.0"

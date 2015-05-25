@@ -27,31 +27,20 @@ module.exports = {
 		particles : {
 			function: require('../js/components/ambiance/particles/particles'),
 		},
+		music : {
+			construct: require("../js/sound/Music"),
+			properties: {
+				url: "https://soundcloud.com/cabbibo/that-was-just-stupidly"
+			}
+		},
+		dragScroll : {
+			function: require('../js/components/utils/drag-scroll')			
+		},
 		sky: {
 			function: require('../js/components/ambiance/Sky'),
 			properties : {
 				width : 50
 			}
 		},
-		// cloudsTop : {
-		// 	construct: require("../js/components/ambiance/Clouds"),
-		// 	properties: {
-		// 		height: 200,
-		// 		rotation: Math.PI / 2
-		// 	}
-		// },
-		// music : {
-		// 	construct: require("../js/sound/Music"),
-		// 	properties: {
-		// 		url: "https://soundcloud.com/synaptyx/mech-attack"
-		// 	}
-		// },
-		// animator : {
-		// 	function: require('../js/components/animator'),
-		// 	properties: require('../js/demos/EndlessTerrain/keyframes.js')
-		// },
-		// stats : {
-		// 	construct: require("../js/components/utils/Stats")
-		// }
 	}
 };
