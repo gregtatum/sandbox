@@ -32,7 +32,7 @@
     "start": "beefy ./js/index.js:assets/build/bundle.js --open",
     "watch": "watchify ./js/index.js -d -o assets/build/bundle.js",
     "build": "browserify ./js/index.js -d -g [uglifyify -x .js] | exorcist assets/build/bundle.js.map > assets/build/bundle.js",
-    "budo": "budo js/index.js -o assets/build/bundle.js --live --verbose | garnish"
+    "budo": "budo js/index.js:assets/build/bundle.js --live --verbose | garnish"
   },
   "devDependencies": {
     "babelify": "^6.0.2",

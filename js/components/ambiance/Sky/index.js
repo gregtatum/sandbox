@@ -25,12 +25,12 @@ var Sky = function( poem, properties ) {
 	var material = new THREE.ShaderMaterial( shader );
 	material.transparent = true;
 	material.depthTest = false;
-	
+		
 	var mesh = new THREE.Mesh( geometry, material );
 	poem.scene.add( mesh );
 	
 	poem.emitter.on('update', function( e ) {
-		shader.uniforms.time.value = e.now;
+		shader.uniforms.time.value = e.elapsed;
 		mesh.position.copy( poem.camera.object.position );
 	});
 };
