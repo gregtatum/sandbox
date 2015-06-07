@@ -1,12 +1,11 @@
 var glslify = require('glslify');
-var createShader = require('three-glslify')(THREE);
 
-var shader = createShader( glslify({
-	vertex: './chromatic.vert',
-	fragment: './chromatic.frag',
-	sourceOnly: true
-}));
+var chromaticAberrationShader = new THREE.ShaderMaterial({
+	vertexShader: glslify('./chromatic.vert'),
+	fragmentShader: glslify('./chromatic.frag'),
+	uniforms: {
+		opacity: { type: 'f', value: 1 },
+	}
+})
 
-shader.uniforms.opacity.value = 1;
-
-module.exports = shader;
+module.exports = chromaticAberrationShader;
