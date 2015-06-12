@@ -1,8 +1,6 @@
-var RSVP = require('rsvp');
-
 var loadTexture = function( url, object, key ) {
 	
-	return new RSVP.Promise(function(resolve, reject) {
+	return new Promise(function(resolve, reject) {
 		
 		THREE.ImageUtils.loadTexture( url, undefined, function( texture ) {
 			

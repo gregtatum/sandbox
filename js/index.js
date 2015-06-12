@@ -1,4 +1,5 @@
 require('./utils/ThreeConsole');
+require('es6-promise').polyfill();
 
 var manifests = require('../manifests');
 

@@ -1,6 +1,5 @@
 var random = require('../utils/random')
   , loadTexture	= require('../utils/loadTexture')
-  , RSVP = require('rsvp')
   , destroyMesh = require('../utils/destroyMesh')
   , mute = require('../sound/mute');
 

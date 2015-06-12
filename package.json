@@ -10,6 +10,7 @@
     "crossroads": "^0.12.0",
     "cubic-bezier": "^0.1.2",
     "eases": "^1.0.6",
+    "es6-promise": "^2.3.0",
     "events": "^1.0.2",
     "exorcist": "^0.1.6",
     "glsl-camera-ray": "^1.0.0",

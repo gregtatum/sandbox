@@ -1,8 +1,6 @@
-var RSVP = require('rsvp');
-
 var loadText = function( url, object, key ) {
 	
-	var promise = new RSVP.Promise(function(resolve, reject){
+	var promise = new Promise(function(resolve, reject){
 		
 		$.ajax(url, {
 			dataType: "text"

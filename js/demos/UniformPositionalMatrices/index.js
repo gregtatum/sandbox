@@ -1,7 +1,6 @@
 var random		= require('../../utils/random')
   , loadTexture	= require('../../utils/loadTexture')
   , loadText	= require('../../utils/loadText')
-  , RSVP		= require('rsvp')
 ;
 
 var UniformPositionalMatrices = function(poem, properties) {
@@ -21,7 +20,7 @@ var UniformPositionalMatrices = function(poem, properties) {
 	this.radius = 200;
 	this.pointSize = 7;
 	
-	RSVP.all([
+	Promise.all([
 		loadTexture( "assets/images/sinegravitycloud.png", this, "texture" ),
 		loadText( "js/demos/UniformPositionalMatrices/shader.vert", this, "vertexShader" ),
 		loadText( "js/demos/UniformPositionalMatrices/shader.frag", this, "fragmentShader" )

@@ -1,7 +1,6 @@
 var random		= require('../utils/random')
   , loadTexture	= require('../utils/loadTexture')
   , loadText	= require('../utils/loadText')
-  , RSVP		= require('rsvp')
 ;
 
 var SineGravityCloud = function(poem, properties) {
@@ -24,7 +23,7 @@ var SineGravityCloud = function(poem, properties) {
 	_.extend( this, properties );
 	
 	
-	RSVP.all([
+	Promise.all([
 		loadTexture( "assets/images/sinegravitycloud.png", this, "texture" ),
 		loadText( "assets/shaders/sinegravitycloud.vert", this, "vertexShader" ),
 		loadText( "assets/shaders/sinegravitycloud.frag", this, "fragmentShader" )

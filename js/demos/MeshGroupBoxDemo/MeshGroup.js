@@ -1,7 +1,6 @@
 var calculateSquaredTextureWidth = require('../../utils/calculateSquaredTextureWidth')
   , loadTexture	= require('../../utils/loadTexture')
   , loadText	= require('../../utils/loadText')
-  , RSVP = require('rsvp');
 
 var MeshGroup = function( poem ) {
 	
@@ -19,7 +18,7 @@ var MeshGroup = function( poem ) {
 	this.vertexShader = null;
 	this.fragmentShader = null;
 	
-	this.loaded = RSVP.all([
+	this.loaded = Promise.all([
 		loadTexture( "assets/images/sinegravitycloud.png", this, "texture" ),
 		loadText( "js/demos/MeshGroupBoxDemo/shader.vert", this, "vertexShader" ),
 		loadText( "js/demos/MeshGroupBoxDemo/shader.frag", this, "fragmentShader" )

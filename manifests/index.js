@@ -1,4 +1,5 @@
 module.exports = {
+	"light-beams" : require("./light-beams"),
 	cubic : require("./cubic"),
 	blobs : require("./blobs"),
 	meshGroupBoxDemo : require("./meshGroupBoxDemo"),
@@ -6,7 +7,9 @@ module.exports = {
 	endlessTerrain : require("./endlessTerrain"),
 	tetrahedra : require("./tetrahedra"),
 	sineGravityCloud : require("./sineGravityCloud"),
-	// uniformPositionalMatrices : require("./uniformPositionalMatrices"),
-	// texturePositionalMatrices : require("./texturePositionalMatrices"),
 	vr : require("./vr"),
 }
+
+// Legacy:
+// uniformPositionalMatrices : require("./uniformPositionalMatrices"),
+// texturePositionalMatrices : require("./texturePositionalMatrices"),
