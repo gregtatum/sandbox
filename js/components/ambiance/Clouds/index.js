@@ -1,5 +1,4 @@
 var glslify = require('glslify');
-var createShader = require('three-glslify')(THREE);
 
 function setupTexture( mesh, scene, material ) {
 	
@@ -35,25 +34,24 @@ var Clouds = function( poem, properties ) {
 	
 	var geometry = new THREE.PlaneGeometry(	config.width, config.width );
 	
-	var shader = createShader( glslify({
-		vertex: './clouds.vert',
-		fragment: './clouds.frag',
-		sourceOnly: true
-	}));
-		
-	shader.side = THREE.BackSide;
-	shader.uniforms = {
-		time:	 	{ type: "f", value:0 },
-		texture:	{ type: "t", value: null },
-		offset:		{ type: "v2", value: config.offset },
-		color: 		{ type: "v4", value: config.color }
-	};
+	var material = new THREE.ShaderMaterial({
 	
-	var material = new THREE.ShaderMaterial( shader );
-	material.transparent = true;
-	material.blending = THREE.AdditiveBlending;
-	material.side = THREE.DoubleSide;
-	material.depthTest = false;
+		vertexShader:    glslify('./clouds.vert'),
+		fragmentShader:  glslify('./clouds.frag'),
+		
+		transparent: true,
+		blending:    THREE.AdditiveBlending,
+		side:        THREE.DoubleSide,
+		depthTest:   false,
+	
+		uniforms: {
+			time:	 	{ type: "f", value:0 },
+			texture:	{ type: "t", value: null },
+			offset:		{ type: "v2", value: config.offset },
+			color: 		{ type: "v4", value: config.color }
+		},
+		attributes: {}
+	})
 	
 	var mesh = new THREE.Mesh( geometry, material );
 	
@@ -61,11 +59,11 @@ var Clouds = function( poem, properties ) {
 	mesh.position.y = config.height;
 	mesh.scale.multiplyScalar( 10 );
 	
-	shader.uniforms.texture.value = setupTexture( mesh, poem.scene, material );
+	material.uniforms.texture.value = setupTexture( mesh, poem.scene, material );
 	
 	poem.emitter.on('update', function( e ) {
 		var cameraPosition = poem.camera.object.position;
-		shader.uniforms.time.value = e.elapsed;
+		material.uniforms.time.value = e.elapsed;
 		mesh.position.set(
 			cameraPosition.x,
 			mesh.position.y,

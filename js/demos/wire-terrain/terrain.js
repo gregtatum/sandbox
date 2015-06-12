@@ -1,5 +1,4 @@
 var Glslify = require('glslify')
-var CreateShader = require('three-glslify')(THREE)
 
 function _createGeometry( width, segments ) {
 	
@@ -99,16 +98,24 @@ module.exports = function wireTerrain( poem, properties ) {
 		height : config.height
 	}
 	
-	var shader = CreateShader( Glslify({
-		vertex		: './terrain.vert',
-		fragment	: './terrain.frag',
-		sourceOnly	: true
-	}))
-	
-	var material = new THREE.ShaderMaterial( shader )
-	material.side = THREE.DoubleSide
-	material.wireframe = true
-	material.transparent = true
+	var material = new THREE.ShaderMaterial({
+		
+		vertexShader    : Glslify('./terrain.vert'),
+		fragmentShader  : Glslify('./terrain.frag'),
+
+		side:        THREE.DoubleSide,
+		wireframe:   true,
+		transparent: true,
+		
+		uniforms: {
+			terrain         : { type: 't' },
+			heightFactor    : { type: 'f' },
+			width           : { type: 'f' },
+			elapsed         : { type: 'f' },
+		},
+		attributes      : {}
+
+	})
 	
 	var meshGrid = _createMeshGrid(
 		material,
@@ -119,13 +126,13 @@ module.exports = function wireTerrain( poem, properties ) {
 	
 	meshGrid.position.y = config.positionY
 	
-	shader.uniforms.terrain.value = _createTexture( meshGrid, poem.scene )
-	shader.uniforms.width.value = config.width / 2
-	shader.uniforms.height = state.height
+	material.uniforms.terrain.value = _createTexture( meshGrid, poem.scene )
+	material.uniforms.width.value = config.width / 2
+	material.uniforms.height = state.height
 	
 	poem.emitter.on( 'update', function( e ) {
-		shader.uniforms.heightFactor.value = state.height
-		shader.uniforms.elapsed.value = e.elapsed
+		material.uniforms.heightFactor.value = state.height
+		material.uniforms.elapsed.value = e.elapsed
 	})
 	
 	poem.emitter.on( 'update', _updateModuloMeshGrid(

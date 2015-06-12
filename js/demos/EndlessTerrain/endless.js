@@ -1,5 +1,4 @@
 var glslify = require('glslify');
-var createShader = require('three-glslify')(THREE);
 
 function createGeometry( width, segments ) {
 	
@@ -103,13 +102,21 @@ var EndlessTerrain = function( poem, properties ) {
 		height : config.height
 	}
 	
-	var shader = createShader( glslify({
-		vertex		: './endless.vert',
-		fragment	: './endless.frag',
-		sourceOnly	: true
-	}));
+	var material = new THREE.ShaderMaterial({
+		
+		vertexShader    : glslify('./endless.vert'),
+		fragmentShader  : glslify('./endless.frag'),
+		side            : THREE.DoubleSide,
+		
+		uniforms        : {
+			terrain         : { type: 't' },
+			heightFactor    : { type: 'f' },
+			width           : { type: 'f' },
+		},
+		attributes      : {}
+
+	})
 	
-	var material = new THREE.ShaderMaterial( shader );
 	material.side = THREE.DoubleSide;
 	
 	var meshGrid = createMeshGrid(
@@ -121,12 +128,12 @@ var EndlessTerrain = function( poem, properties ) {
 	
 	meshGrid.position.y = config.positionY;
 	
-	shader.uniforms.terrain.value = createTexture( meshGrid, poem.scene );
-	shader.uniforms.width.value = config.width / 2;
-	shader.uniforms.height = state.height
+	material.uniforms.terrain.value = createTexture( meshGrid, poem.scene );
+	material.uniforms.width.value = config.width / 2;
+	material.uniforms.height = state.height
 	
 	poem.emitter.on( 'update', function() {
-		shader.uniforms.heightFactor.value = state.height
+		material.uniforms.heightFactor.value = state.height
 	})
 	
 	poem.emitter.on( 'update', updateModuloMeshGrid(

@@ -1,34 +1,32 @@
 var Glslify = require('glslify')
-  , CreateShader = require('three-glslify')(THREE)
-  , LoadTexture	= require('../../../utils/loadTexture')
-  , Random = require('../../../utils/random')
+var LoadTexture	= require('../../../utils/loadTexture')
+var Random = require('../../../utils/random')
 
 var internals = {
 	
 	createMaterial : function( color, range ) {
 		
-		var shader = CreateShader( Glslify({
-			vertex: './particles.vert',
-			fragment: './particles.frag',
-			sourceOnly: true
-		}))
+		var material = new THREE.ShaderMaterial({
 		
-		var material = new THREE.ShaderMaterial( _.extend(shader, {
-
+			vertexShader    : Glslify('./particles.vert'),
+			fragmentShader  : Glslify('./particles.frag'),
+			
 			blending:       THREE.AdditiveBlending,
 			depthTest:      false,
-			transparent:    true
-
-		}))
+			transparent:    true,
 		
-		material.uniforms.color = {
-			type: "c",
-			value: color
-		}
-		material.uniforms.uRange = {
-			type: "f",
-			value: range
-		}
+			uniforms: {
+				elapsed : { type: 'f' },
+				texture : { type: 't' },
+				color   : { type: "c", value: color },
+				uRange  : { type: "f", value: range },
+			},
+			attributes      : {
+				position: { type: 'v3' },
+				size: { type: 'f' },
+				aOffset: { type: 'f' },
+			}
+		})
 		
 		return material
 	},
