@@ -8,12 +8,14 @@ The central poem object is the application graph. If you're looking to get orien
 
 ## Running
 
-To build:
-
-	npm run build
+Make sure npm is install, then in the directory run `npm install` to get the dependencies.
 
 To run and prototype with live-reload:
 
 	npm start
+
+To build:
+
+	npm run build
 
 Project copyright (c) 2014 Greg Tatum under The MIT License (MIT)
