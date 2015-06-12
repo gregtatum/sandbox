@@ -9,6 +9,7 @@ module.exports = {
 		}
 	},
 	components : {
+		renderer : { function : require('../js/renderers/basic-renderer') },
 		sphere : {
 			construct: require("../js/demos/Earth"),
 			properties: {}

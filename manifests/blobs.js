@@ -3,10 +3,10 @@ module.exports = {
 	description : "Raycasting",
 	order : 3,
 	config : {
-		camera : {
-		},
+		camera : {},
 	},
 	components : {
+		renderer : { function : require('../js/renderers/basic-renderer') },
 		controls : {
 			construct: require("../js/components/cameras/Controls"),
 		},

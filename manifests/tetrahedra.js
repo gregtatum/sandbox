@@ -8,18 +8,12 @@ module.exports = {
 			near : 0.1,
 			far : 10000,
 			fov : 40
-		},
-		renderer : {
-			useEffects : true
 		}
 	},
 	components : {
-		controls : {
-			construct: require("../js/components/cameras/Controls"),
-		},
-		mouse : {
-			function: require('../js/components/hids/mouse-tracker')
-		},
+		renderer : { function : require('../js/renderers/effects-renderer') },
+		controls : { construct: require("../js/components/cameras/Controls") },
+		mouse : { function: require('../js/components/hids/mouse-tracker')	},
 		// grid : {
 		// 	construct: require("../js/demos/Grid"),
 		// },

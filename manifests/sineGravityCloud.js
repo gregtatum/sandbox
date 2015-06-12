@@ -6,11 +6,9 @@ module.exports = {
 		camera : {
 			x : -400
 		},
-		renderer : {
-			useEffects : false
-		}
 	},
 	components : {
+		renderer : { function : require('../js/renderers/basic-renderer') },
 		controls : {
 			construct: require("../js/components/cameras/Controls"),
 		},

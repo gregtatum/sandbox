@@ -47,6 +47,17 @@ p {
 	z-index:10;
 	
 }
+.credits, .info, .poem-menu {
+	-webkit-transition: opacity 1500ms;
+	   -moz-transition: opacity 1500ms;
+	    -ms-transition: opacity 1500ms;
+	     -o-transition: opacity 1500ms;
+	        transition: opacity 1500ms;
+}
+
+.hide-ui .credits, .hide-ui .info, .hide-ui .poem-menu {
+	opacity: 0;
+}
 a {
     color: #4A9DE7;
 }

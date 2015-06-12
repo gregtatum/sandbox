@@ -1,6 +1,6 @@
 module.exports = {
-	blobs : require("./blobs"),
 	cubic : require("./cubic"),
+	blobs : require("./blobs"),
 	meshGroupBoxDemo : require("./meshGroupBoxDemo"),
 	carbonDioxideEarth : require("./carbonDioxideEarth"),
 	endlessTerrain : require("./endlessTerrain"),
@@ -8,5 +8,5 @@ module.exports = {
 	sineGravityCloud : require("./sineGravityCloud"),
 	// uniformPositionalMatrices : require("./uniformPositionalMatrices"),
 	// texturePositionalMatrices : require("./texturePositionalMatrices"),
-	// vr : require("./vr"),
+	vr : require("./vr"),
 }

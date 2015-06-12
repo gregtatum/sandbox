@@ -8,6 +8,7 @@ module.exports = {
 		}
 	},
 	components : {
+		renderer : { function : require('../js/renderers/basic-renderer') },
 		demo : {
 			construct: require("../js/demos/MeshGroupBoxDemo"),
 			properties: {}

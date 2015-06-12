@@ -8,6 +8,7 @@ module.exports = {
 		}
 	},
 	components : {
+		renderer : { function : require('../js/renderers/basic-renderer') },
 		controls : {
 			construct: require("../js/components/cameras/Controls"),
 		},

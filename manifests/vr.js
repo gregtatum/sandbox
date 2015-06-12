@@ -7,11 +7,13 @@ module.exports = {
 			x : -300,
 			fov : 70
 		},
-		renderer : {
-			useVR : true
-		}
 	},
 	components : {
+		renderer : {
+			function : require('../js/renderers/cardboard-renderer'),
+			properties: {
+			}
+		},
 		pointcloud : {
 			construct: require("../js/demos/SineGravityCloud"),
 			properties: {

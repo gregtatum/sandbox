@@ -8,12 +8,10 @@ module.exports = {
 			z: 500,
 			near : 0.1,
 			fov : 40
-		},
-		renderer : {
-			useEffects : true
 		}
 	},
 	components : {
+		renderer : { function : require('../js/renderers/effects-renderer') },
 		restrictedCamera : {
 			construct: require("../js/components/cameras/RestrictedCamera"),
 		},
