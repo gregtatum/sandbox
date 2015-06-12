@@ -8,8 +8,6 @@ The central poem object is the application graph. If you're looking to get orien
 
 ## Running
 
-Currently it uses gulp for building, but will be moving to run scripts exclusively.
-
 To build:
 
 	npm run build
