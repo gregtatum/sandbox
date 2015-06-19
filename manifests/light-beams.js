@@ -15,10 +15,10 @@ module.exports = {
 	components : {
 		renderer : { function : require('../js/renderers/basic-renderer') },
 		// renderer : { function : require('../js/renderers/effects-renderer') },
-		// controls : { construct: require("../js/components/cameras/Controls") },
-		restrictedCamera : {
-			construct: require("../js/components/cameras/RestrictedCamera"),
-		},
+		controls : { construct: require("../js/components/cameras/Controls") },
+		// restrictedCamera : {
+		// 	construct: require("../js/components/cameras/RestrictedCamera"),
+		// },
 		lightBeam1 : {
 			function : LightBeam,
 			properties: {

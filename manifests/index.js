@@ -1,13 +1,14 @@
 module.exports = {
-	"light-beams" : require("./light-beams"),
-	cubic : require("./cubic"),
-	blobs : require("./blobs"),
-	meshGroupBoxDemo : require("./meshGroupBoxDemo"),
-	carbonDioxideEarth : require("./carbonDioxideEarth"),
-	endlessTerrain : require("./endlessTerrain"),
-	tetrahedra : require("./tetrahedra"),
-	sineGravityCloud : require("./sineGravityCloud"),
-	vr : require("./vr"),
+	// "light-beams" : require("./light-beams"),
+	// cubic : require("./cubic"),
+	postprocessing : require("./postprocessing"),
+	// blobs : require("./blobs"),
+	// meshGroupBoxDemo : require("./meshGroupBoxDemo"),
+	// carbonDioxideEarth : require("./carbonDioxideEarth"),
+	// endlessTerrain : require("./endlessTerrain"),
+	// tetrahedra : require("./tetrahedra"),
+	// sineGravityCloud : require("./sineGravityCloud"),
+	// vr : require("./vr"),
 }
 
 // Legacy:
