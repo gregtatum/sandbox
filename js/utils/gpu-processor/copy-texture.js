@@ -28,9 +28,9 @@ module.exports = function copyTextureFn( renderer ) {
 
 					vec2 uv = gl_FragCoord.xy / resolution.xy;
 
-					vec3 color = texture2D( texture, uv ).xyz;
+					vec4 color = texture2D( texture, uv );
 
-					gl_FragColor = vec4( color, 1.0 );
+					gl_FragColor = vec4( color.xyz, 1.0 );
 
 				}
 			`
@@ -39,9 +39,11 @@ module.exports = function copyTextureFn( renderer ) {
 	
 	scene.add( mesh )
 	
+	var uniforms = mesh.material.uniforms
+	
 	return function copyTexture( input, output, textureSideLength ) {
 		
-		uniforms.texture.resolution.value.set( textureSideLength, textureSideLength )
+		uniforms.resolution.value.set( textureSideLength, textureSideLength )
 		uniforms.texture.value = input
 		renderer.render( scene, camera, output )
 	}

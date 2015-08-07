@@ -14,6 +14,7 @@
     "events": "^1.0.2",
     "exorcist": "^0.1.6",
     "glsl-camera-ray": "^1.0.0",
+    "glsl-hsl2rgb": "^1.1.0",
     "glsl-hsv2rgb": "^1.0.0",
     "glsl-noise": "0.0.0",
     "glsl-random": "0.0.4",

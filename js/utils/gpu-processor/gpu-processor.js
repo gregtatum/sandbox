@@ -1,5 +1,18 @@
 var CopyTexture = require('./copy-texture')
 
+function _nextPowerOfTwo( value ) {
+
+	value --;
+	value |= value >> 1;
+	value |= value >> 2;
+	value |= value >> 4;
+	value |= value >> 8;
+	value |= value >> 16;
+	value ++;
+
+	return value;
+}
+
 function _createRenderTarget( sideLength, format ) {
 	
 	return new THREE.WebGLRenderTarget(
@@ -23,6 +36,9 @@ function _renderFn( renderer ) {
 	var camera = new THREE.Camera()
 	var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2, 2 ) )
 	
+	camera.position.z = 1
+	scene.add( mesh )
+	
 	return function( shaderMaterial, renderTargetOut ) {
 	
 		mesh.material = shaderMaterial
@@ -44,10 +60,8 @@ function _flipFn( pass ) {
 	}
 }
 
-function _addPassFn( current ) {
+function _addPassFn( current, renderer, copyTexture ) {
 
-	var copyTexture = CopyTexture( renderer )
-		
 	return function addPass( name, props ) {
 		
 		var config = _.extend({
@@ -59,24 +73,34 @@ function _addPassFn( current ) {
 			uniformName       : "texture",
 			autoUpdateUniform : true,
 			shaderMaterial    : null,
+			textureSideLength : null,
+			active            : true
 		}, props)
 		
-		var textureSideLength = THREE.Math.nextPowerOfTwo( Math.sqrt( config.size ) )
 		
-		
-		var data = new Float32Array( size * stride )
-	
-		if( stride !== 3 && stride !== 4 ) {
+		if( config.stride === 3 ) {
+			var format = THREE.RGBFormat
+		} else if( config.stride === 4 ){
+			var format = THREE.RGBAFormat				
+		} else {
 			throw new Error('Stride must be 3 or 4 to work with the RGB and RGBA formats.')
 		}
 
-		for( var i=0; i < data.length; i += stride ) {
-			generateDatum( data, i )
+		var textureSideLength = _nextPowerOfTwo( Math.sqrt( config.size ) )
+		config.textureSideLength = textureSideLength
+		var data = new Float32Array( textureSideLength * textureSideLength * config.stride )
+		
+
+		for( var i=0; i < data.length; i += config.stride ) {
+			config.generateDatum( data, i )
 		}
 
 		var renderTargetA = _createRenderTarget( textureSideLength, format )
 		var renderTargetB = _createRenderTarget( textureSideLength, format )
 	
+		renderTargetA.name = "renderTargetA"
+		renderTargetB.name = "renderTargetB"
+		
 		var texture = new THREE.DataTexture( data, textureSideLength, textureSideLength )
 		_.extend( texture, {
 			format       : format,
@@ -86,18 +110,22 @@ function _addPassFn( current ) {
 			needsUpdate  : true,
 			flipY        : false,
 		})
-		
+
 		copyTexture( texture, renderTargetA, textureSideLength )
 		copyTexture( texture, renderTargetB, textureSideLength )
 		
 		texture.dispose()
 	
 		var pass = {
-			size           : size,
-			stride         : stride,
-			preRender      : preRender,
-			shaderMaterial : shaderMaterial,
-			uniformName    : uniformName,
+			active              : config.active,
+			size                : config.size,
+			stride              : config.stride,
+			preRender           : config.preRender,
+			postRender          : config.postRender,
+			shaderMaterial      : config.shaderMaterial,
+			uniformName         : config.uniformName,
+			autoUpdateUniform   : config.autoUpdateUniform,
+			textureSideLength   : config.textureSideLength,
 			inputRenderTarget   : null,
 			outputRenderTarget  : null,
 			renderTargets  : [ renderTargetA, renderTargetB ]
@@ -117,7 +145,7 @@ function _renderAllFn( current, render ) {
 	return function renderAll() {
 		
 
-		_.each( current.passes, function flipFlopPasses( pass ) {
+		_.each( current.passes, function flipFlopPasses( pass, name ) {
 
 			if( pass.active ) {
 				
@@ -143,13 +171,13 @@ function _renderAllFn( current, render ) {
 				
 		_.each( current.passes, function( pass ) {
 			if( pass.active ) {
-				post.postRender( pass, current.passes )
+				pass.postRender( pass, current.passes )
 			}
 		})
 	}
 }
 
-function _renderPass( current, render ) {
+function _renderPassFn( current, render ) {
 	
 	return function renderPass( nameOrPass ) {
 		
@@ -170,20 +198,23 @@ function _renderPass( current, render ) {
 module.exports = function( renderer, props ) {
 	
 	var current = {
-		passes : []
+		passes : {}
 	}
 	
 	var camera = new THREE.Camera(); camera.position.z = 1
-	var scene = new THREE.Scene();
+	var scene = new THREE.Scene()
+	var copyTexture = CopyTexture( renderer )
 	var render = _renderFn( renderer )
-	var addPass = _addPassFn( config, current )
-	var renderAll = _.renderAllFn( current, render )
-	var renderPass = _.renderPassFn( current, render )
+	var addPass = _addPassFn( current, renderer, copyTexture )
+	var renderAll = _renderAllFn( current, render )
+	var renderPass = _renderPassFn( current, render )
 	
 	return {
 		passes : current.passes,
 		addPass : addPass,
+		renderer : renderer,
 		render : renderAll,
-		renderPass : renderPass
+		renderPass : renderPass,
+		copyTexture : copyTexture
 	}
 }
