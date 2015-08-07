@@ -26,6 +26,7 @@ void main() {
 	
 	vLighting = dot( normal, normalize(cameraPosition - position) );
 	vLighting = vLighting * 0.5 + 0.5;
+	
 	vAttributeIndex = attributeIndex;
 	
 	gl_Position =

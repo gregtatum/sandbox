@@ -1,9 +1,9 @@
-var GpuProcessor = require('../../utils/gpu-processor/gpu-processor')
+var CreateGpuProcessor = require('../../utils/gpu-processor/gpu-processor')
 var Glslify = require('glslify')
 var DuplicateBufferGeometry = require('../../utils/duplicate-buffer-geometry')
 var CopyTexture = require('../../utils/gpu-processor/copy-texture')
 
-var PASS_THROUGH_VERT = "void main() { gl_Position = vec4( position, 1.0 ); }"
+const PASS_THROUGH_VERT = "void main() { gl_Position = vec4( position, 1.0 ); }"
 
 function _generatePositionFn( config ) {
 	
@@ -126,7 +126,7 @@ module.exports = function fbo( poem, props ) {
 		count : 1e5 * 2
 	}, props)
 	
-	var gpuProcessor = GpuProcessor( poem.renderer )
+	var gpuProcessor = CreateGpuProcessor( poem.renderer )
 	var positioning = _initPositioningPass( gpuProcessor, config )
 	
 	
