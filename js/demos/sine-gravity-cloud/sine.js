@@ -1,6 +1,6 @@
-var random		= require('../utils/random')
-  , loadTexture	= require('../utils/loadTexture')
-  , loadText	= require('../utils/loadText')
+var random		= require('../../utils/random')
+  , loadTexture	= require('../../utils/loadTexture')
+  , loadText	= require('../../utils/loadText')
 ;
 
 var SineGravityCloud = function(poem, properties) {
@@ -25,8 +25,8 @@ var SineGravityCloud = function(poem, properties) {
 	
 	Promise.all([
 		loadTexture( "assets/images/sinegravitycloud.png", this, "texture" ),
-		loadText( "assets/shaders/sinegravitycloud.vert", this, "vertexShader" ),
-		loadText( "assets/shaders/sinegravitycloud.frag", this, "fragmentShader" )
+		loadText( "js/demos/sine-gravity-cloud/sine.vert", this, "vertexShader" ),
+		loadText( "js/demos/sine-gravity-cloud/sine.frag", this, "fragmentShader" )
 	])
 	.then(
 		this.start.bind(this),

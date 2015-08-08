@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{documentTitle}}</title>
+
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css' />
+	<link href='base.css?v={{version}}' rel='stylesheet' type='text/css' />
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta property="og:image" content="assets/screenshots/titles.jpg" />
+	<meta name="description" content="{{pageDescription}}">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', '{{analyticsAccount}}']);
+
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+	
+</head>
+<body>
+		
+	<div class='container' id='container'>
+		
+		<div class='info' style='display:none;' id="info">
+			<a href='../0/' style='display:none;' title="Prev" class='arrow-prev'>Previous</a>
+			<h1 id="info-title"></h1>
+			<p id="info-subtitle"></p>
+			<a href='http://gregtatum.com/category/interactive/' style='display:none;' title="Next" class='arrow-next'>More</a>
+		</div>
+
+		<div class='title-webgl-error'>
+			<p>Sorry, it looks like WebGL is not supported by your browser or graphics card.</p>
+			<p><a href='http://get.webgl.org/'>Find out more about WebGL support here.</a></p>
+		</div>
+					
+		<div class='container-blocker' id='container-blocker'></div>
+		
+	</div>
+
+	<footer class='credits'>
+		Made by <a href='{{authorUrl}}'>{{authorName}}</a>.
+		Why not <a href='https://twitter.com/{{authorTwitter}}' target='_new'>tweet @ me</a>?
+		Fork this on <a href='{{githubUrl}}'>GitHub</a>.
+	</footer>
+
+	<!-- Vendor -->
+	<script src='assets/vendor/jquery-2.1.1.min.js'></script>
+	<script src="assets/vendor/three.js"></script>
+	<script src="assets/vendor/underscore-min.js"></script>
+	
+	<!-- Poem -->
+  <!-- Check out the code here: {{githubUrl}} -->
+	<script src='assets/build/bundle.js?v={{version}}'></script>
+	
+</body>
+</html>

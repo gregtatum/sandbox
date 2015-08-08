@@ -13,7 +13,7 @@ module.exports = {
 			construct: require("../js/components/cameras/Controls"),
 		},
 		pointcloud : {
-			construct: require("../js/demos/SineGravityCloud"),
+			construct: require("../js/demos/sine-gravity-cloud/sine"),
 		},
 		grid : {
 			construct: require("../js/demos/Grid"),

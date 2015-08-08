@@ -1,13 +1,14 @@
 module.exports = function fadeOutUi( poem ) {
 	
 	var hidden = false
+	var active = true
 	var $body = $('body')
 	var $canvas = $(poem.canvas)
 	var events = 'mousemove touchmove'
 	
 	var hideUi = _.debounce(function() {
 
-		if( !hidden ) {
+		if( !hidden && active ) {
 			hidden = true
 			$body.addClass('hide-ui')
 		}
@@ -31,6 +32,8 @@ module.exports = function fadeOutUi( poem ) {
 	hideUi()
 	
 	poem.emitter.on('destroy', function() {
+		active = false
+		showUi()
 		$body.off(events, handleInteraction)
 		$canvas.off(events, handleInteraction)
 	})

@@ -9,26 +9,18 @@ module.exports = {
 		},
 	},
 	components : {
-		renderer : {
-			function : require('../js/renderers/cardboard-renderer'),
-			properties: {
-			}
-		},
+		
+		renderer :       { function : require('../js/renderers/cardboard-renderer') },
+		controls :       { construct: require("../js/components/cameras/Orientation") },
+		cameraRotation : { construct: require("../js/components/cameras/RotateAroundOrigin") },
+		grid :           { construct: require("../js/demos/Grid") },
+		
 		pointcloud : {
-			construct: require("../js/demos/SineGravityCloud"),
+			construct: require("../js/demos/sine-gravity-cloud/sine"),
 			properties: {
 				count: 50 * 1000,
 				pointSize : 4
 			}
 		},
-		controls : {
-			construct: require("../js/components/cameras/Orientation"),
-		},
-		cameraRotation : {
-			construct: require("../js/components/cameras/RotateAroundOrigin"),
-		},
-		grid : {
-			construct: require("../js/demos/Grid"),
-		}
 	}
 };
